@@ -235,11 +235,11 @@ export default function AddQuestionsPage() {
   // Update available topics when chapter changes
   useEffect(() => {
     if (grade && subject && chapter) {
-      const topics = syllabusStructure[grade as keyof typeof syllabusStructure]?.[subject]?.[chapter] || [];
-      setAvailableTopics(topics as string[]);
-      setTopic("");
+      const topics = syllabusStructure[grade as keyof typeof syllabusStructure]?.[subject]?.[chapter] || []
+      setAvailableTopics(topics)
+      setTopic("")
     } else {
-      setAvailableTopics([]);
+      setAvailableTopics([])
     }
   }, [grade, subject, chapter])
 
@@ -381,13 +381,14 @@ export default function AddQuestionsPage() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="mcq">Multiple Choice</SelectItem>
+                    <SelectItem value="short">Short Answer</SelectItem>
+                    <SelectItem value="long">Long Answer</SelectItem>
                     {subject === "english" && grade === "9th" && (
                       <>
                         <SelectItem value="fillInTheBlanks">Fill in the Blanks</SelectItem>
                         <SelectItem value="correctSpelling">Correct Spelling</SelectItem>
                         <SelectItem value="vocabulary">Vocabulary (Meanings, Synonyms, Antonyms)</SelectItem>
                         <SelectItem value="grammar">Grammar (Clauses, Sentence Types)</SelectItem>
-                        {/* <SelectItem value="shortQuestions">Short Questions</SelectItem> */}
                         <SelectItem value="translation">Translation (English to Urdu)</SelectItem>
                         <SelectItem value="poemSummary">Poem Summary</SelectItem>
                         <SelectItem value="essayWriting">Essay Writing</SelectItem>
@@ -406,17 +407,6 @@ export default function AddQuestionsPage() {
                         <SelectItem value="applicationWriting">درخواست نویسی</SelectItem>
                         <SelectItem value="letterWriting">خط نویسی</SelectItem>
                         <SelectItem value="essayWriting">مضمون نویسی</SelectItem>
-                        {/* <SelectItem value="mcqsPaperTwo">کثیر انتخابی سوالات (MCQs)</SelectItem> */}
-                        {/* <SelectItem value="antonyms">لفظ "ز" کی ضد</SelectItem>
-                        <SelectItem value="antonyms">لفظ "دور" کی ضد</SelectItem>
-                        <SelectItem value="synonyms">لفظ "شہرت" کا مترادف</SelectItem>
-                        <SelectItem value="synonyms">لفظ "درست" کا مترادف</SelectItem>
-                        <SelectItem value="synonyms">لفظ "پورا" کا مترادف</SelectItem>
-                        <SelectItem value="meanings">متعلق "درباز" کے معنی کیا ہیں</SelectItem>
-                        <SelectItem value="literaryQuestions">تشبیہ، مجاز، استعارہ متعلق سوالات</SelectItem>
-                        <SelectItem value="literaryQuestions">مزاج و ادب سے متعلق سوالات</SelectItem>
-                        <SelectItem value="grammarQuestions">زبان و گرامر سے متعلق سوالات</SelectItem>
-                        <SelectItem value="comprehensionQuestions">متن فہمی سے متعلق سوالات</SelectItem> */}
                       </>
                     )}
                     {subject === "english" && grade === "10th" && (
@@ -445,17 +435,6 @@ export default function AddQuestionsPage() {
                         <SelectItem value="applicationWriting">درخواست نویسی</SelectItem>
                         <SelectItem value="letterWriting">خط نویسی</SelectItem>
                         <SelectItem value="essayWriting">مضمون نویسی</SelectItem>
-                        {/* <SelectItem value="mcqsPaperTwo">کثیر انتخابی سوالات (MCQs)</SelectItem> */}
-                        {/* <SelectItem value="antonyms">لفظ "ز" کی ضد</SelectItem>
-                        <SelectItem value="antonyms">لفظ "دور" کی ضد</SelectItem>
-                        <SelectItem value="synonyms">لفظ "شہرت" کا مترادف</SelectItem>
-                        <SelectItem value="synonyms">لفظ "درست" کا مترادف</SelectItem>
-                        <SelectItem value="synonyms">لفظ "پورا" کا مترادف</SelectItem>
-                        <SelectItem value="meanings">متعلق "درباز" کے معنی کیا ہیں</SelectItem>
-                        <SelectItem value="literaryQuestions">تشبیہ، مجاز، استعارہ متعلق سوالات</SelectItem>
-                        <SelectItem value="literaryQuestions">مزاج و ادب سے متعلق سوالات</SelectItem>
-                        <SelectItem value="grammarQuestions">زبان و گرامر سے متعلق سوالات</SelectItem>
-                        <SelectItem value="comprehensionQuestions">متن فہمی سے متعلق سوالات</SelectItem> */}
                       </>
                     )}
 
@@ -484,17 +463,6 @@ export default function AddQuestionsPage() {
                         <SelectItem value="applicationWriting">درخواست نویسی</SelectItem>
                         <SelectItem value="letterWriting">خط نویسی</SelectItem>
                         <SelectItem value="essayWriting">مضمون نویسی</SelectItem>
-                        {/* <SelectItem value="mcqsPaperTwo">کثیر انتخابی سوالات (MCQs)</SelectItem> */}
-                        {/* <SelectItem value="antonyms">لفظ "ز" کی ضد</SelectItem>
-                        <SelectItem value="antonyms">لفظ "دور" کی ضد</SelectItem>
-                        <SelectItem value="synonyms">لفظ "شہرت" کا مترادف</SelectItem>
-                        <SelectItem value="synonyms">لفظ "درست" کا مترادف</SelectItem>
-                        <SelectItem value="synonyms">لفظ "پورا" کا مترادف</SelectItem>
-                        <SelectItem value="meanings">متعلق "درباز" کے معنی کیا ہیں</SelectItem>
-                        <SelectItem value="literaryQuestions">تشبیہ، مجاز، استعارہ متعلق سوالات</SelectItem>
-                        <SelectItem value="literaryQuestions">مزاج و ادب سے متعلق سوالات</SelectItem>
-                        <SelectItem value="grammarQuestions">زبان و گرامر سے متعلق سوالات</SelectItem>
-                        <SelectItem value="comprehensionQuestions">متن فہمی سے متعلق سوالات</SelectItem> */}
                       </>
                     )}
 
@@ -518,17 +486,6 @@ export default function AddQuestionsPage() {
                         <SelectItem value="applicationWriting">درخواست نویسی</SelectItem>
                         <SelectItem value="letterWriting">خط نویسی</SelectItem>
                         <SelectItem value="essayWriting">مضمون نویسی</SelectItem>
-                        {/* <SelectItem value="mcqsPaperTwo">کثیر انتخابی سوالات (MCQs)</SelectItem> */}
-                        {/* <SelectItem value="antonyms">لفظ "ز" کی ضد</SelectItem>
-                        <SelectItem value="antonyms">لفظ "دور" کی ضد</SelectItem>
-                        <SelectItem value="synonyms">لفظ "شہرت" کا مترادف</SelectItem>
-                        <SelectItem value="synonyms">لفظ "درست" کا مترادف</SelectItem>
-                        <SelectItem value="synonyms">لفظ "پورا" کا مترادف</SelectItem>
-                        <SelectItem value="meanings">متعلق "درباز" کے معنی کیا ہیں</SelectItem>
-                        <SelectItem value="literaryQuestions">تشبیہ، مجاز، استعارہ متعلق سوالات</SelectItem>
-                        <SelectItem value="literaryQuestions">مزاج و ادب سے متعلق سوالات</SelectItem>
-                        <SelectItem value="grammarQuestions">زبان و گرامر سے متعلق سوالات</SelectItem>
-                        <SelectItem value="comprehensionQuestions">متن فہمی سے متعلق سوالات</SelectItem> */}
                       </>
                     )}
                   </SelectContent>

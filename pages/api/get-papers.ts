@@ -5,12 +5,13 @@ const uri = process.env.MONGODB_URI;
 if (!uri) {
   throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
 }
-const client = new MongoClient(uri);
+const options = { useNewUrlParser: true, useUnifiedTopology: true, serverSelectionTimeoutMS: 5000 };
+const client = new MongoClient(uri, options);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
-      await client.connect();
+      if (!client.topology?.isConnected()) await client.connect();
       const database = client.db('questionBank');
       const collection = database.collection('saved-papers');
 
@@ -20,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } catch (error) {
       res.status(500).json({ message: 'Error fetching papers', error });
     } finally {
-      await client.close();
+      // Do not close the client connection
     }
   } else {
     res.status(405).json({ message: 'Method not allowed' });

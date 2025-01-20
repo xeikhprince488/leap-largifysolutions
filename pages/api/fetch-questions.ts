@@ -2,7 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { MongoClient } from 'mongodb'
 
 const uri = process.env.MONGODB_URI
-const client = new MongoClient(uri!)
+const options = { useNewUrlParser: true, useUnifiedTopology: true, serverSelectionTimeoutMS: 5000 };
+const client = new MongoClient(uri!, options)
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -13,7 +14,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { subject, grade, chapters, type, count } = req.body
     console.log('Request body:', req.body)
 
-    await client.connect()
+    await client.connect();
+    await client.db().admin().ping();
     const database = client.db('questionBank')
     
     // Use the correct collection based on subject and grade
@@ -60,7 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.error('Error in API route:', error)
     return res.status(500).json({ error: 'Failed to fetch questions' })
   } finally {
-    await client.close()
+    // Do not close the client connection
   }
 }
 

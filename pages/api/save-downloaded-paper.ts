@@ -11,6 +11,8 @@ if (!uri || !dbName) {
 
 let cachedClient: MongoClient | null = null;
 
+const options = { useNewUrlParser: true, useUnifiedTopology: true, serverSelectionTimeoutMS: 5000 };
+
 async function connectToDatabase() {
   if (cachedClient) {
     return cachedClient;
@@ -19,7 +21,7 @@ async function connectToDatabase() {
   if (!uri) {
     throw new Error('MongoDB URI is not defined');
   }
-  const client = new MongoClient(uri);
+  const client = new MongoClient(uri, options);
   await client.connect();
   cachedClient = client;
   return client;
