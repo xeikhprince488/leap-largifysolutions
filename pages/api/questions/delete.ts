@@ -23,17 +23,17 @@ export default async function handler(req: { method: string; query: { id: any, g
 
     const resultShort = await collection.updateOne(
       { "short.id": parsedId },
-      { $pull: { short: { id: parsedId } } as any }
+      { $pull: { short: { id: parsedId } } }
     )
 
     const resultMcq = await collection.updateOne(
       { "mcq.id": parsedId },
-      { $pull: { mcq: { id: parsedId } } as any }
+      { $pull: { mcq: { id: parsedId } } }
     )
 
     const resultLong = await collection.updateOne(
       { "long.id": parsedId },
-      { $pull: { long: { id: parsedId } } as any }
+      { $pull: { long: { id: parsedId } } }
     )
 
     console.log('Delete results:', { resultShort, resultMcq, resultLong }) // Debugging line
