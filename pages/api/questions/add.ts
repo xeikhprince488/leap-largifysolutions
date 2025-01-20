@@ -41,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(200).json({ success: true, message: 'Question added successfully' })
   } catch (error) {
     console.error('Error adding question:', error); // Debugging line
-    res.status(500).json({ success: false, message: 'Error adding question', error: error.message })
+    res.status(500).json({ success: false, message: 'Error adding question', error: (error as Error).message })
   }
 }
 
