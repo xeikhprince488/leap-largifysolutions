@@ -235,11 +235,14 @@ export default function AddQuestionsPage() {
   // Update available topics when chapter changes
   useEffect(() => {
     if (grade && subject && chapter) {
-      const topics = syllabusStructure[grade as keyof typeof syllabusStructure]?.[subject]?.[chapter] || []
-      setAvailableTopics(topics)
-      setTopic("")
+      const chapterData = syllabusStructure[grade as keyof typeof syllabusStructure]?.[subject]?.[chapter];
+      const topics = Array.isArray(chapterData)
+        ? chapterData
+        : Object.keys(chapterData || {}) as string[];
+      setAvailableTopics(topics);
+      setTopic("");
     } else {
-      setAvailableTopics([])
+      setAvailableTopics([]);
     }
   }, [grade, subject, chapter])
 
