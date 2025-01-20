@@ -342,7 +342,8 @@ export default function ConfigureUrduPaperPage() {
                       <SelectItem value="mcqs">کثیر انتخابی سوالات</SelectItem>
                       <SelectItem value="applicationWriting">درخواست نویسی</SelectItem>
                       <SelectItem value="letterWriting">خط نویسی</SelectItem>
-                      <SelectItem value="essayWriting">مضمون نویسی</SelectContent>
+                      <SelectItem value="essayWriting">مضمون نویسی</SelectItem>
+                    </SelectContent>
                   </Select>
                 </div>
 
