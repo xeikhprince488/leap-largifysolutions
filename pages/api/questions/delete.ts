@@ -16,6 +16,8 @@ export default async function handler(req: { method: string; query: { id: any, g
 
     const collection = db.collection(`${subject}-${grade}`)
     
+    console.log('Collection name:', `${subject}-${grade}`) // Debugging line
+
     const result = await collection.updateOne(
       { "short.id": parseInt(id) },
       { $pull: { short: { id: parseInt(id) } as any } }
