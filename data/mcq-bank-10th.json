@@ -1,0 +1,288 @@
+{
+  "biology-10th": {
+    "CHAP 1 Gaseous Exchange": {
+      "mcq": [],
+      "short": [
+        {
+          "id": 2,
+          "type": "short",
+          "english": "Explain the role of alveoli in gaseous exchange.",
+          "urdu": "گیسیوں کے تبادلے میں ایلوئی کی کیا اہمیت ہے؟",
+          "marks": 3
+        }
+      ],
+      "long": []
+    }
+  },
+  "physics-10th": {
+    "CHAP 1 Motion and Force": {
+      "mcq": [
+        {
+          "id": 1,
+          "type": "mcq",
+          "english": "What is the SI unit of force?",
+          "urdu": "قوت کی ایس آئی اکائی کیا ہے؟",
+          "options": [
+            {
+              "english": "Newton",
+              "urdu": "نیوٹن",
+              "value": "A"
+            },
+            {
+              "english": "Joule",
+              "urdu": "جول",
+              "value": "B"
+            },
+            {
+              "english": "Watt",
+              "urdu": "واٹ",
+              "value": "C"
+            },
+            {
+              "english": "Pascal",
+              "urdu": "پاسکل",
+              "value": "D"
+            }
+          ],
+          "chapter": "CHAP 1 Motion and Force",
+          "correct": "A",
+          "marks": 1
+        }
+      ],
+      "short": [
+        {
+          "id": 1,
+          "type": "short",
+          "english": "Define force and its types.",
+          "urdu": "قوت کی تعریف کریں اور اس کی اقسام بیان کریں۔",
+          "marks": 2
+        },
+        {
+          "id": 2,
+          "type": "short",
+          "english": "Explain Newton's first law of motion.",
+          "urdu": "نیوٹن کے حرکت کے پہلے قانون کی وضاحت کریں۔",
+          "marks": 3
+        }
+      ],
+      "long": [
+        {
+          "id": 1,
+          "type": "long",
+          "english": "Discuss the laws of motion given by Newton and their importance in physics.",
+          "urdu": "نیوٹن کے حرکت کے قوانین پر بات کریں اور ان کی فزکس میں اہمیت بیان کریں۔",
+          "marks": 5
+        }
+      ]
+    }
+  },
+  "chemistry-10th": {
+    "CHAP 1 Chemical Reactions": {
+      "mcq": [
+        {
+          "id": 1,
+          "type": "mcq",
+          "english": "What type of reaction occurs when acid reacts with base?",
+          "urdu": "تیزاب اور قلی کے درمیان کس قسم کا ری ایکشن ہوتا ہے؟",
+          "options": [
+            {
+              "english": "Neutralization",
+              "urdu": "معتدل",
+              "value": "A"
+            },
+            {
+              "english": "Oxidation",
+              "urdu": "آکسیڈیشن",
+              "value": "B"
+            },
+            {
+              "english": "Reduction",
+              "urdu": "ریڈکشن",
+              "value": "C"
+            },
+            {
+              "english": "Decomposition",
+              "urdu": "تجزیہ",
+              "value": "D"
+            }
+          ],
+          "chapter": "CHAP 1 Chemical Reactions",
+          "correct": "A",
+          "marks": 1
+        }
+      ],
+      "short": [
+        {
+          "id": 1,
+          "type": "short",
+          "english": "What is a chemical reaction?",
+          "urdu": "کیمیائی رد عمل کیا ہے؟",
+          "marks": 2
+        },
+        {
+          "id": 2,
+          "type": "short",
+          "english": "Explain the difference between endothermic and exothermic reactions.",
+          "urdu": "انڈوتھرک اور ایکسوتھرک ردعمل میں فرق بیان کریں۔",
+          "marks": 3
+        }
+      ],
+      "long": [
+        {
+          "id": 1,
+          "type": "long",
+          "english": "Discuss the various types of chemical reactions with examples.",
+          "urdu": "کیمیائی رد عمل کی مختلف اقسام پر مثالوں کے ساتھ بحث کریں۔",
+          "marks": 5
+        }
+      ]
+    }
+  },
+  "english-10th": {
+    "CHAP 1 The Sentence": {
+      "mcq": [
+        {
+          "id": 1,
+          "type": "mcq",
+          "english": "Which of the following is a simple sentence?",
+          "urdu": "ان میں سے کون سا جملہ سادہ جملہ ہے؟",
+          "options": [
+            {
+              "english": "He went to the market.",
+              "urdu": "وہ بازار گیا۔",
+              "value": "A"
+            },
+            {
+              "english": "Although he was tired, he worked hard.",
+              "urdu": "اگرچہ وہ تھکا ہوا تھا، اس نے محنت کی۔",
+              "value": "B"
+            },
+            {
+              "english": "She sings and dances.",
+              "urdu": "وہ گاتی اور ناچتی ہے۔",
+              "value": "C"
+            },
+            {
+              "english": "Because it was raining, they stayed home.",
+              "urdu": "کیونکہ بارش ہو رہی تھی، وہ گھر پر رہے۔",
+              "value": "D"
+            }
+          ],
+          "chapter": "CHAP 1 The Sentence",
+          "correct": "A",
+          "marks": 1
+        }
+      ],
+      "short": [
+        {
+          "id": 1,
+          "type": "short",
+          "english": "Define a sentence.",
+          "urdu": "جملے کی تعریف کریں۔",
+          "marks": 2
+        },
+        {
+          "id": 2,
+          "type": "short",
+          "english": "Explain the difference between simple and compound sentences.",
+          "urdu": "سادہ اور مرکب جملوں میں فرق بیان کریں۔",
+          "marks": 3
+        }
+      ],
+      "long": [
+        {
+          "id": 1,
+          "type": "long",
+          "english": "Discuss the types of sentences with examples.",
+          "urdu": "جملوں کی اقسام پر مثالوں کے ساتھ بات کریں۔",
+          "marks": 5
+        }
+      ]
+    }
+  },
+  "urdu-10th": {
+    "CHAP 1 ادب اور اس کی اقسام": {
+      "mcq": [
+        {
+          "id": 1,
+          "type": "mcq",
+          "english": "ادب کی سب سے اہم قسم کون سی ہے؟",
+          "urdu": "ادب کی سب سے اہم قسم کون سی ہے؟",
+          "options": [
+            {
+              "english": "نثری ادب",
+              "urdu": "نثری ادب",
+              "value": "A"
+            },
+            {
+              "english": "نظم",
+              "urdu": "نظم",
+              "value": "B"
+            },
+            {
+              "english": "کہانی",
+              "urdu": "کہانی",
+              "value": "C"
+            },
+            {
+              "english": "شاعری",
+              "urdu": "شاعری",
+              "value": "D"
+            }
+          ],
+          "chapter": "CHAP 1 ادب اور اس کی اقسام",
+          "correct": "A",
+          "marks": 1
+        }
+      ],
+      "short": [
+        {
+          "id": 1,
+          "type": "short",
+          "english": "ادب کی تعریف کریں۔",
+          "urdu": "ادب کی تعریف کریں۔",
+          "marks": 2
+        },
+        {
+          "id": 2,
+          "type": "short",
+          "english": "نثری ادب اور نظم ادب میں فرق بیان کریں۔",
+          "urdu": "نثری ادب اور نظم ادب میں فرق بیان کریں۔",
+          "marks": 3
+        }
+      ],
+      "long": [
+        {
+          "id": 1,
+          "type": "long",
+          "english": "ادب کی مختلف اقسام پر تفصیل سے بات کریں۔",
+          "urdu": "ادب کی مختلف اقسام پر تفصیل سے بات کریں۔",
+          "marks": 5
+        }
+      ]
+    }
+  },
+  "islamyat-10th": {
+    "باب اوّل: قرآن مجید و حدیثِ نبویﷺ": {
+      "mcq": [],
+      "short": [
+        {
+          "id": 1737039335202,
+          "type": "short",
+          "english": "fvgbnm,",
+          "urdu": "dfgfhjkjm.",
+          "grade": "10th",
+          "subject": "islamyat",
+          "chapter": "باب اوّل: قرآن مجید و حدیثِ نبویﷺ",
+          "topic": "احادیثِ نبویہﷺ",
+          "marks": 1,
+          "answer": {
+            "english": "sdgfhgjhkjk",
+            "urdu": "fdgcvhbjn"
+          }
+        }
+      ],
+      "long": []
+    }
+  }
+}

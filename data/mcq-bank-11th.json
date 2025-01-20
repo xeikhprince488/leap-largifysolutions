@@ -1,0 +1,314 @@
+{
+  "physics-11th": {
+    "CHAP 1 Motion and Force": {
+      "mcq": [
+        {
+          "id": 1,
+          "type": "mcq",
+          "english": "What is the SI unit of force?",
+          "urdu": "قوت کی ایس آئی اکائی کیا ہے؟",
+          "options": [
+            { "english": "Newton", "urdu": "نیوٹن", "value": "A" },
+            { "english": "Joule", "urdu": "جول", "value": "B" },
+            { "english": "Watt", "urdu": "واٹ", "value": "C" },
+            { "english": "Pascal", "urdu": "پاسکل", "value": "D" }
+          ],
+          "chapter": "CHAP 1 Motion and Force",
+          "correct": "A",
+          "marks": 1
+        }
+      ],
+      "short": [
+        {
+          "id": 1,
+          "type": "short",
+          "english": "Define force.",
+          "urdu": "قوت کی تعریف کریں۔",
+          "marks": 2
+        }
+      ],
+      "long": [
+        {
+          "id": 1,
+          "type": "long",
+          "english": "Explain the laws of motion with examples.",
+          "urdu": "موشن کے قوانین کو مثالوں کے ساتھ بیان کریں۔",
+          "marks": 5
+        }
+      ]
+    }
+  },
+  "chemistry-11th": {
+    "CHAP 1 Chemical Reactions": {
+      "mcq": [
+        {
+          "id": 1,
+          "type": "mcq",
+          "english": "What type of reaction occurs when acid reacts with base?",
+          "urdu": "تیزاب اور قلی کے درمیان کس قسم کا ری ایکشن ہوتا ہے؟",
+          "options": [
+            { "english": "Neutralization", "urdu": "معتدل", "value": "A" },
+            { "english": "Oxidation", "urdu": "آکسیڈیشن", "value": "B" },
+            { "english": "Reduction", "urdu": "ریڈکشن", "value": "C" },
+            { "english": "Decomposition", "urdu": "تجزیہ", "value": "D" }
+          ],
+          "chapter": "CHAP 1 Chemical Reactions",
+          "correct": "A",
+          "marks": 1
+        }
+      ],
+      "short": [
+        {
+          "id": 1,
+          "type": "short",
+          "english": "Define neutralization reaction.",
+          "urdu": "معتدل ری ایکشن کی تعریف کریں۔",
+          "marks": 2
+        }
+      ],
+      "long": [
+        {
+          "id": 1,
+          "type": "long",
+          "english": "Describe the different types of chemical reactions.",
+          "urdu": "کیمیائی ری ایکشن کی مختلف اقسام کو بیان کریں۔",
+          "marks": 5
+        }
+      ]
+    }
+  },
+  "english-11th": {
+    "CHAP 1 Literature and Comprehension": {
+      "mcq": [
+        {
+          "id": 1,
+          "type": "mcq",
+          "english": "Who wrote the play 'Macbeth'?",
+          "urdu": "ڈرامہ 'میکبیتھ' کس نے لکھا؟",
+          "options": [
+            { "english": "William Shakespeare", "urdu": "ولیم شیکسپیئر", "value": "A" },
+            { "english": "Charles Dickens", "urdu": "چارلس ڈکنز", "value": "B" },
+            { "english": "Jane Austen", "urdu": "جین آستن", "value": "C" },
+            { "english": "Mark Twain", "urdu": "مارک ٹوین", "value": "D" }
+          ],
+          "chapter": "CHAP 1 Literature and Comprehension",
+          "correct": "A",
+          "marks": 1
+        }
+      ],
+      "short": [
+        {
+          "id": 1,
+          "type": "short",
+          "english": "Define the term 'Metaphor'.",
+          "urdu": "'میتافور' کی تعریف کریں۔",
+          "marks": 2
+        }
+      ],
+      "long": [
+        {
+          "id": 1,
+          "type": "long",
+          "english": "Discuss the importance of Shakespeare's work in English literature.",
+          "urdu": "انگریزی ادب میں شیکسپیئر کے کام کی اہمیت پر بات کریں۔",
+          "marks": 5
+        }
+      ]
+    }
+  },
+  "urdu-11th": {
+    "CHAP 1 Urdu Literature": {
+      "mcq": [
+        {
+          "id": 1,
+          "type": "mcq",
+          "english": "Who is the author of the book 'Faiz Ahmad Faiz: A Memoir'?",
+          "urdu": "'فیض احمد فیض: ایک یادگار' کتاب کے مصنف کون ہیں؟",
+          "options": [
+            { "english": "Faiz Ahmad Faiz", "urdu": "فیض احمد فیض", "value": "A" },
+            { "english": "Allama Iqbal", "urdu": "علامہ اقبال", "value": "B" },
+            { "english": "Ahmed Faraz", "urdu": "احمد فراز", "value": "C" },
+            { "english": "Josh Malihabadi", "urdu": "جوش ملیح آبادی", "value": "D" }
+          ],
+          "chapter": "CHAP 1 Urdu Literature",
+          "correct": "A",
+          "marks": 1
+        }
+      ],
+      "short": [
+        {
+          "id": 1,
+          "type": "short",
+          "english": "Define 'Shair' in Urdu poetry.",
+          "urdu": "اردو شاعری میں 'شعر' کی تعریف کریں۔",
+          "marks": 2
+        }
+      ],
+      "long": [
+        {
+          "id": 1,
+          "type": "long",
+          "english": "Explain the impact of Faiz Ahmad Faiz on Urdu literature.",
+          "urdu": "فیض احمد فیض کا اردو ادب پر اثر بیان کریں۔",
+          "marks": 5
+        }
+      ]
+    }
+  },
+  "islamyat-11th": {
+    "CHAP 1 Basic Beliefs in Islam": {
+      "mcq": [
+        {
+          "id": 1,
+          "type": "mcq",
+          "english": "Who was the first Caliph of Islam?",
+          "urdu": "اسلام کا پہلا خلیفہ کون تھا؟",
+          "options": [
+            { "english": "Abu Bakr", "urdu": "حضرت ابو بکر", "value": "A" },
+            { "english": "Umar ibn al-Khattab", "urdu": "حضرت عمر بن خطاب", "value": "B" },
+            { "english": "Ali ibn Abi Talib", "urdu": "حضرت علی بن ابی طالب", "value": "C" },
+            { "english": "Uthman ibn Affan", "urdu": "حضرت عثمان بن عفان", "value": "D" }
+          ],
+          "chapter": "CHAP 1 Basic Beliefs in Islam",
+          "correct": "A",
+          "marks": 1
+        }
+      ],
+      "short": [
+        {
+          "id": 1,
+          "type": "short",
+          "english": "Explain the concept of 'Tawhid'.",
+          "urdu": "'توحید' کے تصور کی وضاحت کریں۔",
+          "marks": 2
+        }
+      ],
+      "long": [
+        {
+          "id": 1,
+          "type": "long",
+          "english": "Discuss the importance of the Prophet Muhammad (PBUH) in Islam.",
+          "urdu": "اسلام میں حضرت محمد ﷺ کی اہمیت پر بات کریں۔",
+          "marks": 5
+        }
+      ]
+    }
+  },
+  "math-11th": {
+    "CHAP 1 Algebra": {
+      "mcq": [
+        {
+          "id": 1,
+          "type": "mcq",
+          "english": "What is the value of x in the equation 2x + 3 = 7?",
+          "urdu": "مساوات 2x + 3 = 7 میں x کی قیمت کیا ہے؟",
+          "options": [
+            { "english": "2", "urdu": "2", "value": "A" },
+            { "english": "1", "urdu": "1", "value": "B" },
+            { "english": "3", "urdu": "3", "value": "C" },
+            { "english": "4", "urdu": "4", "value": "D" }
+          ],
+          "chapter": "CHAP 1 Algebra",
+          "correct": "A",
+          "marks": 1
+        }
+      ],
+      "short": [
+        {
+          "id": 1,
+          "type": "short",
+          "english": "Define the term 'Linear Equation'.",
+          "urdu": "'لائنیئر مساوات' کی تعریف کریں۔",
+          "marks": 2
+        }
+      ],
+      "long": [
+        {
+          "id": 1,
+          "type": "long",
+          "english": "Solve the quadratic equation x^2 + 4x - 5 = 0.",
+          "urdu": "مربع مساوات x^2 + 4x - 5 = 0 کو حل کریں۔",
+          "marks": 5
+        }
+      ]
+    }
+  },
+  "bio-11th": {
+    "CHAP 1 Gaseous Exchange": {
+      "mcq": [
+        {
+          "id": 1,
+          "type": "mcq",
+          "english": "Which organ is responsible for gaseous exchange in humans?",
+          "urdu": "انسانوں میں گیسوں کا تبادلہ کس عضو کے ذریعے ہوتا ہے؟",
+          "options": [
+            { "english": "Lungs", "urdu": "پھیپھڑے", "value": "A" },
+            { "english": "Heart", "urdu": "دل", "value": "B" },
+            { "english": "Liver", "urdu": "جگر", "value": "C" },
+            { "english": "Kidney", "urdu": "گردہ", "value": "D" }
+          ],
+          "chapter": "CHAP 1 Gaseous Exchange",
+          "correct": "A",
+          "marks": 1
+        }
+      ],
+      "short": [
+        {
+          "id": 1,
+          "type": "short",
+          "english": "Define Gaseous Exchange.",
+          "urdu": "گیسوں کا تبادلہ کی تعریف کریں۔",
+          "marks": 2
+        }
+      ],
+      "long": [
+        {
+          "id": 1,
+          "type": "long",
+          "english": "Explain the process of gaseous exchange in human lungs.",
+          "urdu": "انسانی پھیپھڑوں میں گیسوں کے تبادلے کے عمل کی وضاحت کریں۔",
+          "marks": 5
+        }
+      ]
+    }
+  },
+  "pak-studies-11th": {
+    "CHAP 1 The Geography of Pakistan": {
+      "mcq": [
+        {
+          "id": 1,
+          "type": "mcq",
+          "english": "What is the capital of Pakistan?",
+          "urdu": "پاکستان کا دارالحکومت کیا ہے؟",
+          "options": [
+            { "english": "Islamabad", "urdu": "اسلام آباد", "value": "A" },
+            { "english": "Karachi", "urdu": "کراچی", "value": "B" },
+            { "english": "Lahore", "urdu": "لاہور", "value": "C" },
+            { "english": "Peshawar", "urdu": "پشاور", "value": "D" }
+          ],
+          "chapter": "CHAP 1 The Geography of Pakistan",
+          "correct": "A",
+          "marks": 1
+        }
+      ],
+      "short": [
+        {
+          "id": 1,
+          "type": "short",
+          "english": "Describe the geographical location of Pakistan.",
+          "urdu": "پاکستان کے جغرافیائی محل وقوع کی وضاحت کریں۔",
+          "marks": 2
+        }
+      ],
+      "long": [
+        {
+          "id": 1,
+          "type": "long",
+          "english": "Discuss the physical features of Pakistan.",
+          "urdu": "پاکستان کی قدرتی خصوصیات پر بات کریں۔",
+          "marks": 5
+        }
+      ]
+    }
+  }
+}
