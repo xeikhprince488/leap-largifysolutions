@@ -21,14 +21,24 @@ export default async function handler(req: { method: string; query: { id: any, g
     const parsedId = parseInt(id)
     console.log('Parsed ID:', parsedId) // Debugging line
 
-    const result = await collection.updateOne(
-      { $or: [{ "short.id": parsedId }, { "mcq.id": parsedId }, { "long.id": parsedId }] },
-      { $pull: { short: { id: parsedId }, mcq: { id: parsedId }, long: { id: parsedId } } as any }
+    const resultShort = await collection.updateOne(
+      { "short.id": parsedId },
+      { $pull: { short: { id: parsedId } } as any }
     )
 
-    console.log('Delete result:', result) // Debugging line
+    const resultMcq = await collection.updateOne(
+      { "mcq.id": parsedId },
+      { $pull: { mcq: { id: parsedId } } as any }
+    )
 
-    if (result.modifiedCount > 0) {
+    const resultLong = await collection.updateOne(
+      { "long.id": parsedId },
+      { $pull: { long: { id: parsedId } } as any }
+    )
+
+    console.log('Delete results:', { resultShort, resultMcq, resultLong }) // Debugging line
+
+    if (resultShort.modifiedCount > 0 || resultMcq.modifiedCount > 0 || resultLong.modifiedCount > 0) {
       res.status(200).json({ message: 'Question deleted successfully' })
     } else {
       res.status(404).json({ message: 'Question not found' })
