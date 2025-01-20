@@ -7,11 +7,15 @@ if (!uri) {
 }
 const options = { useNewUrlParser: true, useUnifiedTopology: true, serverSelectionTimeoutMS: 5000 };
 const client = new MongoClient(uri, options);
+let isConnected = false;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
-      if (!client.topology?.isConnected()) await client.connect();
+      if (!isConnected) {
+        await client.connect();
+        isConnected = true;
+      }
       const database = client.db('questionBank');
       const collection = database.collection('saved-papers');
 

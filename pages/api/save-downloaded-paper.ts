@@ -13,6 +13,8 @@ let cachedClient: MongoClient | null = null;
 
 const options = { useNewUrlParser: true, useUnifiedTopology: true, serverSelectionTimeoutMS: 5000 };
 
+let isConnected = false;
+
 async function connectToDatabase() {
   if (cachedClient) {
     return cachedClient;
@@ -23,6 +25,7 @@ async function connectToDatabase() {
   }
   const client = new MongoClient(uri, options);
   await client.connect();
+  isConnected = true;
   cachedClient = client;
   return client;
 }

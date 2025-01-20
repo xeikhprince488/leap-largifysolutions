@@ -4,6 +4,7 @@ const uri = process.env.MONGODB_URI;
 const options = { useNewUrlParser: true, useUnifiedTopology: true, serverSelectionTimeoutMS: 5000 };
 let client;
 let clientPromise;
+let isConnected = false;
 
 if (!uri) {
   throw new Error('Please add your Mongo URI to .env.local');
@@ -26,6 +27,10 @@ export default async function handler(req, res) {
 
     try {
       const client = await clientPromise;
+      if (!isConnected) {
+        await client.db().admin().ping();
+        isConnected = true;
+      }
       const database = client.db('questionBank');
       const collection = database.collection('questions');
 

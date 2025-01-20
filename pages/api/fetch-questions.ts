@@ -4,6 +4,7 @@ import { MongoClient } from 'mongodb'
 const uri = process.env.MONGODB_URI
 const options = { useNewUrlParser: true, useUnifiedTopology: true, serverSelectionTimeoutMS: 5000 };
 const client = new MongoClient(uri!, options)
+let isConnected = false;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -14,8 +15,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { subject, grade, chapters, type, count } = req.body
     console.log('Request body:', req.body)
 
-    await client.connect();
-    await client.db().admin().ping();
+    if (!isConnected) {
+      await client.connect();
+      isConnected = true;
+    }
     const database = client.db('questionBank')
     
     // Use the correct collection based on subject and grade

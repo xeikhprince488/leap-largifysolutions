@@ -13,6 +13,7 @@ const options = { useNewUrlParser: true, useUnifiedTopology: true, serverSelecti
 
 let client: MongoClient
 let clientPromise: Promise<MongoClient>
+let isConnected = false;
 
 if (process.env.NODE_ENV === 'development') {
   if (!global._mongoClientPromise) {
@@ -26,7 +27,13 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 clientPromise = clientPromise.then(client => {
-  return client.db().admin().ping().then(() => client);
+  if (!isConnected) {
+    return client.db().admin().ping().then(() => {
+      isConnected = true;
+      return client;
+    });
+  }
+  return client;
 });
 
 export default clientPromise
