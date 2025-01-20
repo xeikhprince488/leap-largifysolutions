@@ -23,7 +23,7 @@ export default async function handler(req: { method: string; query: { id: any, g
 
     const result = await collection.updateOne(
       { $or: [{ "short.id": parsedId }, { "mcq.id": parsedId }, { "long.id": parsedId }] },
-      { $pull: { short: { id: parsedId }, mcq: { id: parsedId }, long: { id: parsedId } } }
+      { $pull: { short: { id: parsedId }, mcq: { id: parsedId }, long: { id: parsedId } } as any }
     )
 
     console.log('Delete result:', result) // Debugging line
