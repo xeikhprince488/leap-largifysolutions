@@ -14,7 +14,14 @@ import { fetchQuestions } from "@/services/questions"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { X, Search, Shuffle, Plus, Download, Trash2 } from "lucide-react"
 import { toast } from "sonner"
-import type { Question, QuestionConfig } from "@/types/questions"
+import type { Question } from "@/types/questions"
+
+type QuestionConfig = {
+  type: "mcq" | "poetryExplanation" | "excerptExplanation" | "fillInTheBlanks" | "mcqs" | "applicationWriting" | "letterWriting" | "essayWriting"
+  count: number
+  marks: number
+  heading: string
+}
 import { Card, CardContent } from "@/components/ui/card"
 import { HeaderDetailsDialog } from "@/components/header-details-dialog"
 
@@ -25,7 +32,7 @@ export default function ConfigureUrduPaperPage() {
     count: 1,
     marks: 1,
     heading: "",
-  })
+    } as QuestionConfig & { type: "mcq" | "poetryExplanation" | "excerptExplanation" | "fillInTheBlanks" | "mcqs" | "applicationWriting" | "letterWriting" | "essayWriting" })
   const [ignoreQuestions, setIgnoreQuestions] = useState("0")
   const [blankLines, setBlankLines] = useState("0")
   const [dualMedium, setDualMedium] = useState(true)
@@ -243,6 +250,8 @@ export default function ConfigureUrduPaperPage() {
         timeAllowed: details.timeAllowed,
         totalMarks: details.totalMarks,
         sections,
+        topic: "",
+        category: ""
       })
 
       if (success) {
@@ -329,7 +338,7 @@ export default function ConfigureUrduPaperPage() {
                   <Label>Question Type</Label>
                   <Select
                     value={currentSection.type}
-                    onValueChange={(value: string) => setCurrentSection({ ...currentSection, type: value })}
+                    onValueChange={(value: string) => setCurrentSection({ ...currentSection, type: value as "mcq" | "poetryExplanation" | "excerptExplanation" | "fillInTheBlanks" | "mcqs" | "applicationWriting" | "letterWriting" | "essayWriting" })}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select type" />

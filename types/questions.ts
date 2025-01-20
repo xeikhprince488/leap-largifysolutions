@@ -45,6 +45,7 @@ export interface QuestionConfig {
   type: 'mcq' | 'short' | 'long'
   count: number
   marks: number
+  heading: string
 }
 
 export interface PaperConfig {

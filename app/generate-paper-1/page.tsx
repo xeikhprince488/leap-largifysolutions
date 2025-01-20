@@ -61,9 +61,9 @@ export default function GeneratePaperPage() {
                   <div key={question.id} className="p-4 border rounded mb-4">
                     <h2 className="font-bold">{question.english}</h2>
                     <p>{question.urdu}</p>
-                    {question.options && (
+                    {(question as any).options && (
                       <ul>
-                        {question.options.map((option, index) => (
+                        {(question as any).options.map((option: any, index: number) => (
                           <li key={index}>{option.english} / {option.urdu}</li>
                         ))}
                       </ul>

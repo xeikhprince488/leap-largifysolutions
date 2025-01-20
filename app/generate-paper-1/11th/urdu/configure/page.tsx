@@ -21,7 +21,7 @@ import { HeaderDetailsDialog } from "@/components/header-details-dialog"
 export default function ConfigureUrduPaperPage() {
   const [sections, setSections] = useState<QuestionConfig[]>([])
   const [currentSection, setCurrentSection] = useState<QuestionConfig>({
-    type: "mcq",
+    type: "mcq" as "mcq" | "short" | "long",
     count: 1,
     marks: 1,
     heading: "",
@@ -243,6 +243,8 @@ export default function ConfigureUrduPaperPage() {
         timeAllowed: details.timeAllowed,
         totalMarks: details.totalMarks,
         sections,
+        topic: "",
+        category: ""
       })
 
       if (success) {
@@ -329,7 +331,7 @@ export default function ConfigureUrduPaperPage() {
                   <Label>Question Type</Label>
                   <Select
                     value={currentSection.type}
-                    onValueChange={(value: string) => setCurrentSection({ ...currentSection, type: value })}
+                    onValueChange={(value: string) => setCurrentSection({ ...currentSection, type: value as "mcq" | "short" | "long" })}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select type" />

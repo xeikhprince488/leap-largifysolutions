@@ -1,5 +1,15 @@
 import { create } from 'zustand'
-import { Question, QuestionBankState } from '@/types/questions'
+import { Question } from '@/types/questions'
+
+interface QuestionBankState {
+  availableQuestions: Question[];
+  selectedQuestions: Question[];
+  randomQuestions: Question[];
+  showPaper: boolean;
+}
+
+
+
 
 const useQuestionStore = create<QuestionBankState & {
   setAvailableQuestions: (questions: Question[]) => void
@@ -12,10 +22,10 @@ const useQuestionStore = create<QuestionBankState & {
   selectedQuestions: [],
   randomQuestions: [],
   showPaper: false,
-  setAvailableQuestions: (questions) => set({ availableQuestions: questions }),
-  setSelectedQuestions: (questions) => set({ selectedQuestions: questions }),
-  setRandomQuestions: (questions) => set({ randomQuestions: questions }),
-  setShowPaper: (show) => set({ showPaper: show }),
+  setAvailableQuestions: (questions: any) => set({ availableQuestions: questions }),
+  setSelectedQuestions: (questions: any) => set({ selectedQuestions: questions }),
+  setRandomQuestions: (questions: any) => set({ randomQuestions: questions }),
+  setShowPaper: (show: any) => set({ showPaper: show }),
   clearSelections: () => set({ selectedQuestions: [], randomQuestions: [] }),
 }))
 

@@ -2,6 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { MongoClient } from 'mongodb';
 
 const uri = process.env.MONGODB_URI;
+if (!uri) {
+  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+}
 const client = new MongoClient(uri);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

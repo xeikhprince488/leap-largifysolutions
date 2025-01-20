@@ -243,6 +243,8 @@ export default function ConfigureEnglishPaperPage() {
         timeAllowed: details.timeAllowed,
         totalMarks: details.totalMarks,
         sections,
+        topic: "",
+        category: ""
       })
 
       if (success) {
@@ -329,7 +331,7 @@ export default function ConfigureEnglishPaperPage() {
                   <Label>Question Type</Label>
                   <Select
                     value={currentSection.type}
-                    onValueChange={(value: string) => setCurrentSection({ ...currentSection, type: value })}
+                    onValueChange={(value: string) => setCurrentSection({ ...currentSection, type: value as "mcq" | "short" | "long" })}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select type" />

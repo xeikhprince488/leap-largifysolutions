@@ -18,7 +18,7 @@ export default async function handler(req: { method: string; query: { id: any, g
     
     const result = await collection.updateOne(
       { "short.id": parseInt(id) },
-      { $pull: { short: { id: parseInt(id) } } }
+      { $pull: { short: { id: parseInt(id) } as any } }
     )
 
     console.log('Delete result:', result) // Debugging line

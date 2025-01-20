@@ -20,7 +20,7 @@ import { HeaderDetailsDialog } from "@/components/header-details-dialog"
 
 export default function ConfigureUrduPaperPage() {
   const [sections, setSections] = useState<QuestionConfig[]>([])
-  const [currentSection, setCurrentSection] = useState<QuestionConfig>({
+  const [currentSection, setCurrentSection] = useState<Omit<QuestionConfig, 'type'> & { type: string }>({
     type: "mcq",
     count: 1,
     marks: 1,
@@ -50,7 +50,7 @@ export default function ConfigureUrduPaperPage() {
   const handleAddSection = () => {
     const heading = prompt("Enter the heading for this section:")
     if (heading) {
-      setSections([...sections, { ...currentSection, heading }])
+      setSections([...sections, { ...currentSection, heading, type: currentSection.type as "mcq" | "short" | "long" }])
       setCurrentSection({
         type: "mcq",
         count: 1,
@@ -243,6 +243,8 @@ export default function ConfigureUrduPaperPage() {
         timeAllowed: details.timeAllowed,
         totalMarks: details.totalMarks,
         sections,
+        topic: "",
+        category: ""
       })
 
       if (success) {

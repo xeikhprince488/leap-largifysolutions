@@ -242,6 +242,8 @@ export default function ConfigureEnglishPaperPage() {
         day: details.day,
         timeAllowed: details.timeAllowed,
         totalMarks: details.totalMarks,
+        topic: "", // Add missing topic property
+        category: "", // Add missing category property
         sections,
       })
 
@@ -329,7 +331,7 @@ export default function ConfigureEnglishPaperPage() {
                   <Label>Question Type</Label>
                   <Select
                     value={currentSection.type}
-                    onValueChange={(value: string) => setCurrentSection({ ...currentSection, type: value })}
+                    onValueChange={(value: string) => setCurrentSection({ ...currentSection, type: value as "mcq" | "short" | "long" })}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select type" />

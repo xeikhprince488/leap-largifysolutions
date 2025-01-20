@@ -1,11 +1,11 @@
-import jsPDF from "jspdf"
+import jsPDF, { GState } from "jspdf"
 import "jspdf-autotable"
 
 declare module "jspdf" {
   interface jsPDF {
     autoTable: (options: any) => jsPDF
     lastQuestionHeight?: number
-    setR2L: (isRTL: boolean) => void
+    setR2L: (isRTL: boolean) => jsPDF
   }
 }
 import type { Question } from "@/types/questions"
@@ -16,9 +16,11 @@ import axios from "axios"
 function manageStorage() {
   const { papers } = useSavedPapersStore.getState()
   const maxPapers = 5 // Reduce the number of stored papers
-  if (papers.length > maxPapers) {
+  const totalPapers = Object.values(papers).reduce((acc, paperArray) => acc + (paperArray as unknown as SavedPaper[]).length, 0);
+  if (totalPapers > maxPapers) {
     // Sort papers by creation date, oldest first
-    const sortedPapers = [...papers].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+    const sortedPapers = Object.values(papers).flat() as unknown as SavedPaper[];
+    sortedPapers.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
     // Remove oldest papers until we're at or below the limit
     while (sortedPapers.length > maxPapers) {
       const oldestPaper = sortedPapers.shift()
@@ -137,7 +139,7 @@ export async function generatePDF(
 
       // Add watermark with increased opacity (35%)
       doc.saveGraphicsState()
-      doc.setGState(new doc.GState({ opacity: 0.35 }))
+      doc.setGState(new GState({ opacity: 0.35 }))
       doc.addImage(watermarkImage, "JPEG", x, y, watermarkWidth, watermarkHeight)
       doc.restoreGraphicsState()
     }
@@ -331,9 +333,9 @@ export async function generatePDF(
         console.warn("Storage quota exceeded. Attempting to clear more space...")
         // Try to remove more papers
         const { papers } = useSavedPapersStore.getState()
-        if (papers.length > 0) {
-          const oldestPaper = papers.reduce((oldest, current) =>
-            new Date(current.createdAt) < new Date(oldest.createdAt) ? current : oldest,
+        if (Object.keys(papers).length > 0) {
+          const oldestPaper = (Object.values(papers).flat() as unknown as SavedPaper[]).reduce((oldest, current) =>
+            new Date(current.createdAt).getTime() < new Date(oldest.createdAt).getTime() ? current : oldest,
           )
           useSavedPapersStore.getState().removePaper(oldestPaper.id)
           // Try to add the paper again

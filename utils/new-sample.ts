@@ -9,16 +9,37 @@ import useSavedPapersStore from '@/store/saved-papers';
 function manageStorage() {
   const { papers } = useSavedPapersStore.getState();
   const maxPapers = 5; // Reduce the number of stored papers
-  if (papers.length > maxPapers) {
+  const paperList = Object.values(papers).flat();
+  if (paperList.length > maxPapers) {
     // Sort papers by creation date, oldest first
-    const sortedPapers = [...papers].sort((a, b) => 
-      new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    const sortedPapers = Object.values(paperList).sort((a, b) => 
+      new Date(a.createdAt as unknown as string).getTime() - new Date(b.createdAt as unknown as string).getTime()
     );
     // Remove oldest papers until we're at or below the limit
     while (sortedPapers.length > maxPapers) {
       const oldestPaper = sortedPapers.shift();
       if (oldestPaper) {
-        useSavedPapersStore.getState().removePaper(oldestPaper.id);
+        if (oldestPaper) {
+          if (oldestPaper) {
+            if (oldestPaper) {
+              if (oldestPaper) {
+                if (oldestPaper) {
+                  useSavedPapersStore.getState().removePaper(oldestPaper.id);
+                } else {
+                  console.error('No oldest paper found to remove.');
+                }
+              } else {
+                console.error('No oldest paper found to remove.');
+              }
+            } else {
+              console.error('No oldest paper found to remove.');
+            }
+          } else {
+            console.error('No oldest paper found to remove.');
+          }
+        } else {
+          console.error('No oldest paper found to remove.');
+        }
       }
     }
   }
@@ -29,7 +50,9 @@ function checkSpaceForSection(yPos: number, sectionHeight: number): boolean {
 }
 
 
-interface Question {
+interface LocalQuestion {
+  type: string;
+  english(english: any, maxQuestionWidth: number): unknown;
   question: string;
   options: string[];
   answer: string;
@@ -37,7 +60,7 @@ interface Question {
 }
 
 export async function generatePDF(
-  questions: Question[],
+  questions: LocalQuestion[],
   metadata: {
     grade: string;
     subject: string;
@@ -183,7 +206,7 @@ export async function generatePDF(
 
       // Handle question text with wrapping
       const maxQuestionWidth = 70; // Adjust based on your needs
-      const questionLines = wrapText(question.english, maxQuestionWidth);
+      const questionLines = wrapText(question.english(question.english, maxQuestionWidth) as string, maxQuestionWidth);
 
       // Print first line of question
       doc.text(questionLines[0], 20, yPos);
@@ -202,7 +225,7 @@ export async function generatePDF(
 
         // Draw options on the same line with minimal spacing
         question.options.forEach((opt, i) => {
-          const optionText = `${i + 1}) ${opt.english}`;
+          const optionText = `${i + 1}) ${opt}`;
           const xPos = optionsStartX + (i * 25); // Reduced spacing between options
 
           // Check if option goes beyond page width
@@ -294,8 +317,10 @@ export async function generatePDF(
       createdAt: new Date().toISOString(),
       metadata: {
         ...metadata,
-        questionTypes: Array.from(new Set(questions.map((q) => q.type))),
+        questionTypes: Array.from(new Set(questions.map((q) => q.type))) as ("mcq" | "short" | "long")[],
         totalQuestions: questions.length,
+        topic: '',
+        category: ''
       },
     };
 
@@ -307,11 +332,12 @@ export async function generatePDF(
         console.warn('Storage quota exceeded. Attempting to clear more space...');
         // Try to remove more papers
         const { papers } = useSavedPapersStore.getState();
-        if (papers.length > 0) {
-          const oldestPaper = papers.reduce((oldest, current) =>
-            new Date(current.createdAt) < new Date(oldest.createdAt) ? current : oldest
-          );
-          useSavedPapersStore.getState().removePaper(oldestPaper.id);
+        if (Object.keys(papers).length > 0) {
+          const paperList: SavedPaper[] = Object.values(papers).flat() as unknown as SavedPaper[];
+          const oldestPaper = paperList.reduce<SavedPaper | null>((oldest, current) =>
+            !oldest || new Date(current.createdAt).getTime() < new Date(oldest.createdAt).getTime() ? current : oldest
+          , null);
+          // useSavedPapersStore.getState().removePaper(oldestPaper.id);
           // Try to add the paper again
           try {
             useSavedPapersStore.getState().addPaper(savedPaper);

@@ -51,6 +51,15 @@ const useSavedPapersStore = create<SavedPapersStore>()(
         
         return { papers: newPapers }
       }),
+      removePaper: (id) => set((state) => {
+        const newPapers = { ...state.papers }
+        for (const grade in newPapers) {
+          for (const subject in newPapers[grade]) {
+            newPapers[grade][subject] = newPapers[grade][subject].filter((paper: SavedPaper) => paper.id !== id)
+          }
+        }
+        return { papers: newPapers }
+      }),
       getPapersByGrade: (grade) => {
         const state = get()
         if (!state.papers[grade]) return []
