@@ -106,11 +106,15 @@ export default function ViewQuestionsPage() {
     if (!grade || !subject || !chapter) return
 
     try {
+      console.log('Delete request for:', { questionId, grade, subject, chapter, type }) // Debugging line
+
       const response = await fetch(`/api/questions/delete?id=${questionId}&grade=${grade}&subject=${subject}`, {
         method: 'DELETE',
       })
 
       if (!response.ok) {
+        const errorText = await response.text()
+        console.error('Error response text:', errorText) // Debugging line
         throw new Error('Failed to delete question')
       }
 

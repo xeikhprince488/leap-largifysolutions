@@ -21,6 +21,8 @@ export default function ChangePasswordPage() {
     setLoading(true)
 
     try {
+      console.log('Form Data:', formData)
+
       if (formData.newPassword !== formData.confirmPassword) {
         throw new Error('Passwords do not match')
       }
@@ -34,6 +36,7 @@ export default function ChangePasswordPage() {
         confirmPassword: ''
       })
     } catch (error) {
+      console.error('Error changing password:', error)
       toast.error(error instanceof Error ? error.message : 'Failed to change password')
     } finally {
       setLoading(false)
