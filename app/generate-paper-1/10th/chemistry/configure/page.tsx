@@ -24,6 +24,7 @@ import { toast } from "sonner"
 import { LongQuestion, MCQQuestion, Question, QuestionConfig, ShortQuestion } from "@/types/questions"
 import { Card, CardContent } from "@/components/ui/card"
 import { HeaderDetailsDialog } from "@/components/header-details-dialog"
+import React from "react"
 
 export default function ConfigureQuestionsPage() {
   const [sections, setSections] = useState<QuestionConfig[]>([])
