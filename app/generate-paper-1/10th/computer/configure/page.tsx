@@ -24,6 +24,7 @@ import { toast } from "sonner"
 import { LongQuestion, MCQQuestion, Question, QuestionConfig, ShortQuestion } from "@/types/questions"
 import { Card, CardContent } from "@/components/ui/card"
 import { HeaderDetailsDialog } from "@/components/header-details-dialog"
+import React from "react"
 
 export default function ConfigureQuestionsPage() {
   const [sections, setSections] = useState<QuestionConfig[]>([])
@@ -63,15 +64,13 @@ export default function ConfigureQuestionsPage() {
     }
   }, [])
 
-  const totalMarks = sections.reduce((sum, section) => sum + (section.count * section.marks), 0)
-
   useEffect(() => {
-    setHeaderDetails((prevDetails) => ({
-      ...prevDetails,
-      totalMarks: totalMarks.toString(),
-      subject: 'computer' // Set subject here
-    }));
-  }, [totalMarks]);
+    // Update totalMarks whenever sections change
+    const totalMarks = sections.reduce((sum, section) => sum + (section.count * section.marks), 0);
+    setHeaderDetails({...headerDetails, totalMarks: totalMarks.toString()})
+  }, [sections]);
+
+  const totalMarks = sections.reduce((sum, section) => sum + (section.count * section.marks), 0)
 
   const handleAddSection = () => {
     const heading = prompt('Enter the heading for this section:')
@@ -245,6 +244,7 @@ export default function ConfigureQuestionsPage() {
     console.log('Submitting header details:', details)
     try {
       setIsGeneratingPDF(true)
+      setHeaderDetails(details)
 
       const success = await generatePDF(selectedQuestions, {
         grade: details.class,
@@ -349,8 +349,6 @@ export default function ConfigureQuestionsPage() {
           onOpenChange={setShowHeaderDialog}
           onSubmit={handleHeaderDetailsSubmit}
           loading={isGeneratingPDF}
-          headerDetails={headerDetails}
-          setHeaderDetails={setHeaderDetails}
         />
       </DashboardLayout>
     )
@@ -361,7 +359,7 @@ export default function ConfigureQuestionsPage() {
       <div className="p-8">
         <div className="max-w-6xl mx-auto">
           <div className="bg-blue-500 text-white p-4 rounded-t-lg flex items-center justify-between">
-            <h1 className="text-lg font-medium">Select Your Questions Here... 10TH - computer</h1>
+            <h1 className="text-lg font-medium">Select Your Questions Here... 10th - computer</h1>
             <X className="h-5 w-5 cursor-pointer" onClick={handleClose} />
           </div>
 
@@ -505,8 +503,6 @@ export default function ConfigureQuestionsPage() {
         onOpenChange={setShowHeaderDialog}
         onSubmit={handleHeaderDetailsSubmit}
         loading={isGeneratingPDF}
-        headerDetails={headerDetails}
-        setHeaderDetails={setHeaderDetails}
       />
     </DashboardLayout>
   )
