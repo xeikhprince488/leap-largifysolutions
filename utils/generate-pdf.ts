@@ -162,7 +162,7 @@ function renderMCQOptions(doc: jsPDF, options: any[], startY: number, leftMargin
     // Calculate position
     const column = index % optionsPerRow
     if (column === 0 && index > 0) {
-      currentY += maxHeightInRow + 5 // Move to next row with spacing
+      currentY += maxHeightInRow + 3 // Reduced spacing between rows
       maxHeightInRow = 0
     }
 
@@ -333,7 +333,7 @@ export async function generatePDF(
           // MCQs
           const leftMargin = 15 // Increased left margin for the MCQ
 
-          yPos += 5 // Add consistent spacing before each question
+          yPos += 3 // Reduced spacing before each question
           doc.setFont("helvetica", "normal")
 
           // Question number
@@ -351,8 +351,8 @@ export async function generatePDF(
 
           // Render MCQ options with new layout system
           if (Array.isArray(question.options)) {
-            yPos = renderMCQOptions(doc, question.options, yPos + 5, leftMargin + 5, isRTL)
-            yPos += 5 // Add some spacing after options
+            yPos = renderMCQOptions(doc, question.options, yPos + 2, leftMargin + 5, isRTL) // Reduced spacing after options
+            yPos += 3 // Reduced spacing after options
           }
         } else {
           // Handle non-MCQ questions as before
