@@ -20,19 +20,20 @@ export default function LoginPage() {
 
   // Local credentials for authentication
   const LOCAL_CREDENTIALS = [
-    { username: "user1", password: "password1" },
-    { username: "user2", password: "password2" },
-    { username: "user3", password: "password3" },
-    { username: "user4", password: "password4" },
-    { username: "user5", password: "password5" },
-    { username: "user6", password: "password6" },
-    { username: "user7", password: "password7" },
-    { username: "user8", password: "password8" },
-    { username: "user9", password: "password9" },
-    { username: "user10", password: "password10" },
-    { username: "user11", password: "password11" },
-    { username: "user12", password: "password12" },
-    { username: "user13", password: "password13" },
+    { username: "alpha_user", password: "alphaPass123" },
+    { username: "beta_user", password: "betaSecure456" },
+    { username: "gamma_user", password: "gammaCode789" },
+    { username: "delta_user", password: "deltaPass321" },
+    { username: "epsilon_user", password: "epsilonKey654" },
+    { username: "zeta_user", password: "zetaSafe987" },
+    { username: "eta_user", password: "etaStrong111" },
+    { username: "theta_user", password: "thetaVault222" },
+    { username: "iota_user", password: "iotaSecure333" },
+    { username: "kappa_user", password: "kappaCode444" },
+    { username: "lambda_user", password: "lambdaPass555" },
+    { username: "mu_user", password: "muKey666" },
+    { username: "nu_user", password: "nuSafe777" },
+    { username: "developer", password: "ahmad" }
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
