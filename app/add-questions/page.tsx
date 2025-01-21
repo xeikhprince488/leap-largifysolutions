@@ -196,6 +196,7 @@ export default function AddQuestionsPage() {
         "physics",
         "urdu",
         "pakstudy",
+        'tarjumaquran',
       ]
 
       // Add statistics for 11th and 12th
@@ -293,7 +294,8 @@ export default function AddQuestionsPage() {
                           <SelectItem value="math">Mathematics</SelectItem>
                           <SelectItem value="physics">Physics</SelectItem>
                           <SelectItem value="urdu">Urdu</SelectItem>
-                          <SelectItem value="pakstudy">Pakistan Studies</SelectItem>
+                          <SelectItem value="tarjumaquran">Tarjuma Tul Quran</SelectItem>
+                          {/* <SelectItem value="pakstudy">Pakistan Studies</SelectItem> */}
                         </>
                       )}
                       {grade === "10th" && (
@@ -302,11 +304,12 @@ export default function AddQuestionsPage() {
                           <SelectItem value="chemistry">Chemistry</SelectItem>
                           <SelectItem value="computer">Computer Science</SelectItem>
                           <SelectItem value="english">English</SelectItem>
-                          <SelectItem value="islamyat">Islamiyat</SelectItem>
+                          {/* <SelectItem value="islamyat">Islamiyat</SelectItem> */}
                           <SelectItem value="math">Mathematics</SelectItem>
                           <SelectItem value="physics">Physics</SelectItem>
                           <SelectItem value="urdu">Urdu</SelectItem>
                           <SelectItem value="pakstudy">Pakistan Studies</SelectItem>
+                          <SelectItem value="tarjumaquran">Tarjuma Tul Quran</SelectItem>
                         </>
                       )}
                       {grade === "11th" && (
@@ -319,8 +322,9 @@ export default function AddQuestionsPage() {
                           <SelectItem value="math">Mathematics</SelectItem>
                           <SelectItem value="physics">Physics</SelectItem>
                           <SelectItem value="urdu">Urdu</SelectItem>
-                          <SelectItem value="statistics">Statistics</SelectItem>
-                          <SelectItem value="pakstudy">Pakistan Studies</SelectItem>
+                          {/* <SelectItem value="statistics">Statistics</SelectItem> */}
+                          <SelectItem value="tarjumaquran">Tarjuma Tul Quran</SelectItem>
+                          {/* <SelectItem value="pakstudy">Pakistan Studies</SelectItem> */}
                         </>
                       )}
                       {grade === "12th" && (
@@ -329,12 +333,13 @@ export default function AddQuestionsPage() {
                           <SelectItem value="chemistry">Chemistry</SelectItem>
                           <SelectItem value="computer">Computer Science</SelectItem>
                           <SelectItem value="english">English</SelectItem>
-                          <SelectItem value="islamyat">Islamiyat</SelectItem>
+                          {/* <SelectItem value="islamyat">Islamiyat</SelectItem> */}
                           <SelectItem value="math">Mathematics</SelectItem>
                           <SelectItem value="physics">Physics</SelectItem>
                           <SelectItem value="urdu">Urdu</SelectItem>
-                          <SelectItem value="statistics">Statistics</SelectItem>
+                          {/* <SelectItem value="statistics">Statistics</SelectItem> */}
                           <SelectItem value="pakstudy">Pakistan Studies</SelectItem>
+                          <SelectItem value="tarjumaquran">Tarjuma Tul Quran</SelectItem>
                         </>
                       )}
                     </SelectContent>

@@ -43,6 +43,17 @@ export default function ConfigureQuestionsPage() {
   const [showHeaderDialog, setShowHeaderDialog] = useState(false)
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const [selectedChapters, setSelectedChapters] = useState<string[]>([])
+  const [headerDetails, setHeaderDetails] = useState({
+    class: '',
+    paperNo: '',
+    date: '',
+    timeAllowed: '',
+    subject: 'math',
+    totalMarks: '',
+    day: '',
+    syllabus: ''
+  });
+
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -51,6 +62,15 @@ export default function ConfigureQuestionsPage() {
       setSelectedChapters(chaptersParam.split(','))
     }
   }, [])
+
+  useEffect(() => {
+    setHeaderDetails((prevDetails) => ({
+      ...prevDetails,
+      totalMarks: totalMarks.toString(),
+      subject: 'math' // Set subject to math
+    }));
+  }, [totalMarks]);
+
 
   const totalMarks = sections.reduce((sum, section) => sum + (section.count * section.marks), 0)
 
@@ -226,6 +246,7 @@ export default function ConfigureQuestionsPage() {
     console.log('Submitting header details:', details)
     try {
       setIsGeneratingPDF(true)
+      setHeaderDetails(details); // Update headerDetails state
 
       const success = await generatePDF(selectedQuestions, {
         grade: details.class,
@@ -330,6 +351,7 @@ export default function ConfigureQuestionsPage() {
           onOpenChange={setShowHeaderDialog}
           onSubmit={handleHeaderDetailsSubmit}
           loading={isGeneratingPDF}
+          headerDetails={headerDetails} // Pass headerDetails to HeaderDetailsDialog
         />
       </DashboardLayout>
     )
@@ -484,8 +506,8 @@ export default function ConfigureQuestionsPage() {
         onOpenChange={setShowHeaderDialog}
         onSubmit={handleHeaderDetailsSubmit}
         loading={isGeneratingPDF}
+        headerDetails={headerDetails} // Pass headerDetails to HeaderDetailsDialog
       />
     </DashboardLayout>
   )
 }
-

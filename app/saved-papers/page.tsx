@@ -14,6 +14,7 @@ export default function SavedPapersPage() {
   const [selectedSubject, setSelectedSubject] = useState<string>('');
   const [selectedChapter, setSelectedChapter] = useState<string>(''); // Add state for chapter
   const [selectedTopic, setSelectedTopic] = useState<string>(''); // Add state for topic
+  const [selectedCategory, setSelectedCategory] = useState<string>(''); // Add state for category
   const [mongoPapers, setMongoPapers] = useState<SavedPaper[]>([]);
 
   useEffect(() => {
@@ -23,8 +24,12 @@ export default function SavedPapersPage() {
   const fetchMongoPapers = async () => {
     try {
       const response = await axios.get('/api/get-papers');
-      console.log('Fetched papers:', response.data); // Debugging statement
-      setMongoPapers(response.data);
+      if (response.data && response.data.length > 0) {
+        console.log('Fetched papers:', response.data); // Debugging statement
+        setMongoPapers(response.data);
+      } else {
+        console.warn('No papers found in the response');
+      }
     } catch (error) {
       console.error('Error fetching papers from MongoDB:', error);
     }
@@ -57,20 +62,20 @@ export default function SavedPapersPage() {
   const subjects = selectedGrade ? Array.from(new Set(mongoPapers.filter(paper => paper.metadata?.grade === selectedGrade).map(paper => paper.metadata?.subject).filter(Boolean))) : [];
   const chapters = selectedGrade && selectedSubject ? Array.from(new Set(mongoPapers.filter(paper => paper.metadata?.grade === selectedGrade && paper.metadata?.subject === selectedSubject).flatMap(paper => paper.metadata?.chapter).filter(Boolean))) : [];
   const topics = selectedGrade && selectedSubject && selectedChapter ? Array.from(new Set(mongoPapers.filter(paper => paper.metadata?.grade === selectedGrade && paper.metadata?.subject === selectedSubject && paper.metadata?.chapter.includes(selectedChapter)).map(paper => paper.metadata?.topic).filter(Boolean))) : [];
-  const papers = selectedGrade && selectedSubject && selectedChapter && selectedTopic
-    ? mongoPapers.filter(paper => paper.metadata?.grade === selectedGrade && paper.metadata?.subject === selectedSubject && paper.metadata?.chapter.includes(selectedChapter) && paper.metadata?.topic === selectedTopic)
-    : selectedGrade && selectedSubject && selectedChapter
-    ? mongoPapers.filter(paper => paper.metadata?.grade === selectedGrade && paper.metadata?.subject === selectedSubject && paper.metadata?.chapter.includes(selectedChapter))
-    : selectedGrade && selectedSubject
-    ? mongoPapers.filter(paper => paper.metadata?.grade === selectedGrade && paper.metadata?.subject === selectedSubject)
-    : selectedGrade
-    ? mongoPapers.filter(paper => paper.metadata?.grade === selectedGrade)
-    : mongoPapers;
+  const categories = Array.from(new Set(mongoPapers.map(paper => paper.metadata?.category).filter(Boolean)));
+  const papers = mongoPapers.filter(paper => 
+    (!selectedGrade || paper.metadata?.grade === selectedGrade) &&
+    (!selectedSubject || paper.metadata?.subject === selectedSubject) &&
+    (!selectedChapter || paper.metadata?.chapter.includes(selectedChapter)) &&
+    (!selectedTopic || paper.metadata?.topic === selectedTopic) &&
+    (!selectedCategory || paper.metadata?.category === selectedCategory)
+  );
 
   console.log('Selected Grade:', selectedGrade); // Debugging statement
   console.log('Selected Subject:', selectedSubject); // Debugging statement
   console.log('Selected Chapter:', selectedChapter); // Debugging statement
   console.log('Selected Topic:', selectedTopic); // Debugging statement
+  console.log('Selected Category:', selectedCategory); // Debugging statement
   console.log('Filtered Papers:', papers); // Debugging statement
 
   const groupedPapers = papers.reduce((acc, paper) => {
@@ -157,6 +162,21 @@ export default function SavedPapersPage() {
                 </Select>
               </div>
             )}
+
+            <div className="w-48">
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           {Object.keys(groupedPapers).map((category) => (

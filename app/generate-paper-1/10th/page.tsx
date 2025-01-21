@@ -21,7 +21,7 @@ const subjects = [
     href: "/generate-paper-1/10th/physics"
   },
   {
-    title: "math",
+    title: "Math",
     grade: "10TH",
     imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/10th/math"
@@ -29,7 +29,7 @@ const subjects = [
   {
     title: "English",
     grade: "10TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
+    // imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/10th/english"
   },
 
@@ -38,6 +38,19 @@ const subjects = [
     grade: "10TH",
     imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/10th/islamyat"
+  },
+  {
+    title: "Pakistan Studies",
+    grade: "10TH",
+    imageUrl: "/placeholder.svg?height=100&width=80",
+    href: "/generate-paper-1/10th/pakstudy"
+  },
+  {
+    title: "Tarjuma Tul Quran",
+    // titleUrdu: "اسلامیات لازمی",
+    grade: "9th",
+    imageUrl: "/placeholder.svg?height=100&width=80",
+    href: "/generate-paper-1/10th/tarjumaquran"
   },
   {
     title: "Urdu",

@@ -5,78 +5,71 @@ const subjects = [
   {
     title: "Biology",
     grade: "9TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/9th/biology"
   },
   {
     title: "Computer",
     grade: "2020",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/9th/computer"
   },
   {
     title: "Chemistry",
     grade: "9TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/9th/chemistry"
   },
   {
     title: "Physics",
     grade: "9TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/9th/physics"
   },
   {
-    title: "math",
+    title: "Math",
     grade: "9TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/9th/math"
   },
   {
     title: "English",
     grade: "9TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/9th/english"
   },
   {
     title: "General Science",
     grade: "9TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/9th/science"
   },
   {
     title: "Urdu",
     titleUrdu: "اردو لازمی",
     grade: "9TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/9th/urdu"
   },
   {
     title: "Islamiat",
     titleUrdu: "اسلامیات لازمی",
     grade: "SNC-2022",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/9th/islamyat"
+  },
+  {
+    title: "Tarjuma Tul Quran",
+    grade: "9th",
+    href: "/generate-paper-1/9th/tarjumaquran"
   },
   // {
   //   title: "Ethics",
   //   titleUrdu: "اخلاقیات",
   //   grade: "PTB",
-  //   imageUrl: "/placeholder.svg?height=100&width=80",
   //   href: "#"
   // },
   // {
   //   title: "History",
   //   titleUrdu: "تاریخ",
   //   grade: "9TH",
-  //   imageUrl: "/placeholder.svg?height=100&width=80",
   //   href: "#"
   // },
   // {
   //   title: "Geography",
   //   titleUrdu: "جغرافیہ",
   //   grade: "9TH",
-  //   imageUrl: "/placeholder.svg?height=100&width=80",
   //   href: "#"
   // }
 ]

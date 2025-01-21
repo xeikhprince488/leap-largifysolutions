@@ -94,7 +94,7 @@ export default function PakistanStudiesChaptersPage() {
   }
 
   const handleNext = () => {
-    router.push('/generate-paper-1/12th/pakistan-studies/configure')
+    router.push('/generate-paper-1/12th/pakstudy/configure')
   }
 
   return (

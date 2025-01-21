@@ -16,11 +16,14 @@ import axios from "axios"
 function manageStorage() {
   const { papers } = useSavedPapersStore.getState()
   const maxPapers = 5 // Reduce the number of stored papers
-  const totalPapers = Object.values(papers).reduce((acc, paperArray) => acc + (paperArray as unknown as SavedPaper[]).length, 0);
+  const totalPapers = Object.values(papers).reduce(
+    (acc, paperArray) => acc + (paperArray as unknown as SavedPaper[]).length,
+    0,
+  )
   if (totalPapers > maxPapers) {
     // Sort papers by creation date, oldest first
-    const sortedPapers = Object.values(papers).flat() as unknown as SavedPaper[];
-    sortedPapers.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    const sortedPapers = Object.values(papers).flat() as unknown as SavedPaper[]
+    sortedPapers.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
     // Remove oldest papers until we're at or below the limit
     while (sortedPapers.length > maxPapers) {
       const oldestPaper = sortedPapers.shift()
@@ -301,7 +304,7 @@ export async function generatePDF(
           // Handle non-MCQ questions as before
           yPos += 6
           doc.setFont("helvetica", "normal")
-          doc.text(`${index + 1}. ${question.english || ''}`, 15, yPos) // Add fallback for undefined question text
+          doc.text(`${index + 1}. ${question.english || ""}`, 15, yPos) // Add fallback for undefined question text
         }
       })
     })
@@ -328,6 +331,8 @@ export async function generatePDF(
       manageStorage() // Call manageStorage before attempting to add the new paper
       useSavedPapersStore.getState().addPaper(savedPaper)
       await savePaperToMongoDB(savedPaper) // Save paper to MongoDB
+      await saveDownloadedPaperToMongoDB(savedPaper) // Save downloaded paper to MongoDB
+      doc.save(fileName)
     } catch (storageError) {
       if (storageError instanceof DOMException && storageError.name === "QuotaExceededError") {
         console.warn("Storage quota exceeded. Attempting to clear more space...")
@@ -341,6 +346,9 @@ export async function generatePDF(
           // Try to add the paper again
           try {
             useSavedPapersStore.getState().addPaper(savedPaper)
+            await savePaperToMongoDB(savedPaper) // Save paper to MongoDB
+            await saveDownloadedPaperToMongoDB(savedPaper) // Save downloaded paper to MongoDB
+            doc.save(fileName)
           } catch (retryError) {
             console.error("Failed to save paper even after clearing space:", retryError)
             // Optionally, you can show a user-friendly message here
@@ -353,11 +361,6 @@ export async function generatePDF(
         throw storageError // Re-throw if it's not a QuotaExceededError
       }
     }
-
-    doc.save(fileName)
-
-    // Save the downloaded paper to MongoDB
-    await saveDownloadedPaperToMongoDB(savedPaper)
 
     return true
   } catch (error) {

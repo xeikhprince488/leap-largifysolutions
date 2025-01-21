@@ -52,6 +52,17 @@ export default function ConfigureQuestionsPage() {
     }
   }, [])
 
+  useEffect(() => {
+    if (showPaper) {
+      console.log("Showing paper, updating selected questions")
+      setSelectedQuestions((prevQuestions) => [...prevQuestions])
+    }
+  }, [showPaper])
+
+  useEffect(() => {
+    console.log('showHeaderDialog changed:', showHeaderDialog)
+  }, [showHeaderDialog])
+
   const totalMarks = sections.reduce((sum, section) => sum + (section.count * section.marks), 0)
 
   const handleAddSection = () => {
@@ -209,8 +220,17 @@ export default function ConfigureQuestionsPage() {
       return
     }
 
-    console.log('Opening header dialog')
-    setShowHeaderDialog(true)
+    // Force a re-render of the paper before opening the dialog
+    setSelectedQuestions(prevQuestions => {
+      console.log('Updating selected questions')
+      return [...prevQuestions]
+    })
+
+    // Delay opening the dialog slightly to ensure state update has occurred
+    setTimeout(() => {
+      console.log('Opening header dialog')
+      setShowHeaderDialog(true)
+    }, 100)
   }
 
   const handleHeaderDetailsSubmit = async (details: {
@@ -227,7 +247,10 @@ export default function ConfigureQuestionsPage() {
     try {
       setIsGeneratingPDF(true)
 
-      const success = await generatePDF(selectedQuestions, {
+      // Ensure selectedQuestions is up-to-date
+      const currentSelectedQuestions = [...selectedQuestions]
+
+      const success = await generatePDF(currentSelectedQuestions, {
         grade: details.class,
         subject: details.subject,
         chapter: [details.syllabus],
@@ -238,18 +261,18 @@ export default function ConfigureQuestionsPage() {
         totalMarks: details.totalMarks,
         topic: "",
         category: "",
-        sections // Pass sections to generatePDF
+        sections
       })
 
       if (success) {
         toast.success('Paper downloaded and saved successfully')
         setShowHeaderDialog(false)
       } else {
-        toast.error('Failed to generate PDF')
+        throw new Error('PDF generation failed')
       }
     } catch (error) {
       console.error('Error generating PDF:', error)
-      toast.error('Failed to generate PDF')
+      toast.error('Failed to generate PDF. Please try again.')
     } finally {
       setIsGeneratingPDF(false)
     }
@@ -488,4 +511,3 @@ export default function ConfigureQuestionsPage() {
     </DashboardLayout>
   )
 }
-

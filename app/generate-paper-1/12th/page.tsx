@@ -21,7 +21,7 @@ const subjects = [
     href: "/generate-paper-1/12th/physics"
   },
   {
-    title: "math",
+    title: "Math",
     grade: "12th",
     imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/12th/math"
@@ -47,12 +47,19 @@ const subjects = [
     href: "/generate-paper-1/12th/urdu"
   },
   {
-    title: "islamyat",
-    titleUrdu: "اسلامیات",
+    title: "Pak Study",
+    // titleUrdu: "اسلامیات",
     grade: "12th",
     imageUrl: "/placeholder.svg?height=100&width=80",
-    href: "/generate-paper-1/12th/urdu"
-  }
+    href: "/generate-paper-1/12th/pakstudy"
+  },
+  {
+    title: "Tarjuma Tul Quran",
+    // titleUrdu: "اسلامیات لازمی",
+    grade: "9th",
+    imageUrl: "/placeholder.svg?height=100&width=80",
+    href: "/generate-paper-1/12th/tarjumaquran"
+  },
 ]
 
 export default function TwelfthGradeSubjectsPage() {

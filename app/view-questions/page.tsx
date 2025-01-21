@@ -36,6 +36,21 @@ interface Questions {
   long: QuestionData[]
 }
 
+const questionTypes = {
+  english: {
+    "9th": ["mcq", "short", "long", "fillInTheBlanks", "correctSpelling", "vocabulary", "grammar", "translation", "poemSummary", "essayWriting", "paragraphWriting", "directIndirect", "sentenceUsage", "urduToEnglish"],
+    "10th": ["mcq", "short", "long", "fillInTheBlanks", "correctSpelling", "vocabulary", "grammar", "shortQuestions", "translation", "poemSummary", "essayWriting", "paragraphWriting", "directIndirect", "sentenceUsage", "urduToEnglish"],
+    "11th": ["mcq", "short", "long", "synonyms", "sentenceCompletion", "verbForms", "shortQuestions", "letterWriting", "storyWriting", "contextualExplanation", "punctuation", "sentencePair", "translation", "essayWriting"],
+    "12th": ["mcq", "short", "long", "mcqs", "bookII", "novel", "idiomsPhrasalVerbs", "translation", "essayWriting"]
+  },
+  urdu: {
+    "9th": ["mcq", "short", "long", "poetryExplanation", "excerptExplanation", "fillInTheBlanks", "mcqs", "applicationWriting", "letterWriting", "essayWriting"],
+    "10th": ["mcq", "short", "long", "poetryExplanation", "excerptExplanation", "fillInTheBlanks", "mcqs", "applicationWriting", "letterWriting", "essayWriting"],
+    "11th": ["mcq", "short", "long", "poetryExplanation", "excerptExplanation", "fillInTheBlanks", "mcqs", "applicationWriting", "letterWriting", "essayWriting"],
+    "12th": ["mcq", "short", "long", "poetryExplanation", "excerptExplanation", "fillInTheBlanks", "mcqs", "applicationWriting", "letterWriting", "essayWriting"]
+  }
+}
+
 export default function ViewQuestionsPage() {
   const [grade, setGrade] = useState('')
   const [subject, setSubject] = useState('')
@@ -45,6 +60,7 @@ export default function ViewQuestionsPage() {
   
   const [availableSubjects, setAvailableSubjects] = useState<string[]>([])
   const [availableChapters, setAvailableChapters] = useState<string[]>([])
+  const [language, setLanguage] = useState<"english" | "urdu">("english")
 
   useEffect(() => {
     if (grade) {
@@ -145,7 +161,7 @@ export default function ViewQuestionsPage() {
               <CardTitle>Filter Questions</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="space-y-2">
                   <Label>Grade</Label>
                   <Select value={grade} onValueChange={setGrade}>
@@ -188,6 +204,19 @@ export default function ViewQuestionsPage() {
                     </SelectContent>
                   </Select>
                 </div>
+
+                <div className="space-y-2">
+                  <Label>Language</Label>
+                  <Select value={language} onValueChange={setLanguage}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select language" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="english">English</SelectItem>
+                      <SelectItem value="urdu">Urdu</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -199,58 +228,28 @@ export default function ViewQuestionsPage() {
           ) : grade && subject && chapter ? (
             <Tabs defaultValue="mcq" className="space-y-4">
               <TabsList>
-                <TabsTrigger value="mcq">
-                  MCQs ({questions.mcq?.length ?? 0})
-                </TabsTrigger>
-                <TabsTrigger value="short">
-                  Short Questions ({questions.short?.length ?? 0})
-                </TabsTrigger>
-                <TabsTrigger value="long">
-                  Long Questions ({questions.long?.length ?? 0})
-                </TabsTrigger>
+                {questionTypes[language][grade].map((type) => (
+                  <TabsTrigger key={type} value={type}>
+                    {type.charAt(0).toUpperCase() + type.slice(1)} ({questions[type]?.length ?? 0})
+                  </TabsTrigger>
+                ))}
               </TabsList>
-              <TabsContent value="mcq" className="space-y-4">
-                {questions.mcq && questions.mcq.length > 0 ? (
-                  questions.mcq.map((question) => (
-                    <MCQQuestion
-                      key={question.id}
-                      question={question}
-                      onDelete={(id) => handleDelete(id, 'mcq')}
-                      type="mcq"
-                    />
-                  ))
-                ) : (
-                  <p className="text-center text-muted-foreground py-8">No MCQs found for this chapter</p>
-                )}
-              </TabsContent>
-              <TabsContent value="short" className="space-y-4">
-                {questions.short && questions.short.length > 0 ? (
-                  questions.short.map((question) => (
-                    <ShortQuestion
-                      key={question.id}
-                      question={question}
-                      onDelete={(id) => handleDelete(id, 'short')}
-                      type="short"
-                    />
-                  ))
-                ) : (
-                  <p className="text-center text-muted-foreground py-8">No short questions found for this chapter</p>
-                )}
-              </TabsContent>
-              <TabsContent value="long" className="space-y-4">
-                {questions.long && questions.long.length > 0 ? (
-                  questions.long.map((question) => (
-                    <LongQuestion
-                      key={question.id}
-                      question={question}
-                      onDelete={(id) => handleDelete(id, 'long')}
-                      type="long"
-                    />
-                  ))
-                ) : (
-                  <p className="text-center text-muted-foreground py-8">No long questions found for this chapter</p>
-                )}
-              </TabsContent>
+              {questionTypes[language][grade].map((type) => (
+                <TabsContent key={type} value={type} className="space-y-4">
+                  {questions[type] && questions[type].length > 0 ? (
+                    questions[type].map((question) => (
+                      <MCQQuestion
+                        key={question.id}
+                        question={question}
+                        onDelete={(id) => handleDelete(id, type)}
+                        type={type}
+                      />
+                    ))
+                  ) : (
+                    <p className="text-center text-muted-foreground py-8">No {type} questions found for this chapter</p>
+                  )}
+                </TabsContent>
+              ))}
             </Tabs>
           ) : (
             <div className="text-center text-muted-foreground py-8">

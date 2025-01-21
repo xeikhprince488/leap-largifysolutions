@@ -39,11 +39,21 @@ export default function ConfigureEnglishPaperPage() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-    const chaptersParam = params.get('chapters')
+    const chaptersParam = params.get("chapters")
     if (chaptersParam) {
-      setSelectedChapters(chaptersParam.split(','))
+      setSelectedChapters(chaptersParam.split(","))
     }
   }, [])
+
+  useEffect(() => {
+    if (showPaper) {
+      setSelectedQuestions((prevQuestions) => [...prevQuestions])
+    }
+  }, [showPaper])
+
+  useEffect(() => {
+    console.log("showHeaderDialog changed:", showHeaderDialog)
+  }, [showHeaderDialog])
 
   const totalMarks = sections.reduce((sum, section) => sum + section.count * section.marks, 0)
 
@@ -199,7 +209,7 @@ export default function ConfigureEnglishPaperPage() {
   }
 
   const handleDownloadClick = () => {
-    console.log("Download button clicked") // Add this line for debugging
+    console.log("Download button clicked")
     if (selectedQuestions.length === 0) {
       toast.error("No questions selected")
       return
@@ -215,8 +225,17 @@ export default function ConfigureEnglishPaperPage() {
       return
     }
 
-    console.log("Opening header dialog") // Add this line for debugging
-    setShowHeaderDialog(true)
+    // Force a re-render of the paper before opening the dialog
+    setSelectedQuestions((prevQuestions) => {
+      console.log("Updating selected questions")
+      return [...prevQuestions]
+    })
+
+    // Delay opening the dialog slightly to ensure state update has occurred
+    setTimeout(() => {
+      console.log("Opening header dialog")
+      setShowHeaderDialog(true)
+    }, 100)
   }
 
   const handleHeaderDetailsSubmit = async (details: {
@@ -229,11 +248,14 @@ export default function ConfigureEnglishPaperPage() {
     day: string
     syllabus: string
   }) => {
-    console.log("Submitting header details:", details) // Add this line for debugging
+    console.log("Submitting header details:", details)
     try {
       setIsGeneratingPDF(true)
 
-      const success = await generatePDF(selectedQuestions, {
+      // Ensure selectedQuestions is up-to-date
+      const currentSelectedQuestions = [...selectedQuestions]
+
+      const success = await generatePDF(currentSelectedQuestions, {
         grade: details.class,
         subject: "English",
         chapter: [details.syllabus],
@@ -244,18 +266,18 @@ export default function ConfigureEnglishPaperPage() {
         totalMarks: details.totalMarks,
         sections,
         topic: "",
-        category: ""
+        category: "",
       })
 
       if (success) {
         toast.success("Paper downloaded and saved successfully")
         setShowHeaderDialog(false)
       } else {
-        toast.error("Failed to generate PDF")
+        throw new Error("PDF generation failed")
       }
     } catch (error) {
       console.error("Error generating PDF:", error)
-      toast.error("Failed to generate PDF")
+      toast.error("Failed to generate PDF. Please try again.")
     } finally {
       setIsGeneratingPDF(false)
     }
@@ -331,7 +353,9 @@ export default function ConfigureEnglishPaperPage() {
                   <Label>Question Type</Label>
                   <Select
                     value={currentSection.type}
-                    onValueChange={(value: string) => setCurrentSection({ ...currentSection, type: value as "mcq" | "short" | "long" })}
+                    onValueChange={(value: string) =>
+                      setCurrentSection({ ...currentSection, type: value as "mcq" | "short" | "long" })
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select type" />

@@ -20,7 +20,7 @@ import { HeaderDetailsDialog } from "@/components/header-details-dialog"
 
 export default function ConfigureUrduPaperPage() {
   const [sections, setSections] = useState<QuestionConfig[]>([])
-  const [currentSection, setCurrentSection] = useState<Omit<QuestionConfig, 'type'> & { type: string }>({
+  const [currentSection, setCurrentSection] = useState<Omit<QuestionConfig, "type"> & { type: string }>({
     type: "mcq",
     count: 1,
     marks: 1,
@@ -39,9 +39,9 @@ export default function ConfigureUrduPaperPage() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-    const chaptersParam = params.get('chapters')
+    const chaptersParam = params.get("chapters")
     if (chaptersParam) {
-      setSelectedChapters(chaptersParam.split(','))
+      setSelectedChapters(chaptersParam.split(","))
     }
   }, [])
 
@@ -244,7 +244,7 @@ export default function ConfigureUrduPaperPage() {
         totalMarks: details.totalMarks,
         sections,
         topic: "",
-        category: ""
+        category: "",
       })
 
       if (success) {

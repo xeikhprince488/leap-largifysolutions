@@ -5,52 +5,59 @@ const subjects = [
   {
     title: "Biology",
     grade: "11th",
-    imageUrl: "/placeholder.svg?height=100&width=80",
+    // imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/11th/biology"
   },
   {
     title: "Chemistry",
     grade: "11th",
-    imageUrl: "/placeholder.svg?height=100&width=80",
+    // imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/11th/chemistry"
   },
   {
     title: "Physics",
     grade: "11th",
-    imageUrl: "/placeholder.svg?height=100&width=80",
+    // imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/11th/physics"
   },
   {
     title: "Math",
     grade: "11th",
-    imageUrl: "/placeholder.svg?height=100&width=80",
+    // imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/11th/math"
   },
   {
     title: "English",
     grade: "11th",
-    imageUrl: "/placeholder.svg?height=100&width=80",
+    // imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/11th/english"
   },
 
   {
     title: "Computer",
     grade: "11th",
-    imageUrl: "/placeholder.svg?height=100&width=80",
+    // imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/11th/islamyat"
   },
   {
     title: "Urdu",
     titleUrdu: "اردو لازمی",
     grade: "11th",
-    imageUrl: "/placeholder.svg?height=100&width=80",
+    // imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/11th/urdu"
   },
   {
-    title: "islamyat",
+    title: "Tarjuma Tul Quran",
+    // titleUrdu: "اسلامیات لازمی",
+    grade: "9th",
+    // imageUrl: "/placeholder.svg?height=100&width=80",
+    href: "/generate-paper-1/11th/tarjumaquran"
+  },
+  {
+    title: "Islamyat",
     titleUrdu: "اسلامیات",
     grade: "11th",
-    imageUrl: "/placeholder.svg?height=100&width=80",
+    // imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/11th/urdu"
   }
 ]
