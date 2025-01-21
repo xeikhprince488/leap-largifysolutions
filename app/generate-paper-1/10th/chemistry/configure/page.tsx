@@ -349,8 +349,6 @@ export default function ConfigureQuestionsPage() {
           onOpenChange={setShowHeaderDialog}
           onSubmit={handleHeaderDetailsSubmit}
           loading={isGeneratingPDF}
-          headerDetails={headerDetails}
-          setHeaderDetails={setHeaderDetails}
         />
       </DashboardLayout>
     )
