@@ -63,6 +63,8 @@ export default function ConfigureQuestionsPage() {
     }
   }, [])
 
+  const totalMarks = sections.reduce((sum, section) => sum + (section.count * section.marks), 0)
+
   useEffect(() => {
     setHeaderDetails((prevDetails) => ({
       ...prevDetails,
@@ -70,9 +72,6 @@ export default function ConfigureQuestionsPage() {
       subject: 'computer' // Set subject here
     }));
   }, [totalMarks]);
-
-
-  const totalMarks = sections.reduce((sum, section) => sum + (section.count * section.marks), 0)
 
   const handleAddSection = () => {
     const heading = prompt('Enter the heading for this section:')
