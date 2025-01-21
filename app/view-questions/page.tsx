@@ -207,7 +207,7 @@ export default function ViewQuestionsPage() {
 
                 <div className="space-y-2">
                   <Label>Language</Label>
-                  <Select value={language} onValueChange={setLanguage}>
+                  <Select value={language} onValueChange={(value) => setLanguage(value as "english" | "urdu")}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select language" />
                     </SelectTrigger>
@@ -228,21 +228,21 @@ export default function ViewQuestionsPage() {
           ) : grade && subject && chapter ? (
             <Tabs defaultValue="mcq" className="space-y-4">
               <TabsList>
-                {questionTypes[language][grade].map((type) => (
+                {questionTypes[language as "english" | "urdu"][grade as keyof typeof questionTypes["english"]].map((type) => (
                   <TabsTrigger key={type} value={type}>
-                    {type.charAt(0).toUpperCase() + type.slice(1)} ({questions[type]?.length ?? 0})
+                    {type.charAt(0).toUpperCase() + type.slice(1)} ({questions[type as keyof Questions]?.length ?? 0})
                   </TabsTrigger>
                 ))}
               </TabsList>
-              {questionTypes[language][grade].map((type) => (
+              {questionTypes[language as "english" | "urdu"][grade as keyof typeof questionTypes["english"]].map((type) => (
                 <TabsContent key={type} value={type} className="space-y-4">
-                  {questions[type] && questions[type].length > 0 ? (
-                    questions[type].map((question) => (
+                  {questions[type as keyof Questions] && questions[type as keyof Questions].length > 0 ? (
+                    questions[type as keyof Questions].map((question) => (
                       <MCQQuestion
                         key={question.id}
                         question={question}
-                        onDelete={(id) => handleDelete(id, type)}
-                        type={type}
+                        onDelete={(id) => handleDelete(id, type as 'mcq' | 'short' | 'long')}
+                        type={type as 'mcq' | 'short' | 'long'}
                       />
                     ))
                   ) : (

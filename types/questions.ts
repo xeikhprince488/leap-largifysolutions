@@ -41,12 +41,30 @@ export interface LongQuestion extends BaseQuestion {
 
 export type Question = MCQQuestion | ShortQuestion | LongQuestion
 
-export interface QuestionConfig {
-  type: 'mcq' | 'short' | 'long'
-  count: number
-  marks: number
-  heading: string
-}
+// export interface QuestionConfig {
+//   type: 'mcq' | 'short' | 'long'
+//   count: number
+//   marks: number
+//   heading: string
+// }
+
+
+
+
+export type QuestionConfig = {
+
+  type: "mcq" | "short" | "long" | "poetryExplanation" | "excerptExplanation" | "fillInTheBlanks" | "mcqs" | "applicationWriting" | "letterWriting" | "essayWriting";
+
+  count: number;
+
+  marks: number;
+
+  heading: string;
+
+};
+
+
+
 
 export interface PaperConfig {
   totalMarks: number

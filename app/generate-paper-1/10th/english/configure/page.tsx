@@ -327,8 +327,6 @@ export default function ConfigureEnglishPaperPage() {
           onOpenChange={setShowHeaderDialog}
           onSubmit={handleHeaderDetailsSubmit}
           loading={isGeneratingPDF}
-          headerDetails={headerDetails}
-          setHeaderDetails={setHeaderDetails}
         />
       </DashboardLayout>
     )
@@ -484,8 +482,7 @@ export default function ConfigureEnglishPaperPage() {
         onOpenChange={setShowHeaderDialog}
         onSubmit={handleHeaderDetailsSubmit}
         loading={isGeneratingPDF}
-        headerDetails={headerDetails}
-        setHeaderDetails={setHeaderDetails}
+        
       />
     </DashboardLayout>
   )

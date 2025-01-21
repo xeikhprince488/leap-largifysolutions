@@ -30,13 +30,13 @@ export function DashboardCards() {
       icon: <ClipboardList className="h-6 w-6 text-green-500" />,
       link: "/saved-papers",
     },
-    // {
-    //   title: "Sub Users",
-    //   description: "Create Subusers Accounts",
-    //   count: "0",
-    //   icon: <Users className="h-6 w-6 text-amber-500" />,
-    //   link: "/sub-users",
-    // },
+    {
+      title: "Sub Users",
+      description: "Create Subusers Accounts",
+      count: "0",
+      icon: <Users className="h-6 w-6 text-amber-500" />,
+      link: "/sub-users",
+    },
     {
       title: "View Questions",
       description: "View and Delete Questions",
@@ -63,7 +63,7 @@ export function DashboardCards() {
         <Link
           key={card.title + card.description}
           href={card.link}
-          className={`block ${card.disabled ? 'cursor-not-allowed opacity-70' : ''}`}
+          className="block"
         >
           <Card className="h-full hover:bg-accent/50 transition-colors">
             <CardContent className="flex items-center gap-4 p-6">
