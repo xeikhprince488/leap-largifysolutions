@@ -5,65 +5,53 @@ const subjects = [
   {
     title: "Biology",
     grade: "10TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/10th/biology"
   },
   {
     title: "Chemistry",
     grade: "10TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/10th/chemistry"
   },
   {
     title: "Physics",
     grade: "10TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/10th/physics"
   },
   {
     title: "Math",
     grade: "10TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/10th/math"
   },
   {
     title: "English",
     grade: "10TH",
-    // imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/10th/english"
   },
-
   {
     title: "Computer",
     grade: "10TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/10th/islamyat"
   },
   {
     title: "Pakistan Studies",
     grade: "10TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/10th/pakstudy"
   },
   {
     title: "Tarjuma Tul Quran",
-    // titleUrdu: "اسلامیات لازمی",
     grade: "9th",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/10th/tarjumaquran"
   },
   {
     title: "Urdu",
     titleUrdu: "اردو لازمی",
     grade: "10TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/10th/urdu"
   },
   {
     title: "islamyat",
     titleUrdu: "اسلامیات",
     grade: "10TH",
-    imageUrl: "/placeholder.svg?height=100&width=80",
     href: "/generate-paper-1/10th/urdu"
   }
 ]

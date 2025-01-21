@@ -40,7 +40,7 @@ export function Sidebar() {
             <Home className="h-4 w-4" />
             Dashboard
           </Link>
-          <Link
+          {/* <Link
             href="/change-password"
             className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-accent ${
               pathname === '/change-password' ? 'bg-accent' : ''
@@ -48,7 +48,7 @@ export function Sidebar() {
           >
             <Key className="h-4 w-4" />
             Change Password
-          </Link>
+          </Link> */}
           <Link
             href="/logout"
             className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-accent ${

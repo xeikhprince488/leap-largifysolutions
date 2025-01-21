@@ -10,13 +10,13 @@ export function DashboardCards() {
       icon: <FileText className="h-6 w-6 text-blue-500" />,
       link: "/generate-paper-1",
     },
-    {
-      title: "Generate Paper",
-      description: "Method 2 (Coming Soon)",
-      icon: <FileText className="h-6 w-6 text-cyan-500" />,
-      link: "#",
-      disabled: true,
-    },
+    // {
+    //   title: "Generate Paper",
+    //   description: "Method 2 (Coming Soon)",
+    //   icon: <FileText className="h-6 w-6 text-cyan-500" />,
+    //   link: "#",
+    //   disabled: true,
+    // },
     {
       title: "Add Questions",
       description: "Add MCQs, Short & Long Questions",

@@ -19,20 +19,34 @@ export default function LoginPage() {
   });
 
   // Local credentials for authentication
-  const LOCAL_CREDENTIALS = {
-    username: "admin",
-    password: "password",
-  };
+  const LOCAL_CREDENTIALS = [
+    { username: "user1", password: "password1" },
+    { username: "user2", password: "password2" },
+    { username: "user3", password: "password3" },
+    { username: "user4", password: "password4" },
+    { username: "user5", password: "password5" },
+    { username: "user6", password: "password6" },
+    { username: "user7", password: "password7" },
+    { username: "user8", password: "password8" },
+    { username: "user9", password: "password9" },
+    { username: "user10", password: "password10" },
+    { username: "user11", password: "password11" },
+    { username: "user12", password: "password12" },
+    { username: "user13", password: "password13" },
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      if (
-        formData.username === LOCAL_CREDENTIALS.username &&
-        formData.password === LOCAL_CREDENTIALS.password
-      ) {
+      const user = LOCAL_CREDENTIALS.find(
+        (cred) =>
+          cred.username === formData.username &&
+          cred.password === formData.password
+      );
+
+      if (user) {
         // Store authentication status in both localStorage and cookies
         localStorage.setItem('isAuthenticated', 'true');
         Cookies.set('isAuthenticated', 'true', { expires: 1 }); // Cookie valid for 1 day
