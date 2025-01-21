@@ -105,6 +105,90 @@ function ensureSingleQuestionPerLine(
   return yPos + questionLines.length * 5 + 2
 }
 
+function calculateOptionLayout(
+  doc: jsPDF,
+  options: any[],
+  pageWidth: number,
+): {
+  optionsPerRow: number
+  optionWidth: number
+} {
+  const availableWidth = pageWidth - 30 // Subtract margins
+  const quarterWidth = availableWidth / 4
+  const halfWidth = availableWidth / 2
+
+  // Calculate the maximum width needed for any option
+  const maxOptionWidth = options.reduce((max, opt) => {
+    const optText = typeof opt === "object" && opt !== null ? opt.english || opt.urdu : String(opt)
+    const optionText = `x) ${optText}` // Add space for option letter
+    const width = doc.getTextWidth(optionText)
+    return Math.max(max, width)
+  }, 0)
+
+  // If any option exceeds quarter width, try half width
+  if (maxOptionWidth > quarterWidth) {
+    // If any option exceeds half width, use full width
+    if (maxOptionWidth > halfWidth) {
+      return {
+        optionsPerRow: 1,
+        optionWidth: availableWidth,
+      }
+    }
+    return {
+      optionsPerRow: 2,
+      optionWidth: halfWidth - 10, // Subtract some padding
+    }
+  }
+
+  // Default to quarter width (4 options per row)
+  return {
+    optionsPerRow: 4,
+    optionWidth: quarterWidth - 5, // Subtract some padding
+  }
+}
+
+function renderMCQOptions(doc: jsPDF, options: any[], startY: number, leftMargin: number, isRTL: boolean): number {
+  const pageWidth = doc.internal.pageSize.width
+  const { optionsPerRow, optionWidth } = calculateOptionLayout(doc, options, pageWidth)
+
+  let currentY = startY
+  let maxHeightInRow = 0
+
+  options.forEach((opt, index) => {
+    const optionLetter = String.fromCharCode(97 + index) // a, b, c, d
+    const optionText = typeof opt === "object" && opt !== null ? (isRTL ? opt.urdu : opt.english) : String(opt)
+    const fullText = `${optionLetter}) ${optionText}`
+
+    // Calculate position
+    const column = index % optionsPerRow
+    if (column === 0 && index > 0) {
+      currentY += maxHeightInRow + 5 // Move to next row with spacing
+      maxHeightInRow = 0
+    }
+
+    // Calculate x position based on column
+    const xPos = leftMargin + column * (optionWidth + 5)
+
+    // Wrap text and render
+    const wrappedLines = wrapText(doc, fullText, optionWidth)
+    doc.setR2L(isRTL)
+
+    wrappedLines.forEach((line, lineIndex) => {
+      const yPos = currentY + lineIndex * 5
+      const textX = isRTL ? doc.internal.pageSize.width - xPos - doc.getTextWidth(line) : xPos
+      doc.text(line, textX, yPos)
+    })
+
+    doc.setR2L(false)
+
+    // Update max height for current row
+    const optionHeight = wrappedLines.length * 5
+    maxHeightInRow = Math.max(maxHeightInRow, optionHeight)
+  })
+
+  return currentY + maxHeightInRow // Return final Y position
+}
+
 export async function generatePDF(
   questions: Question[],
   metadata: {
@@ -249,7 +333,7 @@ export async function generatePDF(
           // MCQs
           const leftMargin = 15 // Increased left margin for the MCQ
 
-          yPos += 2 // Further decreased spacing before the question
+          yPos += 5 // Add consistent spacing before each question
           doc.setFont("helvetica", "normal")
 
           // Question number
@@ -259,52 +343,22 @@ export async function generatePDF(
           // Determine if content should be RTL
           const isRTL = metadata.subject.toLowerCase() === "urdu" || metadata.subject.toLowerCase() === "islamyat"
 
-          // Handle question text with RTL if needed
-          yPos = ensureSingleQuestionPerLine(doc, question.english, yPos, leftMargin, false)
+          // Handle question text
+          yPos = ensureSingleQuestionPerLine(doc, question.english, yPos, leftMargin + 5, false)
           if (question.urdu) {
-            yPos = ensureSingleQuestionPerLine(doc, question.urdu, yPos, leftMargin, isRTL)
+            yPos = ensureSingleQuestionPerLine(doc, question.urdu, yPos, leftMargin + 5, isRTL)
           }
 
+          // Render MCQ options with new layout system
           if (Array.isArray(question.options)) {
-            const availableWidth = 175
-            const optionSpacing = availableWidth / question.options.length
-
-            // Draw options with RTL consideration
-            question.options.forEach((opt, i) => {
-              const optionLetter = String.fromCharCode(97 + i)
-              const optionText = `${optionLetter}) ${typeof opt === "object" && opt !== null ? (isRTL ? opt.urdu : opt.english) : String(opt)}`
-              const optionXPos = leftMargin + i * optionSpacing + (i === 0 ? 5 : 0)
-
-              // Set RTL for Urdu/Islamyat options
-              doc.setR2L(isRTL)
-
-              const wrappedOption = wrapText(doc, optionText, optionSpacing - 5)
-              wrappedOption.forEach((line, lineIndex) => {
-                const xPos = isRTL ? doc.internal.pageSize.width - optionXPos - doc.getTextWidth(line) : optionXPos
-                doc.text(line, xPos, yPos + lineIndex * 5)
-              })
-
-              // Reset RTL
-              doc.setR2L(false)
-            })
-
-            const maxOptionHeight = Math.max(
-              ...question.options.map(
-                (opt) =>
-                  wrapText(
-                    doc,
-                    typeof opt === "object" && opt !== null ? (isRTL ? opt.urdu : opt.english) : String(opt),
-                    optionSpacing - 5,
-                  ).length,
-              ),
-            )
-            yPos += maxOptionHeight * 5 + 2
+            yPos = renderMCQOptions(doc, question.options, yPos + 5, leftMargin + 5, isRTL)
+            yPos += 5 // Add some spacing after options
           }
         } else {
           // Handle non-MCQ questions as before
           yPos += 6
           doc.setFont("helvetica", "normal")
-          doc.text(`${index + 1}. ${question.english || ""}`, 15, yPos) // Add fallback for undefined question text
+          doc.text(`${index + 1}. ${question.english || ""}`, 15, yPos)
         }
       })
     })

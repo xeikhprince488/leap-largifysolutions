@@ -67,7 +67,7 @@ export async function saveQuestion(question: Question) {
     // Read existing data
     let data: DataStructure = {}
     try {
-      const fileContent = await fs.readFile(filePath, 'utf8')
+      const fileContent = await fs.readFile(filePath, 'utf16le') // Change to UTF-16
       data = JSON.parse(fileContent)
     } catch (error) {
       // If file doesn't exist, start with empty data
@@ -97,7 +97,7 @@ export async function saveQuestion(question: Question) {
     }
 
     // Write back to file
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2))
+    await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf16le') // Change to UTF-16
 
     return { success: true, message: 'Question saved successfully' }
   } catch (error) {

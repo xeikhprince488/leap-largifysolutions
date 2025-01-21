@@ -8,7 +8,7 @@ export async function getQuestions(grade: string, subject: string, chapter: stri
     const fileName = `mcq-bank-${grade.toLowerCase()}.json`
     const filePath = path.join(process.cwd(), 'data', fileName)
 
-    const fileContent = await fs.readFile(filePath, 'utf8')
+    const fileContent = await fs.readFile(filePath, 'utf16le') // Change to UTF-16
     const data = JSON.parse(fileContent)
 
     const subjectKey = `${subject.toLowerCase()}-${grade}`
@@ -24,7 +24,7 @@ export async function deleteQuestion(grade: string, subject: string, chapter: st
     const fileName = `mcq-bank-${grade.toLowerCase()}.json`
     const filePath = path.join(process.cwd(), 'data', fileName)
 
-    const fileContent = await fs.readFile(filePath, 'utf8')
+    const fileContent = await fs.readFile(filePath, 'utf16le') // Change to UTF-16
     const data = JSON.parse(fileContent)
 
     const subjectKey = `${subject.toLowerCase()}-${grade}`
@@ -34,7 +34,7 @@ export async function deleteQuestion(grade: string, subject: string, chapter: st
       (q: any) => q.id !== questionId
     )
 
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2))
+    await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf16le') // Change to UTF-16
     return { success: true, message: 'Question deleted successfully' }
   } catch (error) {
     console.error('Error deleting question:', error)
