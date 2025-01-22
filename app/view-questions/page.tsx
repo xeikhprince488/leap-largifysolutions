@@ -242,7 +242,7 @@ export default function ViewQuestionsPage() {
                         key={question.id}
                         question={question}
                         onDelete={(id) => handleDelete(id, type as 'mcq' | 'short' | 'long')}
-                        type={type}
+                        type={type as 'mcq' | 'short' | 'long'}
                       />
                     ))
                   ) : (

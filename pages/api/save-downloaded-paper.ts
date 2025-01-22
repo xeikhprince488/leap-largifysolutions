@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import { SavedPaper } from '@/types/saved-papers';
 
 const uri = process.env.MONGODB_URI;
@@ -42,7 +42,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const db = client.db(dbName);
     const collection = db.collection('saved-papers');
 
-    await collection.insertOne(savedPaper);
+    const paperToSave = { ...savedPaper, _id: new ObjectId(savedPaper._id) };
+    await collection.insertOne(paperToSave);
 
     res.status(200).json({ message: 'Paper saved successfully' });
   } catch (error) {

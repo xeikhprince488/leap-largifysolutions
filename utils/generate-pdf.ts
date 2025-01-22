@@ -380,6 +380,7 @@ export async function generatePDF(
         totalQuestions: questions.length,
         category: metadata.category,
       },
+      _id: ""
     }
 
     try {

@@ -322,6 +322,7 @@ export async function generatePDF(
         topic: '',
         category: ''
       },
+      _id: ''
     };
 
     try {
