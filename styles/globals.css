@@ -7,23 +7,14 @@ body {
 }
 
 /* Add custom font for Urdu or any language-specific text */
+
 @font-face {
-  font-family: 'JameelNooriNastaleeq';
+  font-family: 'Noto Nastaliq Urdu Regular';
   src: url('../public/NotoNastaliqUrdu-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
 
-  /* Add utility class for using the custom Urdu font */
-  .font-urdu {
-    font-family: 'JameelNooriNastaleeq', Arial, Helvetica, sans-serif;
-  }
-}
+
 
 @layer base {
   :root {

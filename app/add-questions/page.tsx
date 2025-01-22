@@ -111,12 +111,25 @@ export default function AddQuestionsPage() {
     })
   }
 
-  const handleSave = async () => {
-    if (!grade || !subject || !chapter) {
-      toast.error("Please select grade, subject, and chapter")
-      return
+  const isFormValid = () => {
+    if (!grade || !subject || !chapter || !questionType || !question[language]) {
+      return false
     }
 
+    if (questionType === "mcq") {
+      if (options.some((option) => !option[language]) || !correctOption) {
+        return false
+      }
+    } else if (questionType === "short" || questionType === "long") {
+      if (!answer[language]) {
+        return false
+      }
+    }
+
+    return true
+  }
+
+  const handleSave = async () => {
     try {
       const newQuestion = {
         id: Date.now(),
@@ -196,7 +209,7 @@ export default function AddQuestionsPage() {
         "physics",
         "urdu",
         "pakstudy",
-        'tarjumaquran',
+        "tarjumaquran",
       ]
 
       // Add statistics for 11th and 12th
@@ -236,14 +249,12 @@ export default function AddQuestionsPage() {
   // Update available topics when chapter changes
   useEffect(() => {
     if (grade && subject && chapter) {
-      const chapterData = syllabusStructure[grade as keyof typeof syllabusStructure]?.[subject]?.[chapter];
-      const topics = Array.isArray(chapterData)
-        ? chapterData
-        : Object.keys(chapterData || {}) as string[];
-      setAvailableTopics(topics);
-      setTopic("");
+      const chapterData = syllabusStructure[grade as keyof typeof syllabusStructure]?.[subject]?.[chapter]
+      const topics = Array.isArray(chapterData) ? chapterData : (Object.keys(chapterData || {}) as string[])
+      setAvailableTopics(topics)
+      setTopic("")
     } else {
-      setAvailableTopics([]);
+      setAvailableTopics([])
     }
   }, [grade, subject, chapter])
 
@@ -635,7 +646,7 @@ export default function AddQuestionsPage() {
               )}
 
               <div className="flex justify-end">
-                <Button onClick={handleSave}>
+                <Button onClick={handleSave} disabled={!isFormValid()}>
                   <Save className="h-4 w-4 mr-2" />
                   Save Question
                 </Button>

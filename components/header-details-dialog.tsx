@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -13,7 +13,7 @@ import {
   DialogPortal,
   DialogOverlay,
 } from "@/components/ui/dialog"
-import { Loader2 } from 'lucide-react'
+import { Loader2 } from "lucide-react"
 
 interface HeaderDetailsDialogProps {
   open: boolean
@@ -31,21 +31,23 @@ interface HeaderDetailsDialogProps {
   loading?: boolean
 }
 
-export function HeaderDetailsDialog({
-  open,
-  onOpenChange,
-  onSubmit,
-  loading = false
-}: HeaderDetailsDialogProps) {
+export function HeaderDetailsDialog({ open, onOpenChange, onSubmit, loading = false }: HeaderDetailsDialogProps) {
+  const formatDate = (date: Date): string => {
+    const day = date.getDate().toString().padStart(2, "0")
+    const month = (date.getMonth() + 1).toString().padStart(2, "0")
+    const year = date.getFullYear()
+    return `${day}-${month}-${year}`
+  }
+
   const [details, setDetails] = useState({
     class: "9th",
     paperNo: "",
-    date: new Date().toISOString().split('T')[0],
+    date: formatDate(new Date()),
     timeAllowed: "40 min",
     subject: "Biology",
     totalMarks: "50",
-    day: new Date().toLocaleDateString('en-US', { weekday: 'long' }),
-    syllabus: "CHAP 1 Introduction to Biology"
+    day: new Date().toLocaleDateString("en-US", { weekday: "long" }),
+    syllabus: "CHAP 1 Introduction to Biology",
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,8 +55,20 @@ export function HeaderDetailsDialog({
     try {
       await onSubmit(details)
     } catch (error) {
-      console.error('Error submitting details:', error)
+      console.error("Error submitting details:", error)
     }
+  }
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputDate = e.target.value // yyyy-mm-dd
+    const [year, month, day] = inputDate.split("-")
+    const newDate = `${day}-${month}-${year}` // dd-mm-yyyy
+    const newDay = new Date(inputDate).toLocaleDateString("en-US", { weekday: "long" })
+    setDetails((prev) => ({
+      ...prev,
+      date: newDate,
+      day: newDay,
+    }))
   }
 
   return (
@@ -73,9 +87,7 @@ export function HeaderDetailsDialog({
                   <Input
                     id="class"
                     value={details.class}
-                    onChange={(e) =>
-                      setDetails((prev) => ({ ...prev, class: e.target.value }))
-                    }
+                    onChange={(e) => setDetails((prev) => ({ ...prev, class: e.target.value }))}
                     required
                     disabled={loading}
                   />
@@ -85,9 +97,7 @@ export function HeaderDetailsDialog({
                   <Input
                     id="paperNo"
                     value={details.paperNo}
-                    onChange={(e) =>
-                      setDetails((prev) => ({ ...prev, paperNo: e.target.value }))
-                    }
+                    onChange={(e) => setDetails((prev) => ({ ...prev, paperNo: e.target.value }))}
                     required
                     disabled={loading}
                   />
@@ -100,22 +110,19 @@ export function HeaderDetailsDialog({
                   <Input
                     id="date"
                     type="date"
-                    value={details.date}
-                    onChange={(e) =>
-                      setDetails((prev) => ({ ...prev, date: e.target.value }))
-                    }
+                    value={details.date.split("-").reverse().join("-")} // Convert dd-mm-yyyy to yyyy-mm-dd for input
+                    onChange={handleDateChange}
                     required
                     disabled={loading}
                   />
                 </div>
+
                 <div className="grid gap-2">
                   <Label htmlFor="timeAllowed">Time Allowed</Label>
                   <Input
                     id="timeAllowed"
                     value={details.timeAllowed}
-                    onChange={(e) =>
-                      setDetails((prev) => ({ ...prev, timeAllowed: e.target.value }))
-                    }
+                    onChange={(e) => setDetails((prev) => ({ ...prev, timeAllowed: e.target.value }))}
                     required
                     disabled={loading}
                   />
@@ -128,9 +135,7 @@ export function HeaderDetailsDialog({
                   <Input
                     id="subject"
                     value={details.subject}
-                    onChange={(e) =>
-                      setDetails((prev) => ({ ...prev, subject: e.target.value }))
-                    }
+                    onChange={(e) => setDetails((prev) => ({ ...prev, subject: e.target.value }))}
                     required
                     disabled={loading}
                   />
@@ -140,9 +145,7 @@ export function HeaderDetailsDialog({
                   <Input
                     id="totalMarks"
                     value={details.totalMarks}
-                    onChange={(e) =>
-                      setDetails((prev) => ({ ...prev, totalMarks: e.target.value }))
-                    }
+                    onChange={(e) => setDetails((prev) => ({ ...prev, totalMarks: e.target.value }))}
                     required
                     disabled={loading}
                   />
@@ -155,9 +158,7 @@ export function HeaderDetailsDialog({
                   <Input
                     id="day"
                     value={details.day}
-                    onChange={(e) =>
-                      setDetails((prev) => ({ ...prev, day: e.target.value }))
-                    }
+                    onChange={(e) => setDetails((prev) => ({ ...prev, day: e.target.value }))}
                     required
                     disabled={loading}
                   />
@@ -167,9 +168,7 @@ export function HeaderDetailsDialog({
                   <Input
                     id="syllabus"
                     value={details.syllabus}
-                    onChange={(e) =>
-                      setDetails((prev) => ({ ...prev, syllabus: e.target.value }))
-                    }
+                    onChange={(e) => setDetails((prev) => ({ ...prev, syllabus: e.target.value }))}
                     required
                     disabled={loading}
                   />

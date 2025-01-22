@@ -92,7 +92,7 @@ function ensureSingleQuestionPerLine(
   doc.setR2L(isRTL)
 
   // For RTL text, adjust the margin to right side
-  const textMargin = isRTL ? doc.internal.pageSize.width - leftMargin - maxQuestionWidth : leftMargin + 5
+  const textMargin = isRTL ? doc.internal.pageSize.width - leftMargin - maxQuestionWidth : leftMargin
 
   // Print question text
   questionLines.forEach((line, lineIndex) => {
@@ -162,7 +162,7 @@ function renderMCQOptions(doc: jsPDF, options: any[], startY: number, leftMargin
     // Calculate position
     const column = index % optionsPerRow
     if (column === 0 && index > 0) {
-      currentY += maxHeightInRow + 3 // Reduced spacing between rows
+      currentY += maxHeightInRow + 2 // Reduced spacing between rows
       maxHeightInRow = 0
     }
 
@@ -331,9 +331,9 @@ export async function generatePDF(
 
         if (question.type === "mcq") {
           // MCQs
-          const leftMargin = 15 // Increased left margin for the MCQ
+          const leftMargin = 13 // Decreased left margin for the MCQ
 
-          yPos += 3 // Reduced spacing before each question
+          yPos += 5 // Add consistent spacing before each question
           doc.setFont("helvetica", "normal")
 
           // Question number
@@ -351,8 +351,8 @@ export async function generatePDF(
 
           // Render MCQ options with new layout system
           if (Array.isArray(question.options)) {
-            yPos = renderMCQOptions(doc, question.options, yPos + 2, leftMargin + 5, isRTL) // Reduced spacing after options
-            yPos += 3 // Reduced spacing after options
+            yPos = renderMCQOptions(doc, question.options, yPos + 1, leftMargin + 5, isRTL)
+            yPos += 2 // Add some spacing after options
           }
         } else {
           // Handle non-MCQ questions as before
@@ -364,7 +364,8 @@ export async function generatePDF(
     })
 
     // Save the PDF
-    const fileName = `${metadata.subject.toLowerCase()}-${metadata.grade.toLowerCase()}-${Date.now()}.pdf`
+    const formattedDate = new Date().toISOString().split("T")[0] // Format: YYYY-MM-DD
+    const fileName = `${metadata.grade.toLowerCase()}-${metadata.subject.toLowerCase()}-${metadata.paperNo}-${formattedDate}.pdf`
     const pdfContent = doc.output("datauristring")
 
     const savedPaper: SavedPaper = {
@@ -392,7 +393,7 @@ export async function generatePDF(
         console.warn("Storage quota exceeded. Attempting to clear more space...")
         // Try to remove more papers
         const { papers } = useSavedPapersStore.getState()
-        if (Object.keys(papers).length > 0) {
+        while (Object.keys(papers).length > 0) {
           const oldestPaper = (Object.values(papers).flat() as unknown as SavedPaper[]).reduce((oldest, current) =>
             new Date(current.createdAt).getTime() < new Date(oldest.createdAt).getTime() ? current : oldest,
           )
@@ -403,11 +404,13 @@ export async function generatePDF(
             await savePaperToMongoDB(savedPaper) // Save paper to MongoDB
             await saveDownloadedPaperToMongoDB(savedPaper) // Save downloaded paper to MongoDB
             doc.save(fileName)
+            break
           } catch (retryError) {
             console.error("Failed to save paper even after clearing space:", retryError)
             // Optionally, you can show a user-friendly message here
           }
-        } else {
+        }
+        if (Object.keys(papers).length === 0) {
           console.error("No papers to remove. Unable to save new paper.")
           // Optionally, you can show a user-friendly message here
         }

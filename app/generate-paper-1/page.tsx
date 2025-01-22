@@ -50,12 +50,12 @@ export default function GeneratePaperPage() {
                 />
               ))}
             </div>
-            <button onClick={handleFetchQuestions} className="mt-8 p-2 bg-blue-500 text-white">
+            {/* <button onClick={handleFetchQuestions} className="mt-8 p-2 bg-blue-500 text-white">
               Fetch Questions
-            </button>
+            </button> */}
             <div className="mt-8">
               {questions.length === 0 ? (
-                <p>No questions available</p>
+                <p></p>
               ) : (
                 questions.map((question) => (
                   <div key={question.id} className="p-4 border rounded mb-4">

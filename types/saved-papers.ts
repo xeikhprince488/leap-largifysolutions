@@ -1,4 +1,5 @@
 export interface SavedPaper {
+  _id: string;
   id: string;
   title: string;
   fileName: string;
