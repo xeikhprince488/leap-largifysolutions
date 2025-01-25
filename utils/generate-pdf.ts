@@ -13,6 +13,13 @@ import type { SavedPaper } from "@/types/saved-papers"
 import useSavedPapersStore from "@/store/saved-papers"
 import axios from "axios"
 
+let ObjectId: any
+if (typeof window === "undefined") {
+  // Only import MongoDB-related code on the server side
+  const mongodb = require("mongodb")
+  ObjectId = mongodb.ObjectId
+}
+
 function manageStorage() {
   const { papers } = useSavedPapersStore.getState()
   const maxPapers = 5 // Reduce the number of stored papers
@@ -43,8 +50,11 @@ async function savePaperToMongoDB(savedPaper: SavedPaper) {
 }
 
 async function saveDownloadedPaperToMongoDB(savedPaper: SavedPaper) {
+  if (typeof window !== "undefined") return // Ensure this code runs only on the server side
   try {
-    await axios.post("/api/save-downloaded-paper", savedPaper)
+    // Ensure _id is a valid ObjectId
+    const paperToSave = { ...savedPaper, _id: new ObjectId(savedPaper._id) }
+    await axios.post("/api/save-downloaded-paper", paperToSave)
   } catch (error) {
     console.error("Error saving downloaded paper to MongoDB:", error)
   }
@@ -204,7 +214,7 @@ export async function generatePDF(
     category: string
     sections: { type: string; heading: string; count: number; marks: number }[]
   },
-): Promise<boolean> {
+): Promise<{ success: boolean; pdfData?: string }> {
   try {
     const doc = new jsPDF()
     doc.setDrawColor(0)
@@ -366,13 +376,13 @@ export async function generatePDF(
     // Save the PDF
     const formattedDate = new Date().toISOString().split("T")[0] // Format: YYYY-MM-DD
     const fileName = `${metadata.grade.toLowerCase()}-${metadata.subject.toLowerCase()}-${metadata.paperNo}-${formattedDate}.pdf`
-    const pdfContent = doc.output("datauristring")
+    const pdfData = doc.output("datauristring")
 
     const savedPaper: SavedPaper = {
       id: Date.now().toString(),
       title: `${metadata.subject} Paper - ${metadata.grade}`,
       fileName,
-      pdfContent,
+      pdfContent: pdfData,
       createdAt: new Date().toISOString(),
       metadata: {
         ...metadata,
@@ -380,7 +390,7 @@ export async function generatePDF(
         totalQuestions: questions.length,
         category: metadata.category,
       },
-      _id: ""
+      _id: "",
     }
 
     try {
@@ -389,6 +399,7 @@ export async function generatePDF(
       await savePaperToMongoDB(savedPaper) // Save paper to MongoDB
       await saveDownloadedPaperToMongoDB(savedPaper) // Save downloaded paper to MongoDB
       doc.save(fileName)
+      return { success: true, pdfData }
     } catch (storageError) {
       if (storageError instanceof DOMException && storageError.name === "QuotaExceededError") {
         console.warn("Storage quota exceeded. Attempting to clear more space...")
@@ -415,15 +426,14 @@ export async function generatePDF(
           console.error("No papers to remove. Unable to save new paper.")
           // Optionally, you can show a user-friendly message here
         }
+        return { success: false }
       } else {
         throw storageError // Re-throw if it's not a QuotaExceededError
       }
     }
-
-    return true
   } catch (error) {
     console.error("Error generating PDF:", error)
-    return false
+    return { success: false }
   }
 }
 

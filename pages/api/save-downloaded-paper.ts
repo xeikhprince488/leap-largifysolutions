@@ -42,12 +42,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const db = client.db(dbName);
     const collection = db.collection('saved-papers');
 
-    const paperToSave = { ...savedPaper, _id: new ObjectId(savedPaper._id) };
+    const paperId = new ObjectId(savedPaper._id); // Ensure paperId is a valid ObjectId
+    const paperToSave = { ...savedPaper, _id: paperId };
     await collection.insertOne(paperToSave);
 
     res.status(200).json({ message: 'Paper saved successfully' });
   } catch (error) {
     console.error('Error saving paper to MongoDB:', error);
-    res.status(500).json({ error: 'Error saving paper to MongoDB' });
+    res.status(500).json({ error: 'Failed to save paper' });
   }
 }

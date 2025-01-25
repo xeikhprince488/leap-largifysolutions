@@ -5,9 +5,9 @@ import { CheckboxTree } from "@/components/ui/checkbox-tree"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-const chapters = [
+const defaultChapters = [
   {
     id: "chap-1",
     title: "CHAP 1 Introduction to Biology",
@@ -101,6 +101,17 @@ export default function BiologyChaptersPage() {
   const router = useRouter()
   const [selectedChapters, setSelectedChapters] = useState<string[]>([])
   const [selectedTopics, setSelectedTopics] = useState<string[]>([])
+  const [chapters, setChapters] = useState(defaultChapters);
+
+  useEffect(() => {
+    const fetchChapters = async () => {
+      const response = await fetch('/api/chapters?grade=9th&subject=biology');
+      const data = await response.json();
+      console.log('Fetched chapters:', data); // Add logging
+      setChapters([...defaultChapters, ...data]);
+    };
+    fetchChapters();
+  }, []);
 
   const handleSelectionChange = (selectedItems: string[]) => {
     console.log('Selected items:', selectedItems);
