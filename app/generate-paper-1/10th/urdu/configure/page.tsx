@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
@@ -11,20 +11,27 @@ import { DashboardLayout } from "@/components/dashboard-layout"
 import { AnswerKey } from "@/components/answer-key"
 import { generatePDF } from "@/utils/generate-pdf"
 import { fetchQuestions } from "@/services/questions"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { X, Search, Shuffle, Plus, Download, Trash2 } from "lucide-react"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { X, Search, Shuffle, Plus, Download, Trash2 } from 'lucide-react'
+import Image from "next/image"
 import { toast } from "sonner"
-import type { Question, QuestionConfig } from "@/types/questions"
+import { LongQuestion, MCQQuestion, Question, QuestionConfig, ShortQuestion } from "@/types/questions"
 import { Card, CardContent } from "@/components/ui/card"
 import { HeaderDetailsDialog } from "@/components/header-details-dialog"
 
-export default function ConfigureUrduPaperPage() {
+export default function ConfigureQuestionsPage() {
   const [sections, setSections] = useState<QuestionConfig[]>([])
   const [currentSection, setCurrentSection] = useState<QuestionConfig>({
-    type: "mcq",
+    type: 'mcq',
     count: 1,
     marks: 1,
-    heading: "",
+    heading: '' // Add heading to currentSection state
   })
   const [ignoreQuestions, setIgnoreQuestions] = useState("0")
   const [blankLines, setBlankLines] = useState("0")
@@ -36,6 +43,10 @@ export default function ConfigureUrduPaperPage() {
   const [showHeaderDialog, setShowHeaderDialog] = useState(false)
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const [selectedChapters, setSelectedChapters] = useState<string[]>([])
+  const predefinedHeadings = ["2. Attempt any five parts.", "3. Attempt any five parts.", "4. Attempt any five parts.", "5. Attempt any two questions.", "Choose the correct option."] // Add predefined headings
+  const [selectedHeading, setSelectedHeading] = useState(predefinedHeadings[0]) // Add state for selected heading
+  const [showPrintDialog, setShowPrintDialog] = useState(false)
+  const [currentPdfData, setCurrentPdfData] = useState<string | null>(null)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -45,17 +56,28 @@ export default function ConfigureUrduPaperPage() {
     }
   }, [])
 
-  const totalMarks = sections.reduce((sum, section) => sum + section.count * section.marks, 0)
+  useEffect(() => {
+    if (showPaper) {
+      console.log("Showing paper, updating selected questions")
+      setSelectedQuestions((prevQuestions) => [...prevQuestions])
+    }
+  }, [showPaper])
+
+  useEffect(() => {
+    console.log('showHeaderDialog changed:', showHeaderDialog)
+  }, [showHeaderDialog])
+
+  const totalMarks = sections.reduce((sum, section) => sum + (section.count * section.marks), 0)
 
   const handleAddSection = () => {
-    const heading = prompt("Enter the heading for this section:")
+    const heading = selectedHeading || prompt("Enter the heading for this section:") // Use selected heading or prompt
     if (heading) {
       setSections([...sections, { ...currentSection, heading }])
       setCurrentSection({
-        type: "mcq",
+        type: 'mcq',
         count: 1,
         marks: 1,
-        heading: "",
+        heading: '' // Reset heading
       })
     }
   }
@@ -68,29 +90,32 @@ export default function ConfigureUrduPaperPage() {
     try {
       let allQuestions: Question[] = []
 
+      // Process each section individually
       for (const section of sections) {
-        const response = await fetch("/api/fetch-questions", {
-          method: "POST",
+        const response = await fetch('/api/fetch-questions', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            subject: "urdu",
-            grade: "10th",
+            subject: 'urdu',
+            grade: '10th',
             type: section.type,
-            count: section.count,
+            count: section.count
           }),
         })
 
         if (!response.ok) {
-          throw new Error("Failed to fetch questions")
+          throw new Error('Failed to fetch questions')
         }
 
         const fetchedQuestions = await response.json()
+        console.log(`Fetched ${fetchedQuestions.length} ${section.type} questions`)
 
+        // Add marks to the questions
         const questionsWithMarks = fetchedQuestions.map((q: any) => ({
           ...q,
-          marks: section.marks,
+          marks: section.marks
         }))
 
         allQuestions = [...allQuestions, ...questionsWithMarks]
@@ -100,123 +125,116 @@ export default function ConfigureUrduPaperPage() {
       setSelectedQuestions(allQuestions)
       setRandomQuestions([])
 
-      const questionCounts = allQuestions.reduce(
-        (acc, q) => {
-          acc[q.type] = (acc[q.type] || 0) + 1
-          return acc
-        },
-        {} as Record<string, number>,
-      )
+      const mcqCount = allQuestions.filter(q => q.type === 'mcq').length
+      const shortCount = allQuestions.filter(q => q.type === 'short').length
+      const longCount = allQuestions.filter(q => q.type === 'long').length
 
-      toast.success(
-        `Selected: ${Object.entries(questionCounts)
-          .map(([type, count]) => `${count} ${type}`)
-          .join(", ")}`,
-      )
+      toast.success(`Selected: ${mcqCount} MCQs, ${shortCount} Short, ${longCount} Long`)
     } catch (error) {
-      console.error("Error fetching questions:", error)
-      toast.error("Failed to fetch questions")
+      console.error('Error fetching questions:', error)
+      toast.error('Failed to fetch questions')
     }
   }
 
   const shuffleArray = <T,>(array: T[]): T[] => {
     const newArray = [...array]
     for (let i = newArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]]
     }
     return newArray
   }
 
   const handleRandomSelect = () => {
-    if (!availableQuestions.length) return
+    if (!availableQuestions.length) return;
 
-    const questionsByType = availableQuestions.reduce(
-      (acc, q) => {
-        if (!acc[q.type]) acc[q.type] = []
-        acc[q.type].push(q)
-        return acc
-      },
-      {} as Record<string, Question[]>,
-    )
+    // Group questions by type
+    const questionsByType = availableQuestions.reduce((acc, q) => {
+      if (!acc[q.type]) acc[q.type] = [];
+      acc[q.type].push(q);
+      return acc;
+    }, {} as Record<string, Question[]>);
 
-    const requiredCounts = sections.reduce(
-      (acc, section) => {
-        if (!acc[section.type]) acc[section.type] = 0
-        acc[section.type] += section.count
-        return acc
-      },
-      {} as Record<string, number>,
-    )
+    // Get the counts from sections
+    const requiredCounts = sections.reduce((acc, section) => {
+      if (!acc[section.type]) acc[section.type] = 0;
+      acc[section.type] += section.count;
+      return acc;
+    }, {} as Record<string, number>);
 
-    let randomized: Question[] = []
+    // Randomly select the required number of questions for each type
+    let randomized: Question[] = [];
     Object.entries(requiredCounts).forEach(([type, count]) => {
-      const typeQuestions = questionsByType[type] || []
-      const shuffled = shuffleArray(typeQuestions)
-      randomized = [...randomized, ...shuffled.slice(0, count)]
-    })
+      const typeQuestions = questionsByType[type] || [];
+      const shuffled = shuffleArray(typeQuestions);
+      randomized = [...randomized, ...shuffled.slice(0, count)];
+    });
 
-    setRandomQuestions(randomized)
-  }
+    setRandomQuestions(randomized);
+  };
 
   const handleAddQuestions = () => {
-    if (!randomQuestions.length) return
+    if (!randomQuestions.length) return;
 
-    const requiredCounts = sections.reduce(
-      (acc, section) => {
-        if (!acc[section.type]) acc[section.type] = 0
-        acc[section.type] += section.count
-        return acc
-      },
-      {} as Record<string, number>,
-    )
+    // Create a map of required counts from sections
+    const requiredCounts = sections.reduce((acc, section) => {
+      if (!acc[section.type]) acc[section.type] = 0;
+      acc[section.type] += section.count;
+      return acc;
+    }, {} as Record<string, number>);
 
+    // Filter questions by type and take only the required count
     const finalSelectedQuestions = Object.entries(requiredCounts).flatMap(([type, count]) => {
-      const typeQuestions = randomQuestions.filter((q) => q.type === type).slice(0, count)
-      return typeQuestions
-    })
+      const typeQuestions = randomQuestions
+        .filter(q => q.type === type)
+        .slice(0, count);
+      return typeQuestions;
+    });
 
-    setSelectedQuestions(finalSelectedQuestions)
-    setRandomQuestions([])
+    setSelectedQuestions(finalSelectedQuestions);
+    setRandomQuestions([]);
 
-    const questionCounts = finalSelectedQuestions.reduce(
-      (acc, q) => {
-        acc[q.type] = (acc[q.type] || 0) + 1
-        return acc
-      },
-      {} as Record<string, number>,
-    )
+    // Show confirmation toast with counts
+    const mcqCount = finalSelectedQuestions.filter(q => q.type === 'mcq').length;
+    const shortCount = finalSelectedQuestions.filter(q => q.type === 'short').length;
+    const longCount = finalSelectedQuestions.filter(q => q.type === 'long').length;
 
-    toast.success(
-      `Added: ${Object.entries(questionCounts)
-        .map(([type, count]) => `${count} ${type}`)
-        .join(", ")}`,
-    )
-  }
+    toast.success(`Added: ${mcqCount} MCQs, ${shortCount} Short, ${longCount} Long questions`);
+  };
 
   const handleClose = () => {
     setShowPaper(true)
   }
 
   const handleDownloadClick = () => {
-    console.log("Download button clicked") // Add this line for debugging
+    console.log('Download button clicked')
     if (selectedQuestions.length === 0) {
-      toast.error("No questions selected")
+      toast.error('No questions selected')
       return
     }
 
-    const hasCorrectCounts = sections.every((section) => {
-      const typeCount = selectedQuestions.filter((q) => q.type === section.type).length
+    // Verify question counts match the requirements
+    const hasCorrectCounts = sections.every(section => {
+      const typeCount = selectedQuestions.filter(q => q.type === section.type).length
       return typeCount === section.count
-    })
+    });
 
     if (!hasCorrectCounts) {
-      toast.error("Question counts do not match the requirements. Please reselect questions.")
+      toast.error('Question counts do not match the requirements. Please reselect questions.')
       return
     }
 
-    console.log("Opening header dialog") // Add this line for debugging
-    setShowHeaderDialog(true)
+    // Force a re-render of the paper before opening the dialog
+    setSelectedQuestions(prevQuestions => {
+      console.log('Updating selected questions')
+      return [...prevQuestions]
+    })
+
+    // Delay opening the dialog slightly to ensure state update has occurred
+    setTimeout(() => {
+      console.log('Opening header dialog')
+      setShowHeaderDialog(true)
+    }, 100)
   }
 
   const handleHeaderDetailsSubmit = async (details: {
@@ -229,33 +247,46 @@ export default function ConfigureUrduPaperPage() {
     day: string
     syllabus: string
   }) => {
-    console.log("Submitting header details:", details) // Add this line for debugging
+    console.log('Submitting header details:', details)
     try {
       setIsGeneratingPDF(true)
 
-      const success = await generatePDF(selectedQuestions, {
+      // Ensure selectedQuestions is up-to-date
+      const currentSelectedQuestions = [...selectedQuestions]
+
+      const result = await generatePDF(currentSelectedQuestions, {
         grade: details.class,
-        subject: "Urdu",
+        subject: details.subject,
         chapter: [details.syllabus],
         paperNo: details.paperNo,
         date: details.date,
         day: details.day,
         timeAllowed: details.timeAllowed,
         totalMarks: details.totalMarks,
-        topic: "", // Add missing topic property
-        category: "", // Add missing category property
-        sections,
+        topic: "",
+        category: "",
+        sections
       })
 
-      if (success) {
-        toast.success("Paper downloaded and saved successfully")
+      if (result.success && result.pdfData) {
+        toast.success("Paper generated successfully")
         setShowHeaderDialog(false)
+
+        // Open PDF in new tab
+        const pdfWindow = window.open()
+        if (pdfWindow) {
+          pdfWindow.document.write(`<iframe width='100%' height='100%' src='${result.pdfData}'></iframe>`)
+        }
+
+        // Store PDF data for printing
+        setCurrentPdfData(result.pdfData)
+        setShowPrintDialog(true)
       } else {
-        toast.error("Failed to generate PDF")
+        throw new Error("PDF generation failed")
       }
     } catch (error) {
-      console.error("Error generating PDF:", error)
-      toast.error("Failed to generate PDF")
+      console.error('Error generating PDF:', error)
+      toast.error('Failed to generate PDF. Please try again.')
     } finally {
       setIsGeneratingPDF(false)
     }
@@ -280,18 +311,44 @@ export default function ConfigureUrduPaperPage() {
               <div className="mb-8">
                 {selectedQuestions.length > 0 && (
                   <>
-                    {sections.map((section, sectionIndex) => (
-                      <div key={sectionIndex} className="mb-8">
-                        <h2 className="text-lg font-semibold mb-4">{section.heading}</h2>
+                    {selectedQuestions.filter(q => q.type === 'mcq').length > 0 && (
+                      <div className="mb-8">
+                        <h2 className="text-lg font-semibold mb-4">Q1. Choose the correct answer:</h2>
                         <div className="space-y-6">
                           {selectedQuestions
-                            .filter((q) => q.type === section.type)
+                            .filter(q => q.type === 'mcq')
                             .map((question, index) => (
                               <QuestionDisplay key={question.id} question={question} index={index} />
                             ))}
                         </div>
                       </div>
-                    ))}
+                    )}
+
+                    {selectedQuestions.filter(q => q.type === 'short').length > 0 && (
+                      <div className="mb-8">
+                        <h2 className="text-lg font-semibold mb-4">Q2. Answer the following short questions:</h2>
+                        <div className="space-y-6">
+                          {selectedQuestions
+                            .filter(q => q.type === 'short')
+                            .map((question, index) => (
+                              <QuestionDisplay key={question.id} question={question} index={index} />
+                            ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedQuestions.filter(q => q.type === 'long').length > 0 && (
+                      <div className="mb-8">
+                        <h2 className="text-lg font-semibold mb-4">Q3. Answer the following in detail:</h2>
+                        <div className="space-y-6">
+                          {selectedQuestions
+                            .filter(q => q.type === 'long')
+                            .map((question, index) => (
+                              <QuestionDisplay key={question.id} question={question} index={index} />
+                            ))}
+                        </div>
+                      </div>
+                    )}
                   </>
                 )}
               </div>
@@ -299,7 +356,7 @@ export default function ConfigureUrduPaperPage() {
               <AnswerKey
                 answers={selectedQuestions.map((q, i) => ({
                   number: i + 1,
-                  answer: q.type === "mcq" ? (q as any).correct : "See detailed answer key",
+                  answer: q.type === 'mcq' ? (q as any).correct : 'See detailed answer key'
                 }))}
               />
             </div>
@@ -320,7 +377,7 @@ export default function ConfigureUrduPaperPage() {
       <div className="p-8">
         <div className="max-w-6xl mx-auto">
           <div className="bg-blue-500 text-white p-4 rounded-t-lg flex items-center justify-between">
-            <h1 className="text-lg font-medium">Configure Urdu Paper - 10th Grade</h1>
+            <h1 className="text-lg font-medium">Select Your Questions Here... 10th - Urdu</h1>
             <X className="h-5 w-5 cursor-pointer" onClick={handleClose} />
           </div>
 
@@ -331,20 +388,17 @@ export default function ConfigureUrduPaperPage() {
                   <Label>Question Type</Label>
                   <Select
                     value={currentSection.type}
-                    onValueChange={(value: "mcq" | "short" | "long") => setCurrentSection({ ...currentSection, type: value })}
+                    onValueChange={(value: 'mcq' | 'short' | 'long') =>
+                      setCurrentSection({ ...currentSection, type: value })
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="mcq">Multiple Choice</SelectItem>
-                      <SelectItem value="poetryExplanation">شاعری کی تشریح</SelectItem>
-                      <SelectItem value="excerptExplanation">حصہ دوم - اقتباس کی تشریح</SelectItem>
-                      <SelectItem value="fillInTheBlanks">خالی جگہ پُر کریں</SelectItem>
-                      <SelectItem value="mcqs">کثیر انتخابی سوالات</SelectItem>
-                      <SelectItem value="applicationWriting">درخواست نویسی</SelectItem>
-                      <SelectItem value="letterWriting">خط نویسی</SelectItem>
-                      <SelectItem value="essayWriting">مضمون نویسی</SelectItem>
+                      <SelectItem value="short">Short Questions</SelectItem>
+                      <SelectItem value="long">Long Questions</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -355,12 +409,10 @@ export default function ConfigureUrduPaperPage() {
                     type="number"
                     min="1"
                     value={currentSection.count}
-                    onChange={(e) =>
-                      setCurrentSection({
-                        ...currentSection,
-                        count: Number.parseInt(e.target.value) || 1,
-                      })
-                    }
+                    onChange={(e) => setCurrentSection({
+                      ...currentSection,
+                      count: parseInt(e.target.value) || 1
+                    })}
                   />
                 </div>
 
@@ -370,20 +422,34 @@ export default function ConfigureUrduPaperPage() {
                     type="number"
                     min="1"
                     value={currentSection.marks}
-                    onChange={(e) =>
-                      setCurrentSection({
-                        ...currentSection,
-                        marks: Number.parseInt(e.target.value) || 1,
-                      })
-                    }
+                    onChange={(e) => setCurrentSection({
+                      ...currentSection,
+                      marks: parseInt(e.target.value) || 1
+                    })}
                   />
                 </div>
               </div>
 
-              <Button onClick={handleAddSection}>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Section
-              </Button>
+              <div className="flex items-center space-x-4">
+                <Button onClick={handleAddSection}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Section
+                </Button>
+                <div className="space-y-2">
+                  <Select value={selectedHeading} onValueChange={(value) => setSelectedHeading(value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select heading" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {predefinedHeadings.map((heading) => (
+                        <SelectItem key={heading} value={heading}>
+                          {heading}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
 
               {sections.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -392,13 +458,19 @@ export default function ConfigureUrduPaperPage() {
                       <CardContent className="p-4">
                         <div className="flex justify-between items-start">
                           <div>
-                            <h3 className="font-medium">{section.heading}</h3>
+                            <h3 className="font-medium">{section.type.toUpperCase()}</h3>
                             <p className="text-sm text-muted-foreground">
                               {section.count} questions × {section.marks} marks
                             </p>
-                            <p className="text-sm font-medium">Total: {section.count * section.marks} marks</p>
+                            <p className="text-sm font-medium">
+                              Total: {section.count * section.marks} marks
+                            </p>
                           </div>
-                          <Button variant="ghost" size="icon" onClick={() => handleRemoveSection(index)}>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleRemoveSection(index)}
+                          >
                             <Trash2 className="h-4 w-4 text-red-500" />
                           </Button>
                         </div>
@@ -469,4 +541,3 @@ export default function ConfigureUrduPaperPage() {
     </DashboardLayout>
   )
 }
-

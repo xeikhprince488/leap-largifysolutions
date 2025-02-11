@@ -37,7 +37,7 @@ export default function ConfigureQuestionsPage() {
   const [showHeaderDialog, setShowHeaderDialog] = useState(false)
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const [selectedChapters, setSelectedChapters] = useState<string[]>([])
-  const predefinedHeadings = ["Solve Any 5 of the following.", "Solve Any 8 of the following.", "Solve Any 3 of the following."] // Add predefined headings
+  const predefinedHeadings = ["2. Attempt any five parts.", "3. Attempt any five parts.", "4. Attempt any five parts.", "5. Attempt any two questions.", "Choose the correct option."] // Add predefined headings
   const [selectedHeading, setSelectedHeading] = useState(predefinedHeadings[0]) // Add state for selected heading
   const [showPrintDialog, setShowPrintDialog] = useState(false)
   const [currentPdfData, setCurrentPdfData] = useState<string | null>(null)

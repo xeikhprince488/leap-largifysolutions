@@ -20,7 +20,7 @@ import { HeaderDetailsDialog } from "@/components/header-details-dialog"
 
 export default function ConfigureUrduPaperPage() {
   const [sections, setSections] = useState<QuestionConfig[]>([])
-  const [currentSection, setCurrentSection] = useState<Omit<QuestionConfig, "type"> & { type: string }>({
+  const [currentSection, setCurrentSection] = useState<Omit<QuestionConfig, "type"> & { type: QuestionConfig["type"] }>({
     type: "mcq",
     count: 1,
     marks: 1,
@@ -36,6 +36,22 @@ export default function ConfigureUrduPaperPage() {
   const [showHeaderDialog, setShowHeaderDialog] = useState(false)
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const [selectedChapters, setSelectedChapters] = useState<string[]>([])
+  const predefinedHeadings = [
+    "درست جواب کا انتخاب کریں۔",
+    "مندرجہ ذیل نظم / غزل کے اشعار کی تشریح کیجیے۔",
+    "درج ذیل نثر پارے کی تشریح کیجیے، سبق کا عنوان، مصنف کا نام اور مشکل الفاظ کے معنی بھی تحریر کیجیے۔",
+    "درج ذیل سوالات کے مختصر جوابات دیں۔",
+    "درج ذیل سبق کا خلاصہ لکھیں۔",
+    " اہم کردار کی مرکزی خیال بیان کریں اور کردار کا بھی تجزیہ کریں۔",
+    "  پیراگراف تحریر کیجیے۔",
+    " مکالمہ تحریر کیجیے۔",
+    "درج ذیل جملوں کی درستگی کریں۔",
+    "درج ذیل جملوں کی مثالیں درج کریں۔"
+  ];
+  
+  const [selectedHeading, setSelectedHeading] = useState(predefinedHeadings[0]) // Add state for selected heading
+  const [showPrintDialog, setShowPrintDialog] = useState(false)
+  const [currentPdfData, setCurrentPdfData] = useState<string | null>(null)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -45,12 +61,22 @@ export default function ConfigureUrduPaperPage() {
     }
   }, [])
 
+  useEffect(() => {
+    if (showPaper) {
+      setSelectedQuestions((prevQuestions) => [...prevQuestions])
+    }
+  }, [showPaper])
+
+  useEffect(() => {
+    console.log("showHeaderDialog changed:", showHeaderDialog)
+  }, [showHeaderDialog])
+
   const totalMarks = sections.reduce((sum, section) => sum + section.count * section.marks, 0)
 
   const handleAddSection = () => {
-    const heading = prompt("Enter the heading for this section:")
+    const heading = selectedHeading || prompt("Enter the heading for this section:") // Use selected heading or prompt
     if (heading) {
-      setSections([...sections, { ...currentSection, heading, type: currentSection.type as "mcq" | "short" | "long" }])
+      setSections([...sections, { ...currentSection, heading } as QuestionConfig])
       setCurrentSection({
         type: "mcq",
         count: 1,
@@ -331,7 +357,7 @@ export default function ConfigureUrduPaperPage() {
                   <Label>Question Type</Label>
                   <Select
                     value={currentSection.type}
-                    onValueChange={(value: string) => setCurrentSection({ ...currentSection, type: value })}
+                    onValueChange={(value: string) => setCurrentSection({ ...currentSection, type: value as QuestionConfig["type"] })}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select type" />
@@ -380,10 +406,26 @@ export default function ConfigureUrduPaperPage() {
                 </div>
               </div>
 
-              <Button onClick={handleAddSection}>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Section
-              </Button>
+              <div className="flex items-center space-x-4">
+                <Button onClick={handleAddSection}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Section
+                </Button>
+                <div className="space-y-2">
+                  <Select value={selectedHeading} onValueChange={(value) => setSelectedHeading(value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select heading" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {predefinedHeadings.map((heading) => (
+                        <SelectItem key={heading} value={heading}>
+                          {heading}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
 
               {sections.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -466,6 +508,20 @@ export default function ConfigureUrduPaperPage() {
         onSubmit={handleHeaderDetailsSubmit}
         loading={isGeneratingPDF}
       />
+      {showPrintDialog && currentPdfData && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg max-w-md w-full">
+            <h2 className="text-lg font-semibold mb-4">Print PDF</h2>
+            <iframe src={currentPdfData} className="w-full h-64 mb-4" />
+            <div className="flex justify-end space-x-2">
+              <Button variant="outline" onClick={() => setShowPrintDialog(false)}>
+                Cancel
+              </Button>
+              <Button onClick={() => window.print()}>Print</Button>
+            </div>
+          </div>
+        </div>
+      )}
     </DashboardLayout>
   )
 }

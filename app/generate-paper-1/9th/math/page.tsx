@@ -8,165 +8,129 @@ import { useRouter } from 'next/navigation'
 
 const mathChapters = [
   {
-    id: "unit-1",
-    title: "UNIT 1: Matrices and Determinants",
+    id: "chapter-1",
+    title: "Chapter 1: Real Numbers",
     items: [
-      { id: "1.1", title: "1.1 EX: 1.1" },
-      { id: "1.2", title: "1.2 EX: 1.2" },
-      { id: "1.3", title: "1.3 EX: 1.3" },
-      { id: "1.4", title: "1.4 EX: 1.4" },
-      { id: "1.5", title: "1.5 EX: 1.5" },
-      { id: "1.6", title: "1.6 EX: 1.6" }
+      { id: "1.1", title: "Exercise 1.1" },
+      { id: "1.2", title: "Exercise 1.2" },
+      { id: "1.3", title: "Exercise 1.3" },
+      { id: "1.4", title: "Review Exercise 1" }
     ]
   },
   {
-    id: "unit-2",
-    title: "UNIT 2: Real and Complex Numbers",
+    id: "chapter-2",
+    title: "Chapter 2: Logarithms",
     items: [
-      { id: "2.1", title: "2.1 EX: 2.1" },
-      { id: "2.2", title: "2.2 EX: 2.2" },
-      { id: "2.3", title: "2.3 EX: 2.3" },
-      { id: "2.4", title: "2.4 EX: 2.4" },
-      { id: "2.5", title: "2.5 EX: 2.5" },
-      { id: "2.6", title: "2.6 EX: 2.6" }
+      { id: "2.1", title: "Exercise 2.1" },
+      { id: "2.2", title: "Exercise 2.2" },
+      { id: "2.3", title: "Exercise 2.3" },
+      { id: "2.4", title: "Exercise 2.4" },
+      { id: "2.5", title: "Review Exercise 2" }
     ]
   },
   {
-    id: "unit-3",
-    title: "UNIT 3: Logarithms",
+    id: "chapter-3",
+    title: "Chapter 3: Sets and Functions",
     items: [
-      { id: "3.1", title: "3.1 EX: 3.1" },
-      { id: "3.2", title: "3.2 EX: 3.2" },
-      { id: "3.3", title: "3.3 EX: 3.3" },
-      { id: "3.4", title: "3.4 EX: 3.4" }
+      { id: "3.1", title: "Exercise 3.1" },
+      { id: "3.2", title: "Exercise 3.2" },
+      { id: "3.3", title: "Exercise 3.3" },
+      { id: "3.4", title: "Review Exercise 3" }
     ]
   },
   {
-    id: "unit-4",
-    title: "UNIT 4: Algebraic Expressions and Algebraic Formulas",
+    id: "chapter-4",
+    title: "Chapter 4: Factorization and Algebraic Manipulation",
     items: [
-      { id: "4.1", title: "4.1 EX: 4.1" },
-      { id: "4.2", title: "4.2 EX: 4.2" },
-      { id: "4.3", title: "4.3 EX: 4.3" },
-      { id: "4.4", title: "4.4 EX: 4.4" }
+      { id: "4.1", title: "Exercise 4.1" },
+      { id: "4.2", title: "Exercise 4.2" },
+      { id: "4.3", title: "Exercise 4.3" },
+      { id: "4.4", title: "Exercise 4.4" },
+      { id: "4.5", title: "Review Exercise 4" }
     ]
   },
   {
-    id: "unit-5",
-    title: "UNIT 5: Factorization",
+    id: "chapter-5",
+    title: "Chapter 5: Linear Equations and Inequalities",
     items: [
-      { id: "5.1", title: "5.1 EX: 5.1" },
-      { id: "5.2", title: "5.2 EX: 5.2" },
-      { id: "5.3", title: "5.3 EX: 5.3" },
-      { id: "5.4", title: "5.4 EX: 5.4" }
+      { id: "5.1", title: "Exercise 5.1" },
+      { id: "5.2", title: "Exercise 5.2" },
+      { id: "5.3", title: "Review Exercise 5" }
     ]
   },
   {
-    id: "unit-6",
-    title: "UNIT 6: Algebraic Manipulation",
+    id: "chapter-6",
+    title: "Chapter 6: Trigonometry",
     items: [
-      { id: "6.1", title: "6.1 EX: 6.1" },
-      { id: "6.2", title: "6.2 EX: 6.2" },
-      { id: "6.3", title: "6.3 EX: 6.3" }
+      { id: "6.1", title: "Exercise 6.1" },
+      { id: "6.2", title: "Exercise 6.2" },
+      { id: "6.3", title: "Exercise 6.3" },
+      { id: "6.4", title: "Exercise 6.4" },
+      { id: "6.5", title: "Exercise 6.5" },
+      { id: "6.6", title: "Exercise 6.6" },
+      { id: "6.7", title: "Review Exercise 6" }
     ]
   },
   {
-    id: "unit-7",
-    title: "UNIT 7: Linear Equations and Inequalities",
+    id: "chapter-7",
+    title: "Chapter 7: Coordinate Geometry",
     items: [
-      { id: "7.1", title: "7.1 EX: 7.1" },
-      { id: "7.2", title: "7.2 EX: 7.2" },
-      { id: "7.3", title: "7.3 EX: 7.3" }
+      { id: "7.1", title: "Exercise 7.1" },
+      { id: "7.2", title: "Exercise 7.2" },
+      { id: "7.3", title: "Exercise 7.3" },
+      { id: "7.4", title: "Review Exercise 7" }
     ]
   },
   {
-    id: "unit-8",
-    title: "UNIT 8: Linear Graphs & Their Application",
+    id: "chapter-8",
+    title: "Chapter 8: Logic",
     items: [
-      { id: "8.1", title: "8.1 EX: 8.1" },
-      { id: "8.2", title: "8.2 EX: 8.2" },
-      { id: "8.3", title: "8.3 EX: 8.3" }
+      { id: "8.1", title: "Exercise 8" }
     ]
   },
   {
-    id: "unit-9",
-    title: "UNIT 9: Introduction to Coordinate Geometry",
+    id: "chapter-9",
+    title: "Chapter 9: Similar Figures",
     items: [
-      { id: "9.1", title: "9.1 EX: 9.1" },
-      { id: "9.2", title: "9.2 EX: 9.2" },
-      { id: "9.3", title: "9.3 EX: 9.3" }
+      { id: "9.1", title: "Exercise 9.1" },
+      { id: "9.2", title: "Exercise 9.2" },
+      { id: "9.3", title: "Exercise 9.3" },
+      { id: "9.4", title: "Exercise 9.4" },
+      { id: "9.5", title: "Review Exercise 9" }
     ]
   },
   {
-    id: "unit-10",
-    title: "UNIT 10: Congruent Triangles",
+    id: "chapter-10",
+    title: "Chapter 10: Graphs of Functions",
     items: [
-      { id: "10.1", title: "10.1 EX: 10.1" },
-      { id: "10.2", title: "10.2 EX: 10.2" },
-      { id: "10.3", title: "10.3 EX: 10.3" },
-      { id: "10.4", title: "10.4 EX: 10.4" }
+      { id: "10.1", title: "Exercise 10.1" },
+      { id: "10.2", title: "Exercise 10.2" },
+      { id: "10.3", title: "Review Exercise 10" }
     ]
   },
   {
-    id: "unit-11",
-    title: "UNIT 11: Parallelograms and Triangles",
+    id: "chapter-11",
+    title: "Chapter 11: Loci and Construction",
     items: [
-      { id: "11.1", title: "11.1 EX: 11.1" },
-      { id: "11.2", title: "11.2 EX: 11.2" },
-      { id: "11.3", title: "11.3 EX: 11.3" },
-      { id: "11.4", title: "11.4 EX: 11.4" },
-      { id: "11.5", title: "11.5 EX: 11.5" }
+      { id: "11.1", title: "Review Exercise 11" }
     ]
   },
   {
-    id: "unit-12",
-    title: "UNIT 12: Line Bisectors and Angle Bisectors",
+    id: "chapter-12",
+    title: "Chapter 12: Information Handling",
     items: [
-      { id: "12.1", title: "12.1 EX: 12.1" },
-      { id: "12.2", title: "12.2 EX: 12.2" },
-      { id: "12.3", title: "12.3 EX: 12.3" }
+      { id: "12.1", title: "Exercise 12.1" },
+      { id: "12.2", title: "Exercise 12.2" },
+      { id: "12.3", title: "Review Exercise 12" }
     ]
   },
   {
-    id: "unit-13",
-    title: "UNIT 13: Sides and Angles of a Triangle",
+    id: "chapter-13",
+    title: "Chapter 13: Probability",
     items: [
-      { id: "13.1", title: "13.1 EX: 13.1" },
-      { id: "13.2", title: "13.2 EX: 13.2" }
-    ]
-  },
-  {
-    id: "unit-14",
-    title: "UNIT 14: Ratio and Proportion",
-    items: [
-      { id: "14.1", title: "14.1 EX: 14.1" },
-      { id: "14.2", title: "14.2 EX: 14.2" }
-    ]
-  },
-  {
-    id: "unit-15",
-    title: "UNIT 15: Pythagoras' Theorem",
-    items: [
-      { id: "15.1", title: "15.1 EX: 15.1" }
-    ]
-  },
-  {
-    id: "unit-16",
-    title: "UNIT 16: Theorems Related with Area",
-    items: [
-      { id: "16.1", title: "16.1 EX: 16.1" },
-      { id: "16.2", title: "16.2 EX: 16.2" }
-    ]
-  },
-  {
-    id: "unit-17",
-    title: "UNIT 17: Practical Geometry --- Triangles",
-    items: [
-      { id: "17.1", title: "17.1 EX: 17.1" },
-      { id: "17.2", title: "17.2 EX: 17.2" },
-      { id: "17.3", title: "17.3 EX: 17.3" },
-      { id: "17.4", title: "17.4 EX: 17.4" },
-      { id: "17.5", title: "17.5 EX: 17.5" }
+      { id: "13.1", title: "Exercise 13.1" },
+      { id: "13.2", title: "Exercise 13.2" },
+      { id: "13.3", title: "Review Exercise 13" }
     ]
   }
 ]

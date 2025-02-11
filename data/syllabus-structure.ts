@@ -13,59 +13,99 @@ interface GradeStructure {
 export const syllabusStructure: GradeStructure = {
   "9th": {
     biology: {
-      "CHAP 1 Introduction to Biology": [
-        "1.1 Introduction to Biology",
-        "1.2 The Levels of Organization",
+      "CHAP 1 THE SCIENCE OF BIOLOGY": [
+        "1.1-Biology and its Branches",
+        "1.2-Relation of Biology with Other Sciences",
+        "1.3-Careers in Biology",
+        "1.4-Quranic Instructions to Reveal the Study of Life",
+        "1.5-Science as a Collaborative Field",
+        "1.6-Scientific Method",
+        "1.7-Theory and Law/Principle",
+        "1.8-Malaria - An Example of Biological Method",
       ],
-      "CHAP 2 Solving a Biological Problem": [
-        "2.1 Biological Method",
-        "2.2 Data Organization and Analysis",
-        "2.3 math as Integral Part of Scientific Process",
+      "CHAP 2 BIODIVERSITY": [
+        "2.1-Biodiversity",
+        "2.2-Classification",
+        "2.3-Taxonomic Ranks",
+        "2.4-History of Classification",
+        "2.5-Domains of Living Organisms",
+        "2.6-Classification of Domain Eukarya",
+        "2.7-Status of Virus in Classification",
+        "2.8-Binomial Nomenclature",
       ],
-      "CHAP 3 Biodiversity": [
-        "3.1 Biodiversity",
-        "3.2 Aims and Principles of Classification",
-        "3.3 History of Classification Systems",
-        "3.4 The Five Kingdoms",
-        "3.5 Binomial Nomenclature",
-        "3.6 Conservation of Biodiversity",
+      "CHAP 3 THE CELL": [
+        "3.1-Cell",
+        "3.2-Structure of Cell",
+        "3.3-Cell wall",
+        "3.4-Cell membrane",
+        "3.5-Cytoplasm",
+        "3.6-Nucleus",
+        "3.7-Cytoskeleton",
+        "3.8-Ribosome",
+        "3.9-Endoplasmic reticulum",
+        "3.10-Golgi apparatus",
+        "3.11-Lysosomes",
+        "3.12-Mitochondria",
+        "3.13-Plastids",
+        "3.14-Vacuoles",
+        "3.15-Centrioles",
+        "3.16-Structural Advantages of Plant and Animal Cells",
+        "3.17-Cell Specialization",
+        "3.18-Stem Cells",
       ],
-      "CHAP 4 Cells and Tissues": [
-        "4.1 Microscopy and the Emergence of Cell Theory",
-        "4.2 Cellular Structures and Functions",
-        "4.3 Cell Size and Surface Area to Volume Ratio",
-        "4.4 Passage of Molecules into and out of Cells",
-        "4.5 Animal and Plant Tissues",
+      "CHAP 4 CELL CYCLE": [
+        "4.1-Cell Cycle",
+        "4.2-Mitosis",
+        "4.3-Meiosis",
+        "4.4-Comparison between Meiosis and Mitosis",
       ],
-      "CHAP 5 Cell Cycle": [
-        "5.1 Cell Cycle",
-        "5.2 Mitosis",
-        "5.3 Meiosis",
-        "5.4 Apoptosis and Necrosis",
+      "CHAP 5 TISSUES, ORGANS, AND ORGAN SYSTEMS": [
+        "5.1-Levels of Organization",
+        "5.2-Organs and Organ Systems in Plants",
+        "5.3-Organs and Organ Systems in Humans",
+        "5.4-Homeostasis",
       ],
-      "CHAP 6 Enzymes": [
-        "6.1 Characteristics of Enzymes",
-        "6.2 Mechanism of Enzyme Action",
-        "6.3 Specificity of Enzymes",
+      "CHAP 6 BIOMOLECULES": [
+        "6.1-Biomolecules",
+        "6.2-Carbohydrates",
+        "6.3-Proteins",
+        "6.4-Lipids",
+        "6.5-Nucleic Acids",
+        "6.6-The Working of DNA and RNA",
       ],
-      "CHAP 7 Bioenergetics": [
-        "7.1 Bioenergetics and the Role of ATP",
-        "7.2 Photosynthesis",
-        "7.3 Respiration",
+      "CHAP 7 ENZYMES": [
+        "7.1-Metabolism",
+        "7.2-Enzymes",
+        "7.3-Mechanism of Enzyme Action",
+        "7.4-Factors that Affect the Activity of Enzymes",
+        "7.5-Enzyme Inhibition",
       ],
-      "CHAP 8 Nutrition": [
-        "8.1 Mineral Nutrition in Plants",
-        "8.2 Components of Human Food",
-        "8.3 Digestion in Humans",
-        "8.4 Disorders of the Gut",
+      "CHAP 8 BIOENERGETICS": [
+        "8.1-ATP: The Cell’s Energy Currency",
+        "8.2-Photosynthesis",
+        "8.3-Cellular Respiration",
       ],
-      "CHAP 9 Transport": [
-        "9.1 Transport in Plants",
-        "9.2 Transport in Humans",
-        "9.3 Cardiovascular Disorders",
+      "CHAP 9 PLANT PHYSIOLOGY": [
+        "9.1-Nutrition in Plants",
+        "9.2-Transport in Plants",
+        "9.3-Transportation",
+        "9.4-Transport of Water and Salts in Plants",
+        "9.5-Translocation of Food in Plants",
+        "9.6-Gaseous Exchange in Plants",
+        "9.7-Mechanisms for Excretion in Plants",
+        "9.8-Osmotic Adjustments in Plants",
+      ],
+      "CHAP 10 REPRODUCTION IN PLANTS": [
+        "10.1-Types of Asexual Reproduction",
+        "10.2-Artificial Propagation",
+        "10.3-Sexual Reproduction in Plants",
+      ],
+      "CHAP 11 BIOSTATISTICS": [
+        "11.1-Introduction of Biostatistics",
+        "11.2-Mean, Median, and Mode",
+        "11.3-Bar Chart",
       ],
     },
-
     computer: {
       "CHAP 1 Problem Solving": [
         "1.1 Problem Solving Steps",
@@ -109,228 +149,288 @@ export const syllabusStructure: GradeStructure = {
     },
 
     physics: {
-      "CHAP 1 Physical Quantities and Measurement": [
-        "1.1 Introduction to Physics",
-        "1.2 Physical Quantities",
+      "UNIT 1 Physical Quantities and Measurements": [
+        "1.1 Physical and Non-Physical Quantities",
+        "1.2 Base and Derived Physical Quantities",
         "1.3 International System of Units",
-        "1.4 Prefixes",
-        "1.5 Scientific Notation",
-        "1.6 Measuring Instruments",
-        "1.7 Significant Figures",
+        "1.4 Scientific Notation",
+        "1.5 Length Measuring Instrument",
+        "1.6 Mass Measuring Instrument",
+        "1.7 Time Measuring Instrument",
+        "1.8 Volume Measuring Instrument",
+        "1.9 Errors in Measurements",
+        "1.10 Uncertainty in Measurements",
+        "1.11 Significant Figures",
+        "1.12 Precision and Accuracy",
+        "1.13 Rounding Off the Digits"
       ],
-      "CHAP 2 Kinematics": [
-        "2.1 Rest and Motion",
-        "2.2 Types of Motion",
-        "2.3 Scalars and Vectors",
-        "2.4 Terms Associated with Motion",
-        "2.5 Graphical Analysis of Motion",
-        "2.6 Equations of Motion",
-        "2.7 Motion of Freely Falling Bodies",
+      "UNIT 2 Kinematics": [
+        "2.1 Scalar and Vectors",
+        "2.2 Rest and Motion",
+        "2.3 Types of Motion",
+        "2.4 Distance and Displacement",
+        "2.5 Speed and Velocity",
+        "2.6 Acceleration",
+        "2.7 Graphical Analysis of Motion",
+        "2.8 Gradient of a Distance-Time Graph",
+        "2.9 Speed-Time Graph",
+        "2.10 Gradient of a Speed-Time Graph",
+        "2.11 Area Under Speed-Time Graph",
+        "2.12 Solving Problems for Motion Under Gravity",
+        "2.13 Free Fall Acceleration"
       ],
-      "CHAP 3 Dynamics": [
-        "3.1 Force, Inertia and Momentum",
-        "3.2 Newton's Laws of Motion",
-        "3.3 Friction",
-        "3.4 Uniform Circular Motion",
+      "UNIT 3 Dynamics": [
+        "3.1 Concept of Force",
+        "3.2 Fundamental Forces",
+        "3.3 Forces in a Free-Body Diagram",
+        "3.4 Newton's Laws of Motion",
+        "3.5 Limitations of Newton's Laws of Motion",
+        "3.6 Mass and Weight",
+        "3.7 Mechanical and Electronic Balances",
+        "3.8 Friction",
+        "3.9 Momentum and Impulse",
+        "3.10 Principle of Conservation of Momentum"
       ],
-      "CHAP 4 Turning Effect of Forces": [
+      "UNIT 4 Turning Effects of Force": [
         "4.1 Like and Unlike Parallel Forces",
-        "4.2 Resultant of Forces",
-        "4.3 Resolution of Forces",
-        "4.4 Torque or Moment of Force",
-        "4.5 Principle of Moments",
-        "4.6 Centre of Mass",
-        "4.7 Centre of Gravity",
-        "4.8 Couple",
-        "4.9 Equilibrium",
-        "4.10 Stability and Position of Centre of Mass",
+        "4.2 Addition of Force",
+        "4.3 Turning Effect of a Force",
+        "4.4 Resolution of Vectors",
+        "4.5 Determination of a Force from Its Perpendicular Components",
+        "4.6 Principle of Moments",
+        "4.7 Centre of Gravity and Centre of Mass",
+        "4.8 Equilibrium",
+        "4.9 Conditions of Equilibrium",
+        "4.10 States of Equilibrium",
+        "4.11 Improvement of Stability",
+        "4.12 Application of Stability in Real Life",
+        "4.13 Centripetal Force"
       ],
-      "CHAP 5 Gravitation": [
-        "5.1 Force of Gravitation",
-        "5.2 Mass of Earth",
-        "5.3 Variation of g with Altitude",
-        "5.4 Artificial Satellites",
+      "UNIT 5 Work, Energy, and Power": [
+        "5.1 Work",
+        "5.2 Energy",
+        "5.3 Conservation of Energy",
+        "5.4 Sources of Energy",
+        "5.5 Renewable and Non-Renewable Sources",
+        "5.6 Advantages and Disadvantages of Methods of Energy Production",
+        "5.7 Power",
+        "5.8 Efficiency"
       ],
-      "CHAP 6 Work and Energy": [
-        "6.1 Work",
-        "6.2 Energy",
-        "6.3 Kinetic Energy",
-        "6.4 Potential Energy",
-        "6.5 Types of Energy",
-        "6.6 Interconversion of Energy",
-        "6.7 Major Sources of Energy",
-        "6.8 Efficiency",
-        "6.9 Power",
+      "UNIT 6 Mechanical Properties of Matter": [
+        "6.1 Deformation of Solids",
+        "6.2 Hooke's Law",
+        "6.3 Density",
+        "6.4 Pressure",
+        "6.5 Pressure in Liquids",
+        "6.6 Atmospheric Pressure",
+        "6.7 Measurement of Atmospheric Pressure",
+        "6.8 Measurement of Pressure by Manometer",
+        "6.9 Pascal's Law"
       ],
-      "CHAP 7 Properties of Matter": [
-        "7.1 Kinetic Molecular Model of Matter",
-        "7.2 Density",
-        "7.3 Pressure",
-        "7.4 Atmospheric Pressure",
-        "7.5 Pressure in Liquids",
-        "7.6 Archimedes Principle",
-        "7.7 Principle of Floatation",
-        "7.8 Elasticity",
-        "7.9 Hook's Law",
+      "UNIT 7 Thermal Properties of Matter": [
+        "7.1 Kinetic Molecular Theory of Matter",
+        "7.2 Temperature and Heat",
+        "7.3 Thermometers",
+        "7.4 Sensitivity, Range, and Linearity of Thermometers",
+        "7.5 Structure of a Liquid-in-Glass Thermometer"
       ],
-      "CHAP 8 Thermal Properties of Matter": [
-        "8.1 Temperature and Heat",
-        "8.2 Thermometer",
-        "8.3 Specific Heat Capacity",
-        "8.4 Change of State",
-        "8.5 Latent Heat of Fusion",
-        "8.6 Latent Heat of Vaporization",
-        "8.7 The Evaporation",
-        "8.8 Thermal Expansion",
+      "UNIT 8 Magnetism": [
+        "8.1 Magnetic Materials",
+        "8.2 Properties of Magnets",
+        "8.3 Induced Magnetism",
+        "8.4 Temporary and Permanent Magnets",
+        "8.5 Magnetic Fields",
+        "8.6 Uses of Permanent Magnets",
+        "8.7 Electromagnets",
+        "8.8 Domain Theory of Magnetism",
+        "8.9 Magnetization and Demagnetization",
+        "8.10 Application of Magnetics in Recording Technology",
+        "8.11 Soft Iron as Magnetic Shield"
       ],
-      "CHAP 9 Transfer of Heat": [
-        "9.1 Transfer of Heat",
-        "9.2 Conduction",
-        "9.3 Convection",
-        "9.4 Radiation",
-        "9.5 Applications and Consequences of Radiation",
-      ],
+      "UNIT 9 Nature of Science": [
+        "9.1 Scope of Physics",
+        "9.2 Branches of Physics",
+        "9.3 Interdisciplinary Nature of Physics",
+        "9.4 Interdisciplinary Research",
+        "9.5 Scientific Method",
+        "9.6 Scientific Base of Technologies and Engineering"
+      ]
     },
 
     chemistry: {
-      "CHAP 1 Fundamentals of Chemistry": [
-        "1.1 Branches of Chemistry",
-        "1.2 Basic Definitions",
-        "1.3 Chemical Species",
-        "1.4 Gram Atomic Mass, Gram Molecular Mass and Gram Formula Mass",
-        "1.5 Avogadro’s Number",
+      "UNIT 1 States of Matter and Phase Change": [
+        "1.1 What is Chemistry",
+        "1.2 States of Matter",
+        "1.3 Element, Compound, and Mixture",
+        "1.4 Allotropic Forms of Substances",
+        "1.5 Difference between Elements, Compounds, and Mixtures",
+        "1.6 Solution, Colloidal Solution, and Suspension",
+        "1.7 Formation of Unsaturated and Saturated Solutions",
+        "1.8 Effect of Temperature on the Solubility of Solutes"
       ],
-      "CHAP 2 Structure of Atoms": [
-        "2.1 Theories and Experiments Related to Structure of Atoms",
-        "2.2 Electronic Configuration",
-        "2.3 Isotopes",
+      "UNIT 2 Atomic Structure": [
+        "2.1 Structure of Atom",
+        "2.2 Atomic Number and Mass Number",
+        "2.3 Isotopes and Their Masses",
+        "2.4 Relative Atomic Mass"
       ],
-      "CHAP 3 Periodic Table and Periodicity of Properties": [
-        "3.1 Periodic Table",
-        "3.2 Periodicity of Properties",
+      "UNIT 3 Chemical Bonding": [
+        "3.1 Why Do Atoms Form Chemical Bonds?",
+        "3.2.2 Covalent Bond",
+        "3.2.3 Coordinate Covalent Bond",
+        "3.3 Metallic Bond",
+        "3.4 Electropositive Character of Metals",
+        "3.5 Electronegative Character of Non-metals",
+        "3.6 Compare the Properties of Ionic and Covalent Compounds",
+        "3.7 Intermolecular Forces of Attraction",
+        "3.8 Nature of Bonding and Properties"
       ],
-      "CHAP 4 Structure of Molecules": [
-        "4.1 Why do Atoms Form Chemical Bond?",
-        "4.2 Chemical Bond",
-        "4.3 Types of Chemical Bond",
-        "4.4 Inter Molecular Forces",
-        "4.5 Nature and Properties of Bonding",
+      "UNIT 4 Stoichiometry": [
+        "4.1 Chemical Formula",
+        "4.2 Empirical Formula",
+        "4.3 Chemical Formulas of Binary Ionic Compounds",
+        "4.4 Chemical Formulas of Compounds",
+        "4.5 Deduce the Molecular Formula from the Structural Formula",
+        "4.6 Avogadro's Number",
+        "4.7 The Mole and Molar Mass",
+        "4.8 Chemical Equation and Chemical Reaction",
+        "4.9 Calculations Based on Chemical Equations"
       ],
-      "CHAP 5 Physical States of Matter": [
-        "5.1 Typical Properties",
-        "5.2 Laws Related to Gases",
-        "5.3 Typical Properties of Liquid",
-        "5.4 Typical Properties of Solids",
-        "5.5 Types of Solids",
-        "5.6 Allotropy",
+      "UNIT 5 Energetics": [
+        "5.1 System and Surrounding",
+        "5.2 Enthalpy",
+        "5.3 Exothermic and Endothermic Reactions",
+        "5.4 How Does a Reaction Take Place?",
+        "5.5 Aerobic and Anaerobic Respiration"
       ],
-      "CHAP 6 Solutions": [
-        "6.1 Solution",
-        "6.2 Saturated Solutions",
-        "6.3 Types of Solutions",
-        "6.4 Concentration Units",
-        "6.5 Solubility",
-        "6.6 Comparison of Solution, Suspension and Colloid",
+      "UNIT 6 Equilibria": [
+        "6.1 Reversible and Irreversible Changes",
+        "6.2 Dynamic Equilibrium",
+        "6.3 Changing the Physical Condition of a Chemical Reaction"
       ],
-      "CHAP 7 Electrochemistry": [
-        "7.1 Oxidation and Reduction Reactions",
-        "7.2 Oxidation State and Rules For Assigning Oxidation State",
-        "7.3 Oxidizing and Reducing Agents",
-        "7.4 Oxidation-Reduction Reactions",
-        "7.5 Electrochemical Cells",
-        "7.6 Electrochemical Industries",
-        "7.7 Corrosion and its Prevention",
+      "UNIT 7 Acid-Base Chemistry": [
+        "7.1 Acids and Bases",
+        "7.2 Different Concepts of Acids and Bases",
+        "7.3 Bronsted-Lowry Concepts of Acids and Bases",
+        "7.4 Properties of Acids and Bases",
+        "7.5 Acid Rain and Its Effects"
       ],
-      "CHAP 8 Chemical Reactivity": ["8.1 Metals", "8.2 Non Metals"],
+      "UNIT 8 Periodic Table and Periodicity": [
+        "8.1 Modern Periodic Table",
+        "8.2 Salient Features of Modern Periodic Table",
+        "8.3 Similarities in the Chemical Properties of Elements in the Same Group",
+        "8.4 Variation of Periodic Properties in Periods and Groups",
+        "8.5 Metallic Character and Reactivity"
+      ],
+      "UNIT 9 Group Properties and Elements": [
+        "9.1 Properties of Group 1 Elements",
+        "9.2 Properties of Group 17 Elements",
+        "9.3 Group Properties of Transition Elements",
+        "9.4 Properties of Noble Gases",
+        "9.5 Physical Properties of Metals and Non-metals"
+      ],
+      "UNIT 10 Environmental Chemistry": [
+        "10.1 Composition of Atmosphere",
+        "10.2 Table Pollutants and Their Harmful Effects",
+        "10.3 Acid Rain",
+        "10.4 Global Warming (Greenhouse Effect)",
+        "10.5 Strategies to Reduce Environmental Issues"
+      ],
+      "UNIT 11 Hydrocarbons": [
+        "11.1 Hydrocarbons",
+        "11.2 Alkanes",
+        "11.3 Preparation of Alkanes",
+        "11.4 Reduction of Alkyl Halides"
+      ],
+      "UNIT 12 Empirical Data Collection and Analysis": [
+        "12.1 SI Units in Chemistry",
+        "12.2 Tools and Techniques to Manage Accuracy and Precision",
+        "12.3 Accuracy and Precision"
+      ],
+      "UNIT 13 Laboratory and Practical Skills": [
+        "13.1 Chemical Hazards in the Laboratory",
+        "13.2 Hazard Signs",
+        "13.3 Personal Protective Equipment (PPE) in the Laboratory",
+        "13.4 Location of Fire Extinguishers",
+        "13.5 Emergency Situations in the Lab"
+      ]
     },
 
     math: {
-      "UNIT 1 Matrices and Determinants": [
+      "UNIT 1 Real Numbers": [
         "1.1 EX: 1.1",
         "1.2 EX: 1.2",
         "1.3 EX: 1.3",
-        "1.4 EX: 1.4",
-        "1.5 EX: 1.5",
-        "1.6 EX: 1.6",
+        "Review Exercise 1"
       ],
-      "UNIT 2 Real and Complex Numbers": [
+      "UNIT 2 Logarithms": [
         "2.1 EX: 2.1",
         "2.2 EX: 2.2",
         "2.3 EX: 2.3",
         "2.4 EX: 2.4",
-        "2.5 EX: 2.5",
-        "2.6 EX: 2.6",
+        "Review Exercise 2"
       ],
-      "UNIT 3 Logarithms": [
+      "UNIT 3 Sets and Functions": [
         "3.1 EX: 3.1",
         "3.2 EX: 3.2",
         "3.3 EX: 3.3",
-        "3.4 EX: 3.4",
+        "Review Exercise 3"
       ],
-      "UNIT 4 Algebraic Expressions and Algebraic Formulas": [
+      "UNIT 4 Factorization and Algebraic Manipulation": [
         "4.1 EX: 4.1",
         "4.2 EX: 4.2",
         "4.3 EX: 4.3",
         "4.4 EX: 4.4",
+        "Review Exercise 4"
       ],
-      "UNIT 5 Factorization": [
+      "UNIT 5 Linear Equations and Inequalities": [
         "5.1 EX: 5.1",
         "5.2 EX: 5.2",
-        "5.3 EX: 5.3",
-        "5.4 EX: 5.4",
+        "Review Exercise 5"
       ],
-      "UNIT 6 Algebraic Manipulation": [
+      "UNIT 6 Trigonometry": [
         "6.1 EX: 6.1",
         "6.2 EX: 6.2",
         "6.3 EX: 6.3",
+        "6.4 EX: 6.4",
+        "6.5 EX: 6.5",
+        "6.6 EX: 6.6",
+        "Review Exercise 6"
       ],
-      "UNIT 7 Linear Equations and Inequalities": [
+      "UNIT 7 Coordinate Geometry": [
         "7.1 EX: 7.1",
         "7.2 EX: 7.2",
         "7.3 EX: 7.3",
+        "Review Exercise 7"
       ],
-      "UNIT 8 Linear Graphs & Their Application": [
-        "8.1 EX: 8.1",
-        "8.2 EX: 8.2",
-        "8.3 EX: 8.3",
+      "UNIT 8 Logic": [
+        "8.1 EX: 8.1"
       ],
-      "UNIT 9 Introduction to Coordinate Geometry": [
+      "UNIT 9 Similar Figures": [
         "9.1 EX: 9.1",
         "9.2 EX: 9.2",
         "9.3 EX: 9.3",
+        "9.4 EX: 9.4",
+        "Review Exercise 9"
       ],
-      "UNIT 10 Congruent Triangles": [
+      "UNIT 10 Graphs of Functions": [
         "10.1 EX: 10.1",
         "10.2 EX: 10.2",
-        "10.3 EX: 10.3",
-        "10.4 EX: 10.4",
+        "Review Exercise 10"
       ],
-      "UNIT 11 Parallelograms and Triangles": [
-        "11.1 EX: 11.1",
-        "11.2 EX: 11.2",
-        "11.3 EX: 11.3",
-        "11.4 EX: 11.4",
-        "11.5 EX: 11.5",
+      "UNIT 11 Loci and Construction": [
+        "Review Exercise 11"
       ],
-      "UNIT 12 Line Bisectors and Angle Bisectors": [
+      "UNIT 12 Information Handling": [
         "12.1 EX: 12.1",
         "12.2 EX: 12.2",
-        "12.3 EX: 12.3",
+        "Review Exercise 12"
       ],
-      "UNIT 13 Sides and Angles of a Triangle": [
+      "UNIT 13 Probability": [
         "13.1 EX: 13.1",
         "13.2 EX: 13.2",
-      ],
-      "UNIT 14 Ratio and Proportion": ["14.1 EX: 14.1", "14.2 EX: 14.2"],
-      "UNIT 15 Pythagoras' Theorem": ["15.1 EX: 15.1"],
-      "UNIT 16 Theorems Related with Area": ["16.1 EX: 16.1", "16.2 EX: 16.2"],
-      "UNIT 17 Practical Geometry --- Triangles": [
-        "17.1 EX: 17.1",
-        "17.2 EX: 17.2",
-        "17.3 EX: 17.3",
-        "17.4 EX: 17.4",
-        "17.5 EX: 17.5",
-      ],
+        "Review Exercise 13"
+      ]
     },
 
     english: {
@@ -344,18 +444,15 @@ export const syllabusStructure: GradeStructure = {
         "9 All is not Lost",
         "10 Drug Addiction",
         "11 Noise in the Environment",
-        "12 Three Days to See"
+        "12 Three Days to See",
       ],
-      POEMS: [
-        "5 Daffodils",
-        "8 Stopping by Woods on a Snowy Evening"
-      ],
+      POEMS: ["5 Daffodils", "8 Stopping by Woods on a Snowy Evening"],
       "English B": [
         "1 Letters",
         "2 Stories",
         "3 Dialogues",
         "4 Comprehension Paragraphs",
-        "5 Idioms"
+        "5 Idioms",
       ],
       TENSES: [
         "1 Use of 'is', 'am', 'are' and 'was', 'were'",
@@ -372,11 +469,9 @@ export const syllabusStructure: GradeStructure = {
         "12 Future Indefinite Tense",
         "13 Future Continuous Tense",
         "14 Future Perfect Tense",
-        "15 Future Perfect Continuous Tense"
-      ]
+        "15 Future Perfect Continuous Tense",
+      ],
     },
-    
-
 
     urdu: {
       نثر: [
@@ -391,35 +486,34 @@ export const syllabusStructure: GradeStructure = {
         "9: امتحان",
         "10: ملکی پرندے اور دوسرے جانور",
         "11: قدرِ ایاز",
-        "12: حوصلہ نہ ہارو آگے بڑھو منزل اب کے دور نہیں"
+        "12: حوصلہ نہ ہارو آگے بڑھو منزل اب کے دور نہیں",
       ],
       نظمیں: [
         "1: حمد",
         "2: نعت",
         "3: برسات کی بہاریں",
         "4: پیوستہ رہ شجر سے امیدِ بہار رکھ",
-        "5: شہدائے پشاور کے لیے ایک نظم"
+        "5: شہدائے پشاور کے لیے ایک نظم",
       ],
       غزلیں: [
         "1: ہستی اپنی حباب کی سی ہے",
         "2: رخ و زلف پر جان کھو یا کیا",
         "3: دلِ ناداں تجھے ہوا کیا ہے؟",
-        "4: لگتا نہیں ہے دل مرا اجڑے دیار میں"
+        "4: لگتا نہیں ہے دل مرا اجڑے دیار میں",
       ],
       "اُردو (ب)": [
         "واحد_جمع",
         "مذکر_مونث",
-        "الفاظ_متضاد", 
-       " الفاظ_مترادف",
-        "غلط_محاورات_جملوں_کی_درستگی", 
-        "محاورات_کی_تکمیل", 
-        "خطوط" ,
-        "درخواستیں", 
-        "کہانیاں" ,
-        "مکالمے"
-      ]
+        "الفاظ_متضاد",
+        " الفاظ_مترادف",
+        "غلط_محاورات_جملوں_کی_درستگی",
+        "محاورات_کی_تکمیل",
+        "خطوط",
+        "درخواستیں",
+        "کہانیاں",
+        "مکالمے",
+      ],
     },
-    
 
     islamyat: {
       "باب اوّل : قرآن مجید و حدیثِ نبوی ﷺ": [
@@ -469,63 +563,25 @@ export const syllabusStructure: GradeStructure = {
     },
 
     tarjumaquran: {
-      "باب 1 سورۃ مریم": [
-        "1.1 سورۃ مریم"
-      ],
-      "باب 2 سورۃ طٰہٰ": [
-        "2.1 سورۃ طٰہٰ"
-      ],
-      "باب 3 سورۃ الانبیاء": [
-        "3.1 سورۃ الانبیاء"
-      ],
-      "باب 4 سورۃ الحج": [
-        "4.1 سورۃ الحج"
-      ],
-      "باب 5 سورۃ الفرقان": [
-        "5.1 سورۃ الفرقان"
-      ],
-      "باب 6 سورۃ الشعراء": [
-        "6.1 سورۃ الشعراء"
-      ],
-      "باب 7 سورۃ النمل": [
-        "7.1 سورۃ النمل"
-      ],
-      "باب 8 سورۃ القصص": [
-        "8.1 سورۃ القصص"
-      ],
-      "باب 9 سورۃ العنکبوت": [
-        "9.1 سورۃ العنکبوت"
-      ],
-      "باب 10 سورۃ الروم": [
-        "10.1 سورۃ الروم"
-      ],
-      "باب 11 سورۃ لقمان": [
-        "11.1 سورۃ لقمان"
-      ],
-      "باب 12 سورۃ السجدہ": [
-        "12.1 سورۃ السجدہ"
-      ],
-      "باب 13 سورۃ سبا": [
-        "13.1 سورۃ سبا"
-      ],
-      "باب 14 سورۃ فاطر": [
-        "14.1 سورۃ فاطر"
-      ],
-      "باب 15 سورۃ یٰسین": [
-        "15.1 سورۃ یٰسین"
-      ],
-      "باب 16 سورۃ الصافات": [
-        "16.1 سورۃ الصافات"
-      ],
-      "باب 17 سورۃ ص": [
-        "17.1 سورۃ ص"
-      ],
-      "باب 18 سورۃ الاحقاف": [
-        "18.1 سورۃ الاحقاف"
-      ]
-    }
-    
-
+      "باب 1 سورۃ مریم": ["1.1 سورۃ مریم"],
+      "باب 2 سورۃ طٰہٰ": ["2.1 سورۃ طٰہٰ"],
+      "باب 3 سورۃ الانبیاء": ["3.1 سورۃ الانبیاء"],
+      "باب 4 سورۃ الحج": ["4.1 سورۃ الحج"],
+      "باب 5 سورۃ الفرقان": ["5.1 سورۃ الفرقان"],
+      "باب 6 سورۃ الشعراء": ["6.1 سورۃ الشعراء"],
+      "باب 7 سورۃ النمل": ["7.1 سورۃ النمل"],
+      "باب 8 سورۃ القصص": ["8.1 سورۃ القصص"],
+      "باب 9 سورۃ العنکبوت": ["9.1 سورۃ العنکبوت"],
+      "باب 10 سورۃ الروم": ["10.1 سورۃ الروم"],
+      "باب 11 سورۃ لقمان": ["11.1 سورۃ لقمان"],
+      "باب 12 سورۃ السجدہ": ["12.1 سورۃ السجدہ"],
+      "باب 13 سورۃ سبا": ["13.1 سورۃ سبا"],
+      "باب 14 سورۃ فاطر": ["14.1 سورۃ فاطر"],
+      "باب 15 سورۃ یٰسین": ["15.1 سورۃ یٰسین"],
+      "باب 16 سورۃ الصافات": ["16.1 سورۃ الصافات"],
+      "باب 17 سورۃ ص": ["17.1 سورۃ ص"],
+      "باب 18 سورۃ الاحقاف": ["18.1 سورۃ الاحقاف"],
+    },
   },
   "10th": {
     biology: {
@@ -846,13 +902,9 @@ export const syllabusStructure: GradeStructure = {
         "10: A World Without Books",
         "11: Great Expectations",
         "12: Population Growth and World Food Supplies",
-        "13: Faithfulness"
+        "13: Faithfulness",
       ],
-      POEMS: [
-        "3: Try Again",
-        "5: The Rain",
-        "8: Peace"
-      ],
+      POEMS: ["3: Try Again", "5: The Rain", "8: Peace"],
       TENSES: [
         "1 Present Indefinite Tense",
         "2 Present Continuous Tense",
@@ -865,23 +917,23 @@ export const syllabusStructure: GradeStructure = {
         "9 Future Indefinite Tense",
         "10 Future Continuous Tense",
         "11 Future Perfect Tense",
-        "12 Future Perfect Continuous Tense"
+        "12 Future Perfect Continuous Tense",
       ],
       "Direct & Indirect": [
         "1 Assertive Sentences",
         "2 Interrogative Sentences",
         "3 Imperative Sentences",
         "4 Exclamatory / Optative Sentences",
-        "5 Interrogative Sentences"
+        "5 Interrogative Sentences",
       ],
       "English B": [
         "1 Pair of Words",
         "2 Essays",
         "3 Writing Paragraphs",
-        "4 Translate into English Paragraphs"
-      ]
+        "4 Translate into English Paragraphs",
+      ],
     },
-    
+
     pakstudy: {
       "CHAP 5: History of Pakistan-II (1971 Till Todate)": [
         "5.1 Zulfiqar Ali Bhutto Era 1971-1977",
@@ -939,7 +991,7 @@ export const syllabusStructure: GradeStructure = {
         "10: استنبول",
         "11: خطوطِ غالبٓ",
         "12: خطوطِ رشید احمد صدیقی",
-        "13: اُٹھ باندھ کمر کیوں ڈرتا ہے"
+        "13: اُٹھ باندھ کمر کیوں ڈرتا ہے",
       ],
       نظمیں: [
         "1: حمد",
@@ -950,22 +1002,21 @@ export const syllabusStructure: GradeStructure = {
         "6: جیوے جیوے پاکستان",
         "7: اونٹ کی شادی",
         "8: مال گوڈام روڈ",
-        "9: بہادر بچے"
+        "9: بہادر بچے",
       ],
       غزلیں: [
         "1: مصیبت بھی راحت فزا ہو گئی",
         "2: آدمی آدمی سے ملتا ہے",
         "3: سر میں سودا بھی نہیں،دل میں تمنا بھی نہیں",
-        "4: یہ فخر تو حاصل ہے،برے ہیں کہ بھلے ہیں"
+        "4: یہ فخر تو حاصل ہے،برے ہیں کہ بھلے ہیں",
       ],
       "حصہ قوائدوانشا (معروضی)": [
         "اعراب لگائیں",
         "گرائمر معروضی",
         "مضامین",
-        "تفہیم عبارات"
-      ]
-    }
-    ,
+        "تفہیم عبارات",
+      ],
+    },
     islamyat: {
       "باب اوّل: قرآن مجید و حدیثِ نبویﷺ": [
         "حفاظت و تدوینِ حدیث: دورِاوّل",
@@ -1014,55 +1065,22 @@ export const syllabusStructure: GradeStructure = {
     },
 
     tarjumaquran: {
-      "باب 1 سورۃ الانعام": [
-        "1.1 سورۃ الانعام"
-      ],
-      "باب 2 سورۃ الاعراف": [
-        "2.1 سورۃ الاعراف"
-      ],
-      "باب 3 سورۃ یونس": [
-        "3.1 سورۃ یونس"
-      ],
-      "باب 4 سورۃ ہود": [
-        "4.1 سورۃ ہود"
-      ],
-      "باب 5 سورۃ الرعد": [
-        "5.1 سورۃ الرعد"
-      ],
-      "باب 6 سورۃ ابراہیم": [
-        "6.1 سورۃ ابراہیم"
-      ],
-      "باب 7 سورۃ الحجر": [
-        "7.1 سورۃ الحجر"
-      ],
-      "باب 8 سورۃ النحل": [
-        "8.1 سورۃ النحل"
-      ],
-      "باب 9 سورۃ بنی اسرائیل": [
-        "9.1 سورۃ بنی اسرائیل"
-      ],
-      "باب 10 سورۃ الکہف": [
-        "10.1 سورۃ الکہف"
-      ],
-      "باب 11 سورۃ المومنون": [
-        "11.1 سورۃ المومنون"
-      ],
-      "باب 12 سورۃ الزمر": [
-        "12.1 سورۃ الزمر"
-      ],
-      "باب 13 سورۃ المومن (الغافر)": [
-        "13.1 سورۃ المومن (الغافر)"
-      ],
-      "باب 14 سورۃ حم السجدہ": [
-        "14.1 سورۃ حم السجدہ"
-      ],
-      "باب 15 سورۃ الشوریٰ": [
-        "15.1 سورۃ الشوریٰ"
-      ]
-    }
-    
-
-
+      "باب 1 سورۃ الانعام": ["1.1 سورۃ الانعام"],
+      "باب 2 سورۃ الاعراف": ["2.1 سورۃ الاعراف"],
+      "باب 3 سورۃ یونس": ["3.1 سورۃ یونس"],
+      "باب 4 سورۃ ہود": ["4.1 سورۃ ہود"],
+      "باب 5 سورۃ الرعد": ["5.1 سورۃ الرعد"],
+      "باب 6 سورۃ ابراہیم": ["6.1 سورۃ ابراہیم"],
+      "باب 7 سورۃ الحجر": ["7.1 سورۃ الحجر"],
+      "باب 8 سورۃ النحل": ["8.1 سورۃ النحل"],
+      "باب 9 سورۃ بنی اسرائیل": ["9.1 سورۃ بنی اسرائیل"],
+      "باب 10 سورۃ الکہف": ["10.1 سورۃ الکہف"],
+      "باب 11 سورۃ المومنون": ["11.1 سورۃ المومنون"],
+      "باب 12 سورۃ الزمر": ["12.1 سورۃ الزمر"],
+      "باب 13 سورۃ المومن (الغافر)": ["13.1 سورۃ المومن (الغافر)"],
+      "باب 14 سورۃ حم السجدہ": ["14.1 سورۃ حم السجدہ"],
+      "باب 15 سورۃ الشوریٰ": ["15.1 سورۃ الشوریٰ"],
+    },
   },
   "11th": {
     biology: {
@@ -1732,12 +1750,12 @@ export const syllabusStructure: GradeStructure = {
         "12: The Gift Of The Magi",
         "13: God Be Praised",
         "14: Overcoat",
-        "15: The Angel And The Author-and Others"
+        "15: The Angel And The Author-and Others",
       ],
       PLAYS: [
         "1: Heat Lightening",
         "2: Visit To A Small Planet",
-        "3: The Oyster And The Pearl"
+        "3: The Oyster And The Pearl",
       ],
       POEMS: [
         "1: The Rain",
@@ -1759,7 +1777,7 @@ export const syllabusStructure: GradeStructure = {
         "17: The Delight Song",
         "18: Love-and Essence Of All Religions",
         "19: A Man Of Words And Not Of Deeds",
-        "20: In Broken Images"
+        "20: In Broken Images",
       ],
       "Correct Form Of Verb": [
         "1 Present Indefinite Tense",
@@ -1773,16 +1791,15 @@ export const syllabusStructure: GradeStructure = {
         "9 Future Indefinite Tense",
         "10 Future Continuous Tense",
         "11 Future Perfect Tense",
-        "12 Future Perfect Continuous Tense"
+        "12 Future Perfect Continuous Tense",
       ],
       "English (B)": [
         "1 Letters",
         "2 Applications",
         "3 Stories",
-        "4 Pair Of Words"
-      ]
+        "4 Pair Of Words",
+      ],
     },
-    
 
     islamyat: {
       "باب نمبر 1: بنیادی عقائد": [
@@ -1829,7 +1846,7 @@ export const syllabusStructure: GradeStructure = {
         "11: لاہور کا جغرافیہ",
         "12: دوستی کا پھل",
         "13: کیا واقعی دنیا گول ہے؟",
-        "14: اور آنا گھر مرغیوں کا"
+        "14: اور آنا گھر مرغیوں کا",
       ],
       نظمیں: [
         "1: حمد",
@@ -1844,7 +1861,7 @@ export const syllabusStructure: GradeStructure = {
         "10: اپسٹریکٹ آرٹ",
         "11: قطعات",
         "12: لوکل بس",
-        "13: وحدانیت"
+        "13: وحدانیت",
       ],
       غزلیں: [
         "1: میر تقی میر",
@@ -1853,7 +1870,7 @@ export const syllabusStructure: GradeStructure = {
         "4: مومن خاں مومن",
         "5: حسرت موہانی",
         "6: فیض احمد فیض",
-        "7: احمد ندیم قاسمی"
+        "7: احمد ندیم قاسمی",
       ],
       "حصہ قوائدوانشا (معروضی)": [
         "مطلع",
@@ -1863,34 +1880,23 @@ export const syllabusStructure: GradeStructure = {
         "تلمیح",
         "تشبیہہ",
         "استعارہ",
-        "جملوں کی درستگی"
+        "جملوں کی درستگی",
       ],
       "گرائمر (خطوط)، (مضامین)": [
         "مکالمے",
         "رداد/مضامین",
         "درخواستیں",
         "رسیدیں",
-        "تلخیص پیراگراف"
-      ]
+        "تلخیص پیراگراف",
+      ],
     },
 
     tarjumaquran: {
-      "باب 4 سورۃ البقرۃ": [
-        "4.1 سورۃ البقرۃ"
-      ],
-      "باب 5 سورۃ آل عمران": [
-        "5.1 سورۃ آل عمران"
-      ],
-      "باب 6 سورۃ الانفال": [
-        "6.1 سورۃ الانفال"
-      ],
-      "باب 7 سورۃ التوبہ": [
-        "7.1 سورۃ التوبہ"
-      ]
-    }
-    
-
-    
+      "باب 4 سورۃ البقرۃ": ["4.1 سورۃ البقرۃ"],
+      "باب 5 سورۃ آل عمران": ["5.1 سورۃ آل عمران"],
+      "باب 6 سورۃ الانفال": ["6.1 سورۃ الانفال"],
+      "باب 7 سورۃ التوبہ": ["7.1 سورۃ التوبہ"],
+    },
   },
   "12th": {
     biology: {
@@ -2639,14 +2645,14 @@ export const syllabusStructure: GradeStructure = {
         "7: My Financial Career",
         "8: China's Way To Progress",
         "9: Hunger And Population Explosion",
-        "10: The Jewel Of The World"
+        "10: The Jewel Of The World",
       ],
       HEROES: [
         "1: First Year At Harrow",
         "2: Hitch-Hiking Across The Sahara",
         "3: Sir Alexander Fleming",
         "4: Louis Pasteur",
-        "5: Mustafa Kamal"
+        "5: Mustafa Kamal",
       ],
       "MR. CHIPS": [
         "Chapter 1",
@@ -2666,17 +2672,16 @@ export const syllabusStructure: GradeStructure = {
         "Chapter 15",
         "Chapter 16",
         "Chapter 17",
-        "Chapter 18"
+        "Chapter 18",
       ],
       "English (B)": [
         "Essays",
         "Idioms",
         "Translate into English Paragraphs",
         "Correct Sentences",
-        "Correct Prepositions"
-      ]
+        "Correct Prepositions",
+      ],
     },
-    
 
     pakstudy: {
       "CHAP 1: Islam and Pakistan": [
@@ -2750,7 +2755,7 @@ export const syllabusStructure: GradeStructure = {
         "11: مواصلات کے جدید ذرائع",
         "12: مولوی نذیر احمد دہلوی",
         "13: ایک سفر نامہ جو کہیں کا بھی نہیں ہے",
-        "14: ایوب عباسی"
+        "14: ایوب عباسی",
       ],
       نظمیں: [
         "1: حمد",
@@ -2762,7 +2767,7 @@ export const syllabusStructure: GradeStructure = {
         "7: نوجوان سے خطاب",
         "8: ایک کوہستانی سفر کے دوران میں",
         "9: تغیر",
-        "10: قطعات"
+        "10: قطعات",
       ],
       غزلیں: [
         "1،2: خواجہ میر درد",
@@ -2771,77 +2776,34 @@ export const syllabusStructure: GradeStructure = {
         "7،8: علامہ اقبالؒ",
         "9،10: ناصر کاظمی",
         "11: فراق گور کھپوری",
-        "12: تابش دہلوی"
+        "12: تابش دہلوی",
       ],
       "حصہ قوائدوانشا (معروضی)": [
         "مطباق اور حروف کا درست استعمال",
         "رموز اوقاف",
-        "مصادر کا بطور امدادی افعال کا استعمال"
+        "مصادر کا بطور امدادی افعال کا استعمال",
       ],
-      "گرائمر (خطوط)، (مضامین)": [
-        "خطوط",
-        "مضامین",
-        "آپ بیتی"
-      ]
+      "گرائمر (خطوط)، (مضامین)": ["خطوط", "مضامین", "آپ بیتی"],
     },
 
     tarjumaquran: {
-      "باب 1 سورۃ النساء": [
-        "1.1 سورۃ النساء"
-      ],
-      "باب 2 سورۃ المائدۃ": [
-        "2.1 سورۃ المائدۃ"
-      ],
-      "باب 3 سورۃ النور": [
-        "3.1 سورۃ النور"
-      ],
-      "باب 4 سورۃ الاحزاب": [
-        "4.1 سورۃ الاحزاب"
-      ],
-      "باب 5 سورۃ محمد": [
-        "5.1 سورۃ محمد"
-      ],
-      "باب 6 سورۃ الفتح": [
-        "6.1 سورۃ الفتح"
-      ],
-      "باب 7 سورۃ الحجرات": [
-        "7.1 سورۃ الحجرات"
-      ],
-      "باب 8 سورۃ الحدید": [
-        "8.1 سورۃ الحدید"
-      ],
-      "باب 9 سورۃ المجادلہ": [
-        "9.1 سورۃ المجادلہ"
-      ],
-      "باب 10 سورۃ الحشر": [
-        "10.1 سورۃ الحشر"
-      ],
-      "باب 11 سورۃ الممتحنۃ": [
-        "11.1 سورۃ الممتحنۃ"
-      ],
-      "باب 12 سورۃ الصف": [
-        "12.1 سورۃ الصف"
-      ],
-      "باب 13 سورۃ الجمعۃ": [
-        "13.1 سورۃ الجمعۃ"
-      ],
-      "باب 14 سورۃ المنافقون": [
-        "14.1 سورۃ المنافقون"
-      ],
-      "باب 15 سورۃ التغابن": [
-        "15.1 سورۃ التغابن"
-      ],
-      "باب 16 سورۃ الطلاق": [
-        "16.1 سورۃ الطلاق"
-      ],
-      "باب 17 سورۃ التحریم": [
-        "17.1 سورۃ التحریم"
-      ]
-    }
-    
-    
-
-    
-
+      "باب 1 سورۃ النساء": ["1.1 سورۃ النساء"],
+      "باب 2 سورۃ المائدۃ": ["2.1 سورۃ المائدۃ"],
+      "باب 3 سورۃ النور": ["3.1 سورۃ النور"],
+      "باب 4 سورۃ الاحزاب": ["4.1 سورۃ الاحزاب"],
+      "باب 5 سورۃ محمد": ["5.1 سورۃ محمد"],
+      "باب 6 سورۃ الفتح": ["6.1 سورۃ الفتح"],
+      "باب 7 سورۃ الحجرات": ["7.1 سورۃ الحجرات"],
+      "باب 8 سورۃ الحدید": ["8.1 سورۃ الحدید"],
+      "باب 9 سورۃ المجادلہ": ["9.1 سورۃ المجادلہ"],
+      "باب 10 سورۃ الحشر": ["10.1 سورۃ الحشر"],
+      "باب 11 سورۃ الممتحنۃ": ["11.1 سورۃ الممتحنۃ"],
+      "باب 12 سورۃ الصف": ["12.1 سورۃ الصف"],
+      "باب 13 سورۃ الجمعۃ": ["13.1 سورۃ الجمعۃ"],
+      "باب 14 سورۃ المنافقون": ["14.1 سورۃ المنافقون"],
+      "باب 15 سورۃ التغابن": ["15.1 سورۃ التغابن"],
+      "باب 16 سورۃ الطلاق": ["16.1 سورۃ الطلاق"],
+      "باب 17 سورۃ التحریم": ["17.1 سورۃ التحریم"],
+    },
   },
 };

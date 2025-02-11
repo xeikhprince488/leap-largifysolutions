@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { X, Search, Shuffle, Plus, Download, Trash2 } from 'lucide-react'
+import Image from "next/image"
 import { toast } from "sonner"
 import { LongQuestion, MCQQuestion, Question, QuestionConfig, ShortQuestion } from "@/types/questions"
 import { Card, CardContent } from "@/components/ui/card"
@@ -42,17 +43,19 @@ export default function ConfigureQuestionsPage() {
   const [showHeaderDialog, setShowHeaderDialog] = useState(false)
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const [selectedChapters, setSelectedChapters] = useState<string[]>([])
-  const [headerDetails, setHeaderDetails] = useState({
-    class: '',
-    paperNo: '',
-    date: '',
-    timeAllowed: '',
-    subject: '',
-    totalMarks: '',
-    day: '',
-    syllabus: '',
-  });
-
+  const predefinedHeadings = [
+    // "2. Attempt any five parts.",
+    // "3. Attempt any five parts.",
+    // "4. Attempt any five parts.",
+    // "5. Attempt any two questions.",
+    // "Choose the correct option.",
+    "درست جواب کا انتخاب کریں۔",
+    "درج ذیل سوالات کے مختصر جوابات دیں۔",
+    "درج ذیل سوالوں کے تفصیلی جوابات دیں۔"
+  ] 
+  const [selectedHeading, setSelectedHeading] = useState(predefinedHeadings[0]) // Add state for selected heading
+  const [showPrintDialog, setShowPrintDialog] = useState(false)
+  const [currentPdfData, setCurrentPdfData] = useState<string | null>(null)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -65,7 +68,7 @@ export default function ConfigureQuestionsPage() {
   useEffect(() => {
     // Update totalMarks whenever sections change
     const totalMarks = sections.reduce((sum, section) => sum + (section.count * section.marks), 0);
-    setHeaderDetails({...headerDetails, totalMarks: totalMarks.toString()})
+    setHeaderDetails({...setHeaderDetails, totalMarks: totalMarks.toString()})
   }, [sections]);
 
 
@@ -411,6 +414,25 @@ export default function ConfigureQuestionsPage() {
                 </div>
               </div>
 
+              <div className="space-y-2">
+                <Label>Heading</Label>
+                <Select
+                  value={selectedHeading}
+                  onValueChange={(value) => setSelectedHeading(value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select heading" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {predefinedHeadings.map((heading, index) => (
+                      <SelectItem key={index} value={heading}>
+                        {heading}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               <Button onClick={handleAddSection}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add Section
@@ -506,3 +528,7 @@ export default function ConfigureQuestionsPage() {
     </DashboardLayout>
   )
 }
+function setHeaderDetails(arg0: any) {
+  throw new Error("Function not implemented.")
+}
+

@@ -42,6 +42,21 @@ export default function ConfigureQuestionsPage() {
   const [showHeaderDialog, setShowHeaderDialog] = useState(false)
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const [selectedChapters, setSelectedChapters] = useState<string[]>([])
+  const predefinedHeadings = [
+    // "2. Attempt any five parts.",
+    // "3. Attempt any five parts.",
+    // "4. Attempt any five parts.",
+    // "5. Attempt any two questions.",
+    // "Choose the correct option.",
+    "درست جواب کا انتخاب کریں۔",
+    "درج ذیل سوالات کے مختصر جوابات دیں۔",
+    "درج ذیل قرآنی الفاظ کے معانی لکھیں۔",
+    "درج ذیل آیات کا بامحاورہ ترجمہ لکھیں۔",
+    "درج ذیل موضوع پر تفصیلی نوٹ لکھیں۔"
+  ] // Add predefined headings
+  const [selectedHeading, setSelectedHeading] = useState(predefinedHeadings[0]) // Add state for selected heading
+  const [showPrintDialog, setShowPrintDialog] = useState(false)
+  const [currentPdfData, setCurrentPdfData] = useState<string | null>(null)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -51,10 +66,21 @@ export default function ConfigureQuestionsPage() {
     }
   }, [])
 
+  useEffect(() => {
+    if (showPaper) {
+      console.log("Showing paper, updating selected questions")
+      setSelectedQuestions((prevQuestions) => [...prevQuestions])
+    }
+  }, [showPaper])
+
+  useEffect(() => {
+    console.log('showHeaderDialog changed:', showHeaderDialog)
+  }, [showHeaderDialog])
+
   const totalMarks = sections.reduce((sum, section) => sum + (section.count * section.marks), 0)
 
   const handleAddSection = () => {
-    const heading = prompt('Enter the heading for this section:')
+    const heading = selectedHeading || prompt("Enter the heading for this section:") // Use selected heading or prompt
     if (heading) {
       setSections([...sections, { ...currentSection, heading }])
       setCurrentSection({
@@ -82,8 +108,8 @@ export default function ConfigureQuestionsPage() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            subject: 'pakstudy',
-            grade: '12th',
+            subject: 'tarjumaquran',
+            grade: '10th',
             type: section.type,
             count: section.count
           }),
@@ -208,8 +234,17 @@ export default function ConfigureQuestionsPage() {
       return
     }
 
-    console.log('Opening header dialog')
-    setShowHeaderDialog(true)
+    // Force a re-render of the paper before opening the dialog
+    setSelectedQuestions(prevQuestions => {
+      console.log('Updating selected questions')
+      return [...prevQuestions]
+    })
+
+    // Delay opening the dialog slightly to ensure state update has occurred
+    setTimeout(() => {
+      console.log('Opening header dialog')
+      setShowHeaderDialog(true)
+    }, 100)
   }
 
   const handleHeaderDetailsSubmit = async (details: {
@@ -226,7 +261,10 @@ export default function ConfigureQuestionsPage() {
     try {
       setIsGeneratingPDF(true)
 
-      const success = await generatePDF(selectedQuestions, {
+      // Ensure selectedQuestions is up-to-date
+      const currentSelectedQuestions = [...selectedQuestions]
+
+      const result = await generatePDF(currentSelectedQuestions, {
         grade: details.class,
         subject: details.subject,
         chapter: [details.syllabus],
@@ -237,18 +275,28 @@ export default function ConfigureQuestionsPage() {
         totalMarks: details.totalMarks,
         topic: "",
         category: "",
-        sections // Pass sections to generatePDF
+        sections
       })
 
-      if (success) {
-        toast.success('Paper downloaded and saved successfully')
+      if (result.success && result.pdfData) {
+        toast.success("Paper generated successfully")
         setShowHeaderDialog(false)
+
+        // Open PDF in new tab
+        const pdfWindow = window.open()
+        if (pdfWindow) {
+          pdfWindow.document.write(`<iframe width='100%' height='100%' src='${result.pdfData}'></iframe>`)
+        }
+
+        // Store PDF data for printing
+        setCurrentPdfData(result.pdfData)
+        setShowPrintDialog(true)
       } else {
-        toast.error('Failed to generate PDF')
+        throw new Error("PDF generation failed")
       }
     } catch (error) {
       console.error('Error generating PDF:', error)
-      toast.error('Failed to generate PDF')
+      toast.error('Failed to generate PDF. Please try again.')
     } finally {
       setIsGeneratingPDF(false)
     }
@@ -262,7 +310,7 @@ export default function ConfigureQuestionsPage() {
             <div className="p-8">
               <div className="flex justify-between items-center mb-6">
                 <div>
-                  <h2 className="text-lg font-semibold">pakstudy Paper - 12th Grade</h2>
+                  <h2 className="text-lg font-semibold">Tarjuma Quran Paper - 10th Grade</h2>
                   <p className="text-sm text-muted-foreground">Total Marks: {totalMarks}</p>
                 </div>
                 <Button onClick={handleDownloadClick}>
@@ -339,19 +387,19 @@ export default function ConfigureQuestionsPage() {
       <div className="p-8">
         <div className="max-w-6xl mx-auto">
           <div className="bg-blue-500 text-white p-4 rounded-t-lg flex items-center justify-between">
-            <h1 className="text-lg font-medium">Select Your Questions Here... 12th - pakstudy</h1>
+            <h1 className="text-lg font-medium">Select Your Questions Here... 10th - Tarjuma Quran</h1>
             <X className="h-5 w-5 cursor-pointer" onClick={handleClose} />
           </div>
-          
+
           <div className="bg-white border-x border-b rounded-b-lg p-6">
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label>Question Type</Label>
-                  <Select 
-                    value={currentSection.type} 
-                    onValueChange={(value: 'mcq' | 'short' | 'long') => 
-                      setCurrentSection({...currentSection, type: value})
+                  <Select
+                    value={currentSection.type}
+                    onValueChange={(value: 'mcq' | 'short' | 'long') =>
+                      setCurrentSection({ ...currentSection, type: value })
                     }
                   >
                     <SelectTrigger>
@@ -367,35 +415,51 @@ export default function ConfigureQuestionsPage() {
 
                 <div className="space-y-2">
                   <Label>Number of Questions</Label>
-                  <Input 
-                    type="number" 
-                    min="1" 
+                  <Input
+                    type="number"
+                    min="1"
                     value={currentSection.count}
                     onChange={(e) => setCurrentSection({
-                      ...currentSection, 
+                      ...currentSection,
                       count: parseInt(e.target.value) || 1
-                    })} 
+                    })}
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label>Marks per Question</Label>
-                  <Input 
-                    type="number" 
-                    min="1" 
+                  <Input
+                    type="number"
+                    min="1"
                     value={currentSection.marks}
                     onChange={(e) => setCurrentSection({
-                      ...currentSection, 
+                      ...currentSection,
                       marks: parseInt(e.target.value) || 1
-                    })} 
+                    })}
                   />
                 </div>
               </div>
 
-              <Button onClick={handleAddSection}>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Section
-              </Button>
+              <div className="flex items-center space-x-4">
+                <Button onClick={handleAddSection}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Section
+                </Button>
+                <div className="space-y-2">
+                  <Select value={selectedHeading} onValueChange={(value) => setSelectedHeading(value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select heading" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {predefinedHeadings.map((heading) => (
+                        <SelectItem key={heading} value={heading}>
+                          {heading}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
 
               {sections.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

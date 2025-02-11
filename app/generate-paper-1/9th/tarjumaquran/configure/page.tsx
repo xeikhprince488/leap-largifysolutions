@@ -36,6 +36,21 @@ export default function ConfigureQuestionsPage() {
   const [showHeaderDialog, setShowHeaderDialog] = useState(false)
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const [selectedChapters, setSelectedChapters] = useState<string[]>([])
+  const [selectedHeading, setSelectedHeading] = useState<string | undefined>(undefined)
+  const predefinedHeadings = [
+    // "2. Attempt any five parts.",
+    // "3. Attempt any five parts.",
+    // "4. Attempt any five parts.",
+    // "5. Attempt any two questions.",
+    // "Choose the correct option.",
+    "درست جواب کا انتخاب کریں۔",
+    "درج ذیل سوالات کے مختصر جوابات دیں۔",
+    "درج ذیل قرآنی الفاظ کے معانی لکھیں۔",
+    "درج ذیل آیات کا بامحاورہ ترجمہ لکھیں۔",
+    "درج ذیل موضوع پر تفصیلی نوٹ لکھیں۔"
+  ]
+  const [showPrintDialog, setShowPrintDialog] = useState(false)
+  const [currentPdfData, setCurrentPdfData] = useState<string | null>(null)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -45,10 +60,20 @@ export default function ConfigureQuestionsPage() {
     }
   }, [])
 
+  useEffect(() => {
+    if (showPaper) {
+      setSelectedQuestions((prevQuestions) => [...prevQuestions])
+    }
+  }, [showPaper])
+
+  useEffect(() => {
+    console.log("showHeaderDialog changed:", showHeaderDialog)
+  }, [showHeaderDialog])
+
   const totalMarks = sections.reduce((sum, section) => sum + section.count * section.marks, 0)
 
   const handleAddSection = () => {
-    const heading = prompt("Enter the heading for this section:")
+    const heading = selectedHeading || prompt("Enter the heading for this section:") // Use selected heading or prompt
     if (heading) {
       setSections([...sections, { ...currentSection, heading }])
       setCurrentSection({
@@ -397,10 +422,26 @@ export default function ConfigureQuestionsPage() {
                 </div>
               </div>
 
-              <Button onClick={handleAddSection}>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Section
-              </Button>
+              <div className="flex items-center space-x-4">
+                <Button onClick={handleAddSection}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Section
+                </Button>
+                <div className="space-y-2">
+                  <Select value={selectedHeading} onValueChange={(value) => setSelectedHeading(value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select heading" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {predefinedHeadings.map((heading) => (
+                        <SelectItem key={heading} value={heading}>
+                          {heading}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
 
               {sections.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

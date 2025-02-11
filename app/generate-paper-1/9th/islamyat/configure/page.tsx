@@ -37,6 +37,15 @@ export default function ConfigureQuestionsPage() {
   const [showHeaderDialog, setShowHeaderDialog] = useState(false)
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const [selectedChapters, setSelectedChapters] = useState<string[]>([])
+  const predefinedHeadings = [
+    "درست جواب کا انتخاب کریں۔",
+    "درج ذیل سوالات کے مختصر جوابات دیں۔",
+    "درج ذیل سوالوں کے تفصیلی جوابات دیں۔",
+    "درج ذیل حدیث مبارکہ کا ترجمہ تحریر کیجیے۔"
+  ];
+  const [selectedHeading, setSelectedHeading] = useState(predefinedHeadings[0]) // Add state for selected heading
+  const [showPrintDialog, setShowPrintDialog] = useState(false)
+  const [currentPdfData, setCurrentPdfData] = useState<string | null>(null)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -59,7 +68,7 @@ export default function ConfigureQuestionsPage() {
   const totalMarks = sections.reduce((sum, section) => sum + section.count * section.marks, 0)
 
   const handleAddSection = () => {
-    const heading = prompt("Enter the heading for this section:")
+    const heading = selectedHeading || prompt("Enter the heading for this section:") // Use selected heading or prompt
     if (heading) {
       setSections([...sections, { ...currentSection, heading }])
       setCurrentSection({
@@ -250,7 +259,7 @@ export default function ConfigureQuestionsPage() {
       // Ensure selectedQuestions is up-to-date
       const currentSelectedQuestions = [...selectedQuestions]
 
-      const success = await generatePDF(currentSelectedQuestions, {
+      const result = await generatePDF(currentSelectedQuestions, {
         grade: details.class,
         subject: details.subject,
         chapter: [details.syllabus],
@@ -261,12 +270,22 @@ export default function ConfigureQuestionsPage() {
         totalMarks: details.totalMarks,
         topic: "",
         category: "",
-        sections,
+        sections
       })
 
-      if (success) {
-        toast.success("Paper downloaded and saved successfully")
+      if (result.success && result.pdfData) {
+        toast.success("Paper generated successfully")
         setShowHeaderDialog(false)
+
+        // Open PDF in new tab
+        const pdfWindow = window.open()
+        if (pdfWindow) {
+          pdfWindow.document.write(`<iframe width='100%' height='100%' src='${result.pdfData}'></iframe>`)
+        }
+
+        // Store PDF data for printing
+        setCurrentPdfData(result.pdfData)
+        setShowPrintDialog(true)
       } else {
         throw new Error("PDF generation failed")
       }
@@ -420,10 +439,26 @@ export default function ConfigureQuestionsPage() {
                 </div>
               </div>
 
-              <Button onClick={handleAddSection}>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Section
-              </Button>
+              <div className="flex items-center space-x-4">
+                <Button onClick={handleAddSection}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Section
+                </Button>
+                <div className="space-y-2">
+                  <Select value={selectedHeading} onValueChange={(value) => setSelectedHeading(value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select heading" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {predefinedHeadings.map((heading) => (
+                        <SelectItem key={heading} value={heading}>
+                          {heading}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
 
               {sections.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

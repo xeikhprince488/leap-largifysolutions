@@ -9,90 +9,121 @@ import { useState, useEffect } from 'react'
 
 const defaultChapters = [
   {
-    id: "chap-1",
-    title: "CHAP 1 Introduction to Biology",
+    id: 'chap-1',
+    title: 'CHAP 1 Introduction to Biology',
     items: [
-      { id: "1.1", title: "1.1 Introduction to Biology" },
-      { id: "1.2", title: "1.2 The Levels of Organization" }
+      { id: "1.1", title: "1.1 Biology and its Branches" },
+      { id: "1.2", title: "1.2 Relation of Biology with Other Sciences" },
+      { id: "1.3", title: "1.3 Careers in Biology" },
+      { id: "1.4", title: "1.4 Quranic Instructions to Reveal the Study of Life" },
+      { id: "1.5", title: "1.5 Science as a Collaborative Field" },
+      { id: "1.6", title: "1.6 Scientific Method" },
+      { id: "1.7", title: "1.7 Theory and Law/Principle" },
+      { id: "1.8", title: "1.8 Malaria - An Example of Biological Method" }
     ]
   },
   {
     id: "chap-2",
-    title: "CHAP 2 Solving a Biological Problem",
+    title: "CHAP 2 Biodiversity",
     items: [
-      { id: "2.1", title: "2.1 Biological Method" },
-      { id: "2.2", title: "2.2 Data Organization and Analysis" },
-      { id: "2.3", title: "2.3 math as Integral Part of Scientific Process" }
+      { id: "2.1", title: "2.1 Biodiversity" },
+      { id: "2.2", title: "2.2 Classification" },
+      { id: "2.3", title: "2.3 Taxonomic Ranks" },
+      { id: "2.4", title: "2.4 History of Classification" },
+      { id: "2.5", title: "2.5 Domains of Living Organisms" },
+      { id: "2.6", title: "2.6 Classification of Domain Eukarya" },
+      { id: "2.7", title: "2.7 Status of Virus in Classification" },
+      { id: "2.8", title: "2.8 Binomial Nomenclature" }
     ]
   },
   {
     id: "chap-3",
-    title: "CHAP 3 Biodiversity",
+    title: "CHAP 3 The Cell",
     items: [
-      { id: "3.1", title: "3.1 Biodiversity" },
-      { id: "3.2", title: "3.2 Aims and Principles of Classification" },
-      { id: "3.3", title: "3.3 History of Classification Systems" },
-      { id: "3.4", title: "3.4 The Five Kingdoms" },
-      { id: "3.5", title: "3.5 Binomial Nomenclature" },
-      { id: "3.6", title: "3.6 Conservation of Biodiversity" }
+      { id: "3.1", title: "3.1 Cell" },
+      { id: "3.2", title: "3.2 Structure of Cell" },
+      { id: "3.3", title: "3.3 Cell Wall" },
+      { id: "3.4", title: "3.4 Cell Membrane" },
+      { id: "3.5", title: "3.5 Cytoplasm" },
+      { id: "3.6", title: "3.6 Nucleus" },
+      { id: "3.7", title: "3.7 Cytoskeleton" },
+      { id: "3.8", title: "3.8 Ribosome" },
+      { id: "3.9", title: "3.9 Endoplasmic Reticulum" },
+      { id: "3.10", title: "3.10 Golgi Apparatus" },
+      { id: "3.11", title: "3.11 Lysosomes" },
+      { id: "3.12", title: "3.12 Mitochondria" },
+      { id: "3.13", title: "3.13 Plastids" },
+      { id: "3.14", title: "3.14 Vacuoles" },
+      { id: "3.15", title: "3.15 Centrioles" },
+      { id: "3.16", title: "3.16 Structural Advantages of Plant and Animal Cells" },
+      { id: "3.17", title: "3.17 Cell Specialization" },
+      { id: "3.18", title: "3.18 Stem Cells" }
     ]
   },
   {
     id: "chap-4",
-    title: "CHAP 4 Cells and Tissues",
+    title: "CHAP 4 Cell Cycle",
     items: [
-      { id: "4.1", title: "4.1 Microscopy and the Emergence of Cell Theory" },
-      { id: "4.2", title: "4.2 Cellular Structures and Functions" },
-      { id: "4.3", title: "4.3 Cell Size and Surface Area to Volume Ratio" },
-      { id: "4.4", title: "4.4 Passage of Molecules into and out of Cells" },
-      { id: "4.5", title: "4.5 Animal and Plant Tissues" }
+      { id: "4.1", title: "4.1 Cell Cycle" },
+      { id: "4.2", title: "4.2 Mitosis" },
+      { id: "4.3", title: "4.3 Meiosis" },
+      { id: "4.4", title: "4.4 Comparison between Meiosis and Mitosis" }
     ]
   },
   {
     id: "chap-5",
-    title: "CHAP 5 Cell Cycle",
+    title: "CHAP 5 Tissues, Organs, and Organ Systems",
     items: [
-      { id: "5.1", title: "5.1 Cell Cycle" },
-      { id: "5.2", title: "5.2 Mitosis" },
-      { id: "5.3", title: "5.3 Meiosis" },
-      { id: "5.4", title: "5.4 Apoptosis and Necrosis" }
+      { id: "5.1", title: "5.1 Levels of Organization" },
+      { id: "5.2", title: "5.2 Organs and Organ Systems in Plants" },
+      { id: "5.3", title: "5.3 Organs and Organ Systems in Humans" },
+      { id: "5.4", title: "5.4 Homeostasis" }
     ]
   },
   {
     id: "chap-6",
-    title: "CHAP 6 Enzymes",
+    title: "CHAP 6 Biomolecules",
     items: [
-      { id: "6.1", title: "6.1 Characteristics of Enzymes" },
-      { id: "6.2", title: "6.2 Mechanism of Enzymes action" },
-      { id: "6.3", title: "6.3 Specificity of Enzymes" }
+      { id: "6.1", title: "6.1 Biomolecules" },
+      { id: "6.2", title: "6.2 Carbohydrates" },
+      { id: "6.3", title: "6.3 Proteins" },
+      { id: "6.4", title: "6.4 Lipids" },
+      { id: "6.5", title: "6.5 Nucleic Acids" },
+      { id: "6.6", title: "6.6 The Working of DNA and RNA" }
     ]
   },
   {
     id: "chap-7",
-    title: "CHAP 7 Bioenergetics",
+    title: "CHAP 7 Enzymes",
     items: [
-      { id: "7.1", title: "7.1 Bioenergetics and the Role of ATP" },
-      { id: "7.2", title: "7.2 Photosynthesis" },
-      { id: "7.3", title: "7.3 Respiration" }
+      { id: "7.1", title: "7.1 Metabolism" },
+      { id: "7.2", title: "7.2 Enzymes" },
+      { id: "7.3", title: "7.3 Mechanism of Enzyme Action" },
+      { id: "7.4", title: "7.4 Factors that Affect the Activity of Enzymes" },
+      { id: "7.5", title: "7.5 Enzyme Inhibition" }
     ]
   },
   {
     id: "chap-8",
-    title: "CHAP 8 Nutrition",
+    title: "CHAP 8 Bioenergetics",
     items: [
-      { id: "8.1", title: "8.1 Mineral Nutrition in Plants" },
-      { id: "8.2", title: "8.2 Components of Human Food" },
-      { id: "8.3", title: "8.3 Digestion in Human" },
-      { id: "8.4", title: "8.4 Disorders of Gut" }
+      { id: "8.1", title: "8.1 ATP: The Cell’s Energy Currency" },
+      { id: "8.2", title: "8.2 Photosynthesis" },
+      { id: "8.3", title: "8.3 Cellular Respiration" }
     ]
   },
   {
     id: "chap-9",
-    title: "CHAP 9 Transport",
+    title: "CHAP 9 Plant Physiology",
     items: [
-      { id: "9.1", title: "9.1 Transport in Plants" },
-      { id: "9.2", title: "9.2 Transport in Human" },
-      { id: "9.3", title: "9.3 Cardiovascular Disorder" }
+      { id: "9.1", title: "9.1 Nutrition in Plants" },
+      { id: "9.2", title: "9.2 Transport in Plants" },
+      { id: "9.3", title: "9.3 Transportation" },
+      { id: "9.4", title: "9.4 Transport of Water and Salts in Plants" },
+      { id: "9.5", title: "9.5 Translocation of Food in Plants" },
+      { id: "9.6", title: "9.6 Gaseous Exchange in Plants" },
+      { id: "9.7", title: "9.7 Mechanisms for Excretion in Plants" },
+      { id: "9.8", title: "9.8 Osmotic Adjustments in Plants" }
     ]
   }
 ]

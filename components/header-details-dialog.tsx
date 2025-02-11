@@ -47,7 +47,7 @@ export function HeaderDetailsDialog({ open, onOpenChange, onSubmit, loading = fa
     subject: "Biology",
     totalMarks: "50",
     day: new Date().toLocaleDateString("en-US", { weekday: "long" }),
-    syllabus: "CHAP 1 Introduction to Biology",
+    syllabus: "CHAP 1 ",
   })
 
   const handleSubmit = async (e: React.FormEvent) => {

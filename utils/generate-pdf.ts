@@ -1,5 +1,6 @@
 import jsPDF, { GState } from "jspdf"
 import "jspdf-autotable"
+import { setupUrduFont, renderUrduText } from "@/utils/pdf-helpers"
 
 declare module "jspdf" {
   interface jsPDF {
@@ -94,23 +95,21 @@ function ensureSingleQuestionPerLine(
   leftMargin: number,
   isRTL = false,
 ): number {
-  if (!question) return yPos // Add this line to handle undefined question
+  if (!question) return yPos
   const maxQuestionWidth = 175
   const questionLines = wrapText(doc, question, maxQuestionWidth)
 
-  // Set text alignment based on language
-  doc.setR2L(isRTL)
-
-  // For RTL text, adjust the margin to right side
-  const textMargin = isRTL ? doc.internal.pageSize.width - leftMargin - maxQuestionWidth : leftMargin
-
-  // Print question text
-  questionLines.forEach((line, lineIndex) => {
-    doc.text(line, textMargin, yPos + lineIndex * 5)
-  })
-
-  // Reset R2L setting
-  doc.setR2L(false)
+  if (isRTL && question) {
+    const rightMargin = doc.internal.pageSize.width - leftMargin - maxQuestionWidth
+    questionLines.forEach((line, lineIndex) => {
+      renderUrduText(doc, line, rightMargin, yPos + lineIndex * 5, { maxWidth: maxQuestionWidth })
+    })
+  } else {
+    doc.setFont("helvetica", "normal")
+    questionLines.forEach((line, lineIndex) => {
+      doc.text(line, leftMargin, yPos + lineIndex * 5)
+    })
+  }
 
   return yPos + questionLines.length * 5 + 2
 }
@@ -172,31 +171,34 @@ function renderMCQOptions(doc: jsPDF, options: any[], startY: number, leftMargin
     // Calculate position
     const column = index % optionsPerRow
     if (column === 0 && index > 0) {
-      currentY += maxHeightInRow + 2 // Reduced spacing between rows
+      currentY += maxHeightInRow + 2
       maxHeightInRow = 0
     }
 
-    // Calculate x position based on column
     const xPos = leftMargin + column * (optionWidth + 5)
 
     // Wrap text and render
     const wrappedLines = wrapText(doc, fullText, optionWidth)
-    doc.setR2L(isRTL)
 
-    wrappedLines.forEach((line, lineIndex) => {
-      const yPos = currentY + lineIndex * 5
-      const textX = isRTL ? doc.internal.pageSize.width - xPos - doc.getTextWidth(line) : xPos
-      doc.text(line, textX, yPos)
-    })
-
-    doc.setR2L(false)
+    if (isRTL) {
+      wrappedLines.forEach((line, lineIndex) => {
+        const yPos = currentY + lineIndex * 5
+        renderUrduText(doc, line, xPos, yPos, { maxWidth: optionWidth })
+      })
+    } else {
+      doc.setFont("helvetica", "normal")
+      wrappedLines.forEach((line, lineIndex) => {
+        const yPos = currentY + lineIndex * 5
+        doc.text(line, xPos, yPos)
+      })
+    }
 
     // Update max height for current row
     const optionHeight = wrappedLines.length * 5
     maxHeightInRow = Math.max(maxHeightInRow, optionHeight)
   })
 
-  return currentY + maxHeightInRow // Return final Y position
+  return currentY + maxHeightInRow
 }
 
 export async function generatePDF(
@@ -220,6 +222,18 @@ export async function generatePDF(
     doc.setDrawColor(0)
     doc.setLineWidth(0.5)
     doc.rect(5, 5, 200, 287) // Outer border for the entire paper
+
+    // Setup Urdu font
+    try {
+      const fontLoaded = await setupUrduFont(doc)
+      if (!fontLoaded) {
+        console.warn("Failed to load Urdu font, falling back to basic font")
+        doc.setFont("helvetica", "normal")
+      }
+    } catch (error) {
+      console.error("Error setting up font:", error)
+      doc.setFont("helvetica", "normal")
+    }
 
     // Function to add watermark to a page
     function addWatermark(doc: jsPDF) {
@@ -362,7 +376,7 @@ export async function generatePDF(
           // Render MCQ options with new layout system
           if (Array.isArray(question.options)) {
             yPos = renderMCQOptions(doc, question.options, yPos + 1, leftMargin + 5, isRTL)
-            yPos += 2 // Add some spacing after options
+            yPos += 1 // Add some spacing after options
           }
         } else {
           // Handle non-MCQ questions as before
