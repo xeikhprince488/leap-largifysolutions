@@ -13,6 +13,7 @@ interface QuestionData {
   }[];
   correct?: string;
   marks: number;
+  
 }
 
 interface Questions {

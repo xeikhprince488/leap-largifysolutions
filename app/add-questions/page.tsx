@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Plus, Save, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 import { syllabusStructure } from "@/data/syllabus-structure"
+import { Upload } from "@/components/ui/upload"
 
 interface Option {
   english: string
@@ -90,6 +91,8 @@ export default function AddQuestionsPage() {
     urdu: [""],
   })
 
+  const [image, setImage] = useState<string | null>(null)
+
   const handleAddOutlinePoint = () => {
     setOutline({
       english: [...outline.english, ""],
@@ -109,6 +112,14 @@ export default function AddQuestionsPage() {
       ...outline,
       [language]: outline[language].map((point, i) => (i === index ? value : point)),
     })
+  }
+
+  const handleImageUpload = (file: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result as string); // Save image as base64 string
+    };
+    reader.readAsDataURL(file);
   }
 
   const isFormValid = () => {
@@ -141,6 +152,7 @@ export default function AddQuestionsPage() {
         topic,
         marks: question.marks,
         language,
+        image, // Add image to the question object
         ...(questionType === "mcq"
           ? {
               options,
@@ -187,6 +199,7 @@ export default function AddQuestionsPage() {
         ])
         setAnswer({ english: "", urdu: "" })
         setOutline({ english: [""], urdu: [""] })
+        setImage(null)
       } else {
         toast.error(result.message)
       }
@@ -602,6 +615,10 @@ export default function AddQuestionsPage() {
                       placeholder="Enter answer in Urdu"
                       style={{ direction: "rtl" }}
                     />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Upload Image</Label>
+                    <Upload onFileSelect={handleImageUpload} />
                   </div>
                 </div>
               )}

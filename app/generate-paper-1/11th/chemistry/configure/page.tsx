@@ -43,6 +43,10 @@ export default function ConfigureQuestionsPage() {
   const [showHeaderDialog, setShowHeaderDialog] = useState(false)
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const [selectedChapters, setSelectedChapters] = useState<string[]>([])
+  const predefinedHeadings = ["2. Attempt any five parts.", "3. Attempt any five parts.", "4. Attempt any five parts.", "5. Attempt any two questions.", "Choose the correct option."] // Add predefined headings
+  const [selectedHeading, setSelectedHeading] = useState(predefinedHeadings[0]) // Add state for selected heading
+  const [showPrintDialog, setShowPrintDialog] = useState(false)
+  const [currentPdfData, setCurrentPdfData] = useState<string | null>(null)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -52,10 +56,21 @@ export default function ConfigureQuestionsPage() {
     }
   }, [])
 
+  useEffect(() => {
+    if (showPaper) {
+      console.log("Showing paper, updating selected questions")
+      setSelectedQuestions((prevQuestions) => [...prevQuestions])
+    }
+  }, [showPaper])
+
+  useEffect(() => {
+    console.log('showHeaderDialog changed:', showHeaderDialog)
+  }, [showHeaderDialog])
+
   const totalMarks = sections.reduce((sum, section) => sum + (section.count * section.marks), 0)
 
   const handleAddSection = () => {
-    const heading = prompt('Enter the heading for this section:')
+    const heading = selectedHeading || prompt("Enter the heading for this section:") // Use selected heading or prompt
     if (heading) {
       setSections([...sections, { ...currentSection, heading }])
       setCurrentSection({
@@ -329,8 +344,17 @@ export default function ConfigureQuestionsPage() {
       return
     }
 
-    console.log('Opening header dialog')
-    setShowHeaderDialog(true)
+    // Force a re-render of the paper before opening the dialog
+    setSelectedQuestions(prevQuestions => {
+      console.log('Updating selected questions')
+      return [...prevQuestions]
+    })
+
+    // Delay opening the dialog slightly to ensure state update has occurred
+    setTimeout(() => {
+      console.log('Opening header dialog')
+      setShowHeaderDialog(true)
+    }, 100)
   }
 
   const handleHeaderDetailsSubmit = async (details: {
@@ -513,6 +537,25 @@ export default function ConfigureQuestionsPage() {
                 </div>
               </div>
 
+              <div className="space-y-2">
+                <Label>Section Heading</Label>
+                <Select
+                  value={selectedHeading}
+                  onValueChange={(value) => setSelectedHeading(value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select heading" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {predefinedHeadings.map((heading, index) => (
+                      <SelectItem key={index} value={heading}>
+                        {heading}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               <Button onClick={handleAddSection}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add Section
@@ -531,6 +574,9 @@ export default function ConfigureQuestionsPage() {
                             </p>
                             <p className="text-sm font-medium">
                               Total: {section.count * section.marks} marks
+                            </p>
+                            <p className="text-sm font-medium">
+                              Heading: {section.heading}
                             </p>
                           </div>
                           <Button

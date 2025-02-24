@@ -13,6 +13,7 @@ interface Paper {
 }
 
 interface SavedPapersStore extends SavedPapersState {
+  clearPapers: any;
   removePaper(id: any): unknown;
   addPaper: (paper: SavedPaper) => void
   getPapersByGrade: (grade: string) => SavedPaper[]
@@ -60,6 +61,7 @@ const useSavedPapersStore = create<SavedPapersStore>()(
         }
         return { papers: newPapers }
       }),
+      clearPapers: () => set({ papers: {} }),
       getPapersByGrade: (grade) => {
         const state = get()
         if (!state.papers[grade]) return []

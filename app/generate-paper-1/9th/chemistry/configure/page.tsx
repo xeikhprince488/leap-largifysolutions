@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { QuestionDisplay } from "@/components/question-display"
 import { PaperLayout } from "@/components/paper-layout"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { AnswerKey } from "@/components/answer-key"
@@ -18,6 +17,20 @@ import { toast } from "sonner"
 import { LongQuestion, MCQQuestion, type Question, type QuestionConfig, ShortQuestion } from "@/types/questions"
 import { Card, CardContent } from "@/components/ui/card"
 import { HeaderDetailsDialog } from "@/components/header-details-dialog"
+
+const QuestionDisplay = ({ question, index }: { question: Question; index: number }) => (
+  <div className="p-4">
+    <p className="font-medium">
+      {index + 1}. {question.english}
+    </p>
+    {question.urdu && <p className="font-medium">{question.urdu}</p>}
+    {question.image && (
+      <div className="mt-2">
+        <Image src={question.image} alt={`Question ${index + 1}`} width={200} height={100} />
+      </div>
+    )}
+  </div>
+)
 
 export default function ConfigureQuestionsPage() {
   const [sections, setSections] = useState<QuestionConfig[]>([])

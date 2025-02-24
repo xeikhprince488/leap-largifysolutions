@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { syllabusStructure } from "@/data/syllabus-structure"
 import { MCQQuestion, ShortQuestion, LongQuestion } from "@/components/question-types"
 import { toast } from "sonner"
+import { Image } from "@/components/ui/image"
 
 interface QuestionData {
   id: number
@@ -28,6 +29,7 @@ interface QuestionData {
   }[]
   correct?: string
   marks: number
+  image?: string // Add image property
 }
 
 interface Questions {
@@ -147,6 +149,33 @@ export default function ViewQuestionsPage() {
     }
   }
 
+  const renderQuestion = (question: QuestionData, type: 'mcq' | 'short' | 'long') => {
+    return (
+      <div key={question.id} className="space-y-4">
+        <Card>
+          <CardHeader>
+            <CardTitle>{question.english}</CardTitle>
+          </CardHeader>
+          <CardContent className="flex">
+            {question.image && (
+              <div className="mb-4 flex justify-center">
+                <div className="w-36 h-36">
+                  <div className="object-contain w-full h-full">
+                    <Image src={question.image} alt="Question Image" />
+                  </div>
+                </div>
+              </div>
+            )}
+            {/* Render question details based on type */}
+            {type === 'mcq' && <MCQQuestion question={question} onDelete={() => handleDelete(question.id, type)} type={"mcq"} />}
+            {type === 'short' && <ShortQuestion question={question} onDelete={() => handleDelete(question.id, type)} type={"mcq"} />}
+            {type === 'long' && <LongQuestion question={question} onDelete={() => handleDelete(question.id, type)} type={"mcq"} />}
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
   return (
     <DashboardLayout>
       <div className="p-8">
@@ -237,14 +266,7 @@ export default function ViewQuestionsPage() {
               {questionTypes[language as "english" | "urdu"][grade as keyof typeof questionTypes["english"]].map((type) => (
                 <TabsContent key={type} value={type} className="space-y-4">
                   {questions[type as keyof Questions] && questions[type as keyof Questions].length > 0 ? (
-                    questions[type as keyof Questions].map((question) => (
-                      <MCQQuestion
-                        key={question.id}
-                        question={question}
-                        onDelete={(id) => handleDelete(id, type as 'mcq' | 'short' | 'long')}
-                        type={type as 'mcq' | 'short' | 'long'}
-                      />
-                    ))
+                    questions[type as keyof Questions].map((question) => renderQuestion(question, type as 'mcq' | 'short' | 'long'))
                   ) : (
                     <p className="text-center text-muted-foreground py-8">No {type} questions found for this chapter</p>
                   )}

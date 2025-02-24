@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -56,6 +58,7 @@ export function HeaderDetailsDialog({ open, onOpenChange, onSubmit, loading = fa
       await onSubmit(details)
     } catch (error) {
       console.error("Error submitting details:", error)
+      // Optionally, show a user-friendly message here
     }
   }
 

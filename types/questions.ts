@@ -5,12 +5,13 @@ export interface Option {
 }
 
 export interface BaseQuestion {
-  id: number
+  id: string // Change id type to string
   english: string
   urdu: string
   chapter: string
   type: 'mcq' | 'short' | 'long'
-  marks: number
+  marks: number;
+  image?: string 
 }
 
 export interface MCQQuestion extends BaseQuestion {
@@ -41,15 +42,7 @@ export interface LongQuestion extends BaseQuestion {
 
 export type Question = MCQQuestion | ShortQuestion | LongQuestion
 
-// export interface QuestionConfig {
-//   type: 'mcq' | 'short' | 'long'
-//   count: number
-//   marks: number
-//   heading: string
-// }
-
-
-
+export type { MCQQuestion as MCQQuestionType, ShortQuestion as ShortQuestionType, LongQuestion as LongQuestionType };
 
 export type QuestionConfig = {
 
@@ -62,9 +55,6 @@ export type QuestionConfig = {
   heading: string;
 
 };
-
-
-
 
 export interface PaperConfig {
   totalMarks: number

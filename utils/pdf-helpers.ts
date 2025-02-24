@@ -1,11 +1,17 @@
-import type { jsPDF } from "jspdf"
+import jsPDF from "jspdf"
 
-export async function setupUrduFont(doc: jsPDF) {
+export async function setupUrduFont(doc: jsPDF): Promise<boolean> {
   try {
-    const fontData = await getUrduFont()
-    doc.addFont(fontData, "NafeesNastaleeq", "normal", "Identity-H")
-    doc.setFont("NafeesNastaleeq", "normal")
-    doc.setR2L(true) // Enable right-to-left for Urdu
+    const fontUrl = "/path/to/urdu-font.ttf"
+    const response = await fetch(fontUrl)
+    if (!response.ok) {
+      throw new Error("Failed to fetch Urdu font")
+    }
+    const fontData = await response.arrayBuffer()
+    const fontBase64 = btoa(String.fromCharCode(...new Uint8Array(fontData)))
+    doc.addFileToVFS("urdu-font.ttf", fontBase64)
+    doc.addFont("urdu-font.ttf", "Urdu", "normal")
+    doc.setFont("Urdu")
     return true
   } catch (error) {
     console.error("Error setting up Urdu font:", error)
@@ -13,19 +19,15 @@ export async function setupUrduFont(doc: jsPDF) {
   }
 }
 
-export function renderUrduText(doc: jsPDF, text: string, x: number, y: number, options: { maxWidth?: number } = {}) {
-  try {
-    doc.setFont("NafeesNastaleeq", "normal")
-    doc.setR2L(true)
-    doc.text(text, x, y, { ...options, align: "right" })
-    doc.setR2L(false)
-    return true
-  } catch (error) {
-    console.error("Error rendering Urdu text:", error)
-    doc.setFont("helvetica", "normal")
-    doc.text("[Urdu text]", x, y)
-    return false
-  }
+export function renderUrduText(
+  doc: jsPDF,
+  text: string,
+  x: number,
+  y: number,
+  options: { maxWidth?: number } = {}
+) {
+  doc.setFont("Urdu")
+  doc.text(text, x, y, { maxWidth: options.maxWidth })
 }
 
 async function getUrduFont(): Promise<string> {

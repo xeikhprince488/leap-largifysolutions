@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { QuestionDisplay } from "@/components/question-display"
 import { PaperLayout } from "@/components/paper-layout"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { AnswerKey } from "@/components/answer-key"
@@ -18,6 +17,20 @@ import { toast } from "sonner"
 import { LongQuestion, MCQQuestion, type Question, type QuestionConfig, ShortQuestion } from "@/types/questions"
 import { Card, CardContent } from "@/components/ui/card"
 import { HeaderDetailsDialog } from "@/components/header-details-dialog"
+
+const QuestionDisplay = ({ question, index }: { question: Question; index: number }) => (
+  <div className="p-4">
+    <p className="font-medium">
+      {index + 1}. {question.english}
+    </p>
+    {question.urdu && <p className="font-medium">{question.urdu}</p>}
+    {question.image && (
+      <div className="mt-2">
+        <Image src={question.image} alt={`Question ${index + 1}`} width={200} height={100} />
+      </div>
+    )}
+  </div>
+)
 
 export default function ConfigureQuestionsPage() {
   const [sections, setSections] = useState<QuestionConfig[]>([])
@@ -288,7 +301,7 @@ export default function ConfigureQuestionsPage() {
             <div className="p-8">
               <div className="flex justify-between items-center mb-6">
                 <div>
-                  <h2 className="text-lg font-semibold">biology Paper - 9th Grade</h2>
+                  <h2 className="text-lg font-semibold">Biology Paper - 9th Grade</h2>
                   <p className="text-sm text-muted-foreground">Total Marks: {totalMarks}</p>
                 </div>
                 <Button onClick={handleDownloadClick}>
@@ -365,7 +378,7 @@ export default function ConfigureQuestionsPage() {
       <div className="p-8">
         <div className="max-w-6xl mx-auto">
           <div className="bg-blue-500 text-white p-4 rounded-t-lg flex items-center justify-between">
-            <h1 className="text-lg font-medium">Select Your Questions Here... 9TH - biology</h1>
+            <h1 className="text-lg font-medium">Select Your Questions Here... 9TH - Biology</h1>
             <X className="h-5 w-5 cursor-pointer" onClick={handleClose} />
           </div>
 
@@ -428,7 +441,6 @@ export default function ConfigureQuestionsPage() {
                   Add Section
                 </Button>
                 <div className="space-y-2">
-                  {/* <Label>Section Heading</Label> */}
                   <Select value={selectedHeading} onValueChange={(value) => setSelectedHeading(value)}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select heading" />

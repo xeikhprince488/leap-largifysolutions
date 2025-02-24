@@ -8,6 +8,7 @@ interface Question {
   grade: string;
   subject: string;
   chapter: string;
+  image?: string ;
   // Add other necessary fields
 }
 

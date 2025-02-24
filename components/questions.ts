@@ -13,6 +13,7 @@ interface Question {
   chapter: string
   topic?: string
   marks: number
+  image?: string 
   options?: Array<{
     english: string
     urdu: string
@@ -34,6 +35,7 @@ interface QuestionData {
   type: string;
   english: string;
   urdu: string;
+  image?: string 
   options?: {
     english: string;
     urdu: string;

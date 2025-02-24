@@ -6,7 +6,7 @@
       "esnext"
     ],
     "allowJs": true,
-    "target": "ES6",
+    "target": "es2017",
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -34,7 +34,7 @@
   "include": [
     "**/*.ts",
     ".next/types/**/*.ts"
-  ],
+, "utils/generate-word.ts"  ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts"

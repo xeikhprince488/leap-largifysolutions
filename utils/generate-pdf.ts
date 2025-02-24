@@ -1,6 +1,10 @@
 import jsPDF, { GState } from "jspdf"
 import "jspdf-autotable"
 import { setupUrduFont, renderUrduText } from "@/utils/pdf-helpers"
+import type { Question } from "@/types/questions"
+import type { SavedPaper } from "@/types/saved-papers"
+import useSavedPapersStore from "@/store/saved-papers"
+import axios from "axios"
 
 declare module "jspdf" {
   interface jsPDF {
@@ -9,10 +13,6 @@ declare module "jspdf" {
     setR2L: (isRTL: boolean) => jsPDF
   }
 }
-import type { Question } from "@/types/questions"
-import type { SavedPaper } from "@/types/saved-papers"
-import useSavedPapersStore from "@/store/saved-papers"
-import axios from "axios"
 
 let ObjectId: any
 if (typeof window === "undefined") {
@@ -21,23 +21,150 @@ if (typeof window === "undefined") {
   ObjectId = mongodb.ObjectId
 }
 
+// Modify the manageStorage function to be more aggressive
 function manageStorage() {
-  const { papers } = useSavedPapersStore.getState()
-  const maxPapers = 5 // Reduce the number of stored papers
-  const totalPapers = Object.values(papers).reduce(
-    (acc, paperArray) => acc + (paperArray as unknown as SavedPaper[]).length,
-    0,
-  )
-  if (totalPapers > maxPapers) {
-    // Sort papers by creation date, oldest first
-    const sortedPapers = Object.values(papers).flat() as unknown as SavedPaper[]
-    sortedPapers.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
-    // Remove oldest papers until we're at or below the limit
-    while (sortedPapers.length > maxPapers) {
-      const oldestPaper = sortedPapers.shift()
-      if (oldestPaper) {
-        useSavedPapersStore.getState().removePaper(oldestPaper.id)
+  try {
+    // First, try to clear any expired or old data
+    clearOldData()
+
+    // Calculate total storage usage
+    let totalSize = 0
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (key) {
+        totalSize += localStorage.getItem(key)?.length || 0
       }
+    }
+
+    // If using more than 70% of quota (lowered from 80%), start cleaning up
+    const quota = 5 * 1024 * 1024 // 5MB typical quota
+    if (totalSize > quota * 0.7) {
+      // Get all paper keys and their timestamps
+      const paperKeys = []
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+        if (key?.startsWith("saved-papers-")) {
+          const item = localStorage.getItem(key)
+          if (item) {
+            const data = JSON.parse(item)
+            paperKeys.push({ key, timestamp: new Date(data.createdAt).getTime() })
+          }
+        }
+      }
+
+      // Sort by oldest first
+      paperKeys.sort((a, b) => a.timestamp - b.timestamp)
+
+      // Remove oldest papers until we're under 50% quota (lowered from 60%)
+      while (totalSize > quota * 0.5 && paperKeys.length > 0) {
+        const oldest = paperKeys.shift()
+        if (oldest) {
+          const removedItem = localStorage.getItem(oldest.key)
+          localStorage.removeItem(oldest.key)
+          totalSize -= removedItem?.length || 0
+        }
+      }
+
+      // If we still have storage issues, remove the main storage
+      if (totalSize > quota * 0.7) {
+        localStorage.removeItem("saved-papers-storage")
+      }
+    }
+  } catch (error) {
+    console.error("Error managing storage:", error)
+    // Clear all saved papers if we can't manage storage
+    clearAllStorage()
+  }
+}
+
+// Add new function to clear all storage
+function clearAllStorage() {
+  const keysToRemove = []
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i)
+    if (key?.startsWith("saved-papers-")) {
+      keysToRemove.push(key)
+    }
+  }
+  keysToRemove.forEach((key) => localStorage.removeItem(key))
+  localStorage.removeItem("saved-papers-storage")
+}
+
+function clearOldData() {
+  const now = new Date().getTime()
+  const keysToRemove = []
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i)
+    if (key && key.startsWith("saved-papers-")) {
+      const item = localStorage.getItem(key)
+      if (item) {
+        const data = JSON.parse(item)
+        if (now - new Date(data.createdAt).getTime() > 30 * 24 * 60 * 60 * 1000) {
+          // 30 days
+          keysToRemove.push(key)
+        }
+      }
+    }
+  }
+
+  keysToRemove.forEach((key) => localStorage.removeItem(key))
+}
+
+// Add this function to compress PDF data before storage
+function compressPDFData(pdfData: string): string {
+  // Remove unnecessary metadata and whitespace
+  return pdfData.replace(/\s+/g, " ").trim()
+}
+
+// Modify the saveData function to handle the main storage key specifically
+function saveData(key: string, data: any) {
+  try {
+    // If this is the main storage key, ensure we have space
+    if (key === "saved-papers-storage") {
+      manageStorage()
+    }
+
+    // Compress PDF data if present
+    if (data.pdfContent) {
+      data.pdfContent = compressPDFData(data.pdfContent)
+    }
+
+    localStorage.setItem(key, JSON.stringify(data))
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "QuotaExceededError") {
+      console.warn("Storage quota exceeded. Attempting to free space...")
+
+      // Clear all storage if this is the main storage key
+      if (key === "saved-papers-storage") {
+        clearAllStorage()
+      } else {
+        manageStorage()
+      }
+
+      try {
+        localStorage.setItem(key, JSON.stringify(data))
+      } catch (retryError) {
+        console.error("Failed to save data after clearing space:", retryError)
+        // If still failing, try without PDF content
+        if (data.pdfContent) {
+          const dataWithoutPDF = { ...data, pdfContent: null }
+          try {
+            localStorage.setItem(key, JSON.stringify(dataWithoutPDF))
+          } catch (finalError) {
+            console.error("Failed to save even without PDF content:", finalError)
+            // As a last resort, remove all storage and try one final time
+            clearAllStorage()
+            try {
+              localStorage.setItem(key, JSON.stringify(dataWithoutPDF))
+            } catch (lastError) {
+              console.error("All attempts to save data failed:", lastError)
+            }
+          }
+        }
+      }
+    } else {
+      console.error("Failed to save data:", error)
     }
   }
 }
@@ -201,6 +328,33 @@ function renderMCQOptions(doc: jsPDF, options: any[], startY: number, leftMargin
   return currentY + maxHeightInRow
 }
 
+function renderQuestionWithImage(
+  doc: jsPDF,
+  question: Question,
+  yPos: number,
+  leftMargin: number,
+  isRTL: boolean,
+): number {
+  // Render question text
+  yPos = ensureSingleQuestionPerLine(doc, question.english, yPos, leftMargin, false)
+  if (question.urdu) {
+    yPos = ensureSingleQuestionPerLine(doc, question.urdu, yPos, leftMargin, isRTL)
+  }
+
+  // Render image if available
+  if (question.image) {
+    const imgWidth = 100 // Set a reasonable width for the image
+    const imgHeight = 50 // Set a reasonable height for the image
+    const imgX = leftMargin
+    const imgY = yPos + 5 // Add some spacing before the image
+
+    doc.addImage(question.image, "JPEG", imgX, imgY, imgWidth, imgHeight)
+    yPos += imgHeight + 10 // Add spacing after the image
+  }
+
+  return yPos
+}
+
 export async function generatePDF(
   questions: Question[],
   metadata: {
@@ -238,6 +392,7 @@ export async function generatePDF(
     // Function to add watermark to a page
     function addWatermark(doc: jsPDF) {
       const watermarkImage = new Image()
+      watermarkImage.crossOrigin = "anonymous"
       watermarkImage.src =
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-01-20%20at%2010.03.11%20AM%20(1)-9d9PlEPwDS8Ywj039V6swth9aeyGkU.jpeg"
       // Calculate center position
@@ -260,6 +415,7 @@ export async function generatePDF(
 
     // Add header image
     const headerImage = new Image()
+    headerImage.crossOrigin = "anonymous"
     headerImage.src =
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-01-20%20at%2010.03.11%20AM-s9x0BZj6iejceCDagMRdeImEuAa5yY.jpeg"
     doc.addImage(headerImage, "JPEG", 10, 10, 190, 15)
@@ -271,7 +427,16 @@ export async function generatePDF(
     // Table headers
     const totalMarks = questions.reduce((total, q) => total + (q.marks || 0), 0)
     const tableData = [
-      ["Class", metadata.grade, "Paper No.", metadata.paperNo, "Date", metadata.date, "Time Allowed", "40 min"],
+      [
+        "Class",
+        metadata.grade,
+        "Paper No.",
+        metadata.paperNo,
+        "Date",
+        metadata.date,
+        "Time Allowed",
+        metadata.timeAllowed,
+      ],
       [
         "Subject",
         metadata.subject,
@@ -324,7 +489,10 @@ export async function generatePDF(
     doc.text(paperObjectiveText, textX, yPos)
     yPos += 5 // Reduced spacing after PAPER OBJECTIVE
 
-    function addNewPageIfNeeded(yPos: number, doc: jsPDF, borderDrawn = false): [number, boolean] {
+    let borderDrawn = false // Initialize borderDrawn
+
+    // Add sections with headings
+    metadata.sections.forEach((section) => {
       if (yPos > 270) {
         doc.addPage()
         yPos = 20
@@ -333,17 +501,10 @@ export async function generatePDF(
           doc.setLineWidth(0.5)
           doc.rect(5, 5, 200, 287) // Outer border for the new page
           addWatermark(doc) // Add watermark to new page
+          borderDrawn = true
         }
-        return [yPos, true]
       }
-      return [yPos, borderDrawn]
-    }
 
-    let borderDrawn = false // Initialize borderDrawn
-
-    // Add sections with headings
-    metadata.sections.forEach((section, sectionIndex) => {
-      ;[yPos, borderDrawn] = addNewPageIfNeeded(yPos, doc, borderDrawn)
       yPos += 8
       doc.setFont("helvetica", "bold")
       doc.text(section.heading, 10, yPos)
@@ -351,38 +512,48 @@ export async function generatePDF(
 
       const sectionQuestions = questions.filter((q) => q.type === section.type)
       sectionQuestions.forEach((question, index) => {
-        ;[yPos, borderDrawn] = addNewPageIfNeeded(yPos, doc, borderDrawn)
+        if (yPos > 270) {
+          doc.addPage()
+          yPos = 20
+          if (!borderDrawn) {
+            doc.setDrawColor(0)
+            doc.setLineWidth(0.5)
+            doc.rect(5, 5, 200, 287) // Outer border for the new page
+            addWatermark(doc) // Add watermark to new page
+            borderDrawn = true
+          }
+        }
+
+        const leftMargin = 13 // Decreased left margin for all question types
+
+        yPos += 5 // Add consistent spacing before each question
+        doc.setFont("helvetica", "normal")
+
+        // Question number
+        const questionNumber = (index + 1).toString()
+        doc.text(`${questionNumber}.`, leftMargin, yPos)
+
+        // Determine if content should be RTL
+        const isRTL = metadata.subject.toLowerCase() === "urdu" || metadata.subject.toLowerCase() === "islamyat"
+
+        // Handle question text and image
+        yPos = renderQuestionWithImage(doc, question, yPos, leftMargin + 5, isRTL)
 
         if (question.type === "mcq") {
-          // MCQs
-          const leftMargin = 13 // Decreased left margin for the MCQ
-
-          yPos += 5 // Add consistent spacing before each question
-          doc.setFont("helvetica", "normal")
-
-          // Question number
-          const questionNumber = (index + 1).toString()
-          doc.text(`${questionNumber}.`, leftMargin, yPos)
-
-          // Determine if content should be RTL
-          const isRTL = metadata.subject.toLowerCase() === "urdu" || metadata.subject.toLowerCase() === "islamyat"
-
-          // Handle question text
-          yPos = ensureSingleQuestionPerLine(doc, question.english, yPos, leftMargin + 5, false)
-          if (question.urdu) {
-            yPos = ensureSingleQuestionPerLine(doc, question.urdu, yPos, leftMargin + 5, isRTL)
-          }
-
           // Render MCQ options with new layout system
           if (Array.isArray(question.options)) {
             yPos = renderMCQOptions(doc, question.options, yPos + 1, leftMargin + 5, isRTL)
             yPos += 1 // Add some spacing after options
           }
-        } else {
-          // Handle non-MCQ questions as before
-          yPos += 6
-          doc.setFont("helvetica", "normal")
-          doc.text(`${index + 1}. ${question.english || ""}`, 15, yPos)
+        } else if (question.type === "short" || question.type === "long") {
+          // Add answer space for short and long questions
+          yPos += 10 // Add some space before the answer area
+          doc.setDrawColor(200, 200, 200) // Light gray color for lines
+          for (let i = 0; i < (question.type === "short" ? 3 : 6); i++) {
+            doc.line(leftMargin, yPos, 200, yPos)
+            yPos += 7 // Space between lines
+          }
+          yPos += 5 // Add some space after the answer area
         }
       })
     })
@@ -412,6 +583,7 @@ export async function generatePDF(
       useSavedPapersStore.getState().addPaper(savedPaper)
       await savePaperToMongoDB(savedPaper) // Save paper to MongoDB
       await saveDownloadedPaperToMongoDB(savedPaper) // Save downloaded paper to MongoDB
+      saveData("saved-papers-" + savedPaper.id, savedPaper) // Save to local storage with error handling
       doc.save(fileName)
       return { success: true, pdfData }
     } catch (storageError) {
@@ -429,6 +601,7 @@ export async function generatePDF(
             useSavedPapersStore.getState().addPaper(savedPaper)
             await savePaperToMongoDB(savedPaper) // Save paper to MongoDB
             await saveDownloadedPaperToMongoDB(savedPaper) // Save downloaded paper to MongoDB
+            saveData("saved-papers-" + savedPaper.id, savedPaper) // Save to local storage with error handling
             doc.save(fileName)
             break
           } catch (retryError) {
